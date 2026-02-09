@@ -1,0 +1,15 @@
+C:\Programming\QuikSharp\bin\Release\netstandard2.0\amd64\KernelTraceControl.dll
+C:\Programming\QuikSharp\bin\Release\netstandard2.0\amd64\msdia140.dll
+C:\Programming\QuikSharp\bin\Release\netstandard2.0\TraceReloggerLib.dll
+C:\Programming\QuikSharp\bin\Release\netstandard2.0\Dia2Lib.dll
+C:\Programming\QuikSharp\bin\Release\netstandard2.0\QUIKSharp.dll.config
+C:\Programming\QuikSharp\bin\Release\netstandard2.0\QUIKSharp.deps.json
+C:\Programming\QuikSharp\bin\Release\netstandard2.0\QUIKSharp.dll
+C:\Programming\QuikSharp\bin\Release\netstandard2.0\QUIKSharp.xml
+C:\Programming\QuikSharp\obj\Release\netstandard2.0\QuikSharp.csproj.AssemblyReference.cache
+C:\Programming\QuikSharp\obj\Release\netstandard2.0\QuikSharp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Programming\QuikSharp\obj\Release\netstandard2.0\QuikSharp.AssemblyInfoInputs.cache
+C:\Programming\QuikSharp\obj\Release\netstandard2.0\QuikSharp.AssemblyInfo.cs
+C:\Programming\QuikSharp\obj\Release\netstandard2.0\QuikSharp.csproj.CoreCompileInputs.cache
+C:\Programming\QuikSharp\obj\Release\netstandard2.0\QUIKSharp.dll
+C:\Programming\QuikSharp\obj\Release\netstandard2.0\QUIKSharp.xml
