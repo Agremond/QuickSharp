@@ -1,0 +1,17 @@
+C:\Programming\QuikHostSM\bin\Debug\net8.0\QuikHostSM.exe
+C:\Programming\QuikHostSM\bin\Debug\net8.0\QuikHostSM.deps.json
+C:\Programming\QuikHostSM\bin\Debug\net8.0\QuikHostSM.runtimeconfig.json
+C:\Programming\QuikHostSM\bin\Debug\net8.0\QuikHostSM.dll
+C:\Programming\QuikHostSM\bin\Debug\net8.0\QuikHostSM.pdb
+C:\Programming\QuikHostSM\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.csproj.AssemblyReference.cache
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.GeneratedMSBuildEditorConfig.editorconfig
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.AssemblyInfoInputs.cache
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.AssemblyInfo.cs
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.csproj.CoreCompileInputs.cache
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.csproj.Up2Date
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.dll
+C:\Programming\QuikHostSM\obj\Debug\net8.0\refint\QuikHostSM.dll
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.pdb
+C:\Programming\QuikHostSM\obj\Debug\net8.0\QuikHostSM.genruntimeconfig.cache
+C:\Programming\QuikHostSM\obj\Debug\net8.0\ref\QuikHostSM.dll

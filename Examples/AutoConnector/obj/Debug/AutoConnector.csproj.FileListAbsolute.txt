@@ -1,0 +1,17 @@
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\AutoConnector.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\AutoConnector.pdb
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\QUIKSharp.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\Newtonsoft.Json.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\System.Threading.Channels.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\System.Buffers.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\netstandard.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\QUIKSharp.xml
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\bin\Debug\QUIKSharp.dll.config
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\obj\Debug\AutoConnector.csproj.AssemblyReference.cache
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\obj\Debug\AutoConnector.csproj.CoreCompileInputs.cache
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\obj\Debug\AutoConn.1B7F1917.Up2Date
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\obj\Debug\AutoConnector.dll
+C:\Programming\QUIKSharp-master\Examples\AutoConnector\obj\Debug\AutoConnector.pdb
