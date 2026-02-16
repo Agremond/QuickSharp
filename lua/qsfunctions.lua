@@ -32,15 +32,16 @@ end
 -- @param msg message table
 -- @return same msg table
 function qsfunctions.ping(msg)
-    -- need to know data structure the caller gives
-    msg.t = 0 -- avoid time generation. Could also leave original
-    if msg.data == "Ping" then
+    msg.t = 0
+    local innerData = msg.data
+    if type(innerData) == "table" and innerData.data == "Ping" then
         msg.data = "Pong"
-        return msg
+    elseif innerData == "Ping" then
+        msg.data = "Pong"
     else
-        msg.data = msg.data .. " is not Ping"
-        return msg
+        msg.data = tostring(innerData) .. " is not Ping"
     end
+    return msg
 end
 
 --- Echoes its message
@@ -199,8 +200,6 @@ function qsfunctions.addLabel2(msg)
 	return msg;
 end
 
--- Функция задает параметры для метки с указанным идентификатором.
--- В случае успешного завершения функция возвращает «true», иначе – «false».
 function qsfunctions.setLabelParams(msg)
 	local spl = split2(msg.data, "|");
 	local chartTag, labelId, yValue, strDate, strTime, text, imagePath, alignment, hint, r, g, b, transparency, tranBackgrnd, fontName, fontHeight =
@@ -274,10 +273,16 @@ end
 -- Class functions --
 ---------------------
 
---- Функция предназначена для получения списка кодов классов, переданных с сервера в ходе сеанса связи.
 function qsfunctions.getClassesList(msg)
-    msg.data = getClassesList()
---    if  msg.data then log(msg.data) else log("getClassesList returned nil") end
+log("������� " .. msg.cmd .. ", req_id=" .. tostring(msg.req_id or "?") .. 
+        ", data ���=" .. type(msg.data) .. ", data=" .. to_json(msg.data or {}), 0)
+    local classes = getClassesList()
+    if classes == "" or classes == nil then
+        msg.data = ""  -- ��� ����� ��������� ����� sleep, �� ����� ��
+        msg.warning = "Classes list not yet loaded"
+    else
+        msg.data = classes
+    end
     return msg
 end
 
@@ -808,6 +813,7 @@ end
 -- OptionBoard functions --
 --------------------------
 function qsfunctions.getOptionBoard(msg)
+
     local spl = split(msg.data, "|")
     local classCode, secCode, series = spl[1], spl[2], spl[3]
 	local result, err = getOptions(classCode, secCode, series )
@@ -819,8 +825,8 @@ function qsfunctions.getOptionBoard(msg)
 		log("Option board returns nil", 3)
 		msg.data = nil
 	end
-	
-    return msg.data
+    msg.data = result or {}
+    return msg
 end
 
 function getOptions(classCode,secCode,series)

@@ -1,8 +1,9 @@
---~ Copyright (c) 2014-2020 QUIKSharp Authors https://github.com/finsight/QUIKSharp/blob/master/AUTHORS.md. All rights reserved.
---~ Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
+-- qsutils.lua (исправленная версия)
 
-local socket = require ("socket")
-local json = require ("dkjson")
+local json = require "dkjson"
+local shm  = require "ipc.shm"
+local sem  = require "ipc.sem"
+
 local qsutils = {}
 
 --- Sleep that always works
@@ -14,15 +15,18 @@ function delay(msec)
     end
 end
 
--- high precision current time
+script_path = getScriptPath()
+
+local time_offset = 0
+local last_os_time = os.time()
 function timemsec()
-    local st, res = pcall(socket.gettime)
-    if st then
-        return (res) * 1000
-    else
-        log("unexpected error in timemsec", 3)
-        error("unexpected error in timemsec")
+    local now = os.time()
+    if now > last_os_time then
+        time_offset = 0
+        last_os_time = now
     end
+    time_offset = time_offset + 50   -- грубая эмуляция
+    return (now * 1000) + time_offset % 1000
 end
 
 -- Returns the name of the file that calls this function (without extension)
@@ -35,8 +39,8 @@ function scriptFilename()
     return string.gsub(full_path, "^.*\\(.*)[.]lua[c]?$", "%1")
 end
 
--- when true will show QUIK message for log(...,0)
 is_debug = false
+
 
 -- log files
 
@@ -98,15 +102,6 @@ function paramsFromConfig(scriptName)
         return nil
     end
 end
-
--- closes log
-function closeLog()
-    if logfile then
-        pcall(logfile:close(logfile))
-    end
-end
-
-logfile = openLog()
 
 --- Write to log file and to Quik messages
 function log(msg, level)
@@ -171,138 +166,176 @@ function to_json(msg)
     end
 end
 
--- current connection state
-is_connected = false
-local response_server
-local callback_server
-local response_client
-local callback_client
+-- =============================================================================
+-- ТРАНСПОРТ: shared memory + семафоры
+-- =============================================================================
 
---- accept client on server
-local function getResponseServer()
-    log('Waiting for a response client...', 0)
-	if not response_server then
-		log("Cannot bind to response_server, probably the port is already in use", 3)
-	else
-		while true do
-			local status, client, err = pcall(response_server.accept, response_server )
-			if status and client then
-				return client
-			else
-				log(err, 3)
-			end
-		end
-	end
+local SHM_NAME    = "QuikSharp_SHM_v2"
+local SEM_CS2LUA  = "QuikSharp_CS2Lua"   -- C# > Lua (запрос готов)
+local SEM_LUA2CS  = "QuikSharp_Lua2CS"   -- Lua > C# (ответ готов)
+local SEM_LUA2CS_SYNC     = "QuikSharp_Lua2CS_Sync"
+local SEM_LUA2CS_CALLBACK = "QuikSharp_Lua2CS_Callback"
+
+
+local shm_handle
+local sem_cs2lua
+local sem_lua2cs
+local is_connected = false
+
+local HEADER_SIZE = 24
+local MAGIC = 0x5155494B   -- "QUIK"
+
+local function init_shm()
+    if shm_handle then return true end
+
+    local ok, err = shm.create(SHM_NAME, 4*1024*1024)
+    if not ok then
+        log("shm.create failed: " .. tostring(err), 3)
+        return false, err
+    end
+    shm_handle = ok
+
+	ok, err = sem.open(SEM_LUA2CS_SYNC, 1)
+	sem_lua2cs_sync = ok
+	
+	ok, err = sem.open(SEM_LUA2CS_CALLBACK, 1)
+	sem_lua2cs_callback = ok
+
+
+    ok, err = sem.open(SEM_CS2LUA, 1)
+    if not ok then
+        log("sem.open CS2Lua failed: " .. tostring(err), 3)
+        return false, err
+    end
+    sem_cs2lua = ok
+
+    ok, err = sem.open(SEM_LUA2CS, 1)
+    if not ok then
+        log("sem.open Lua2CS failed: " .. tostring(err), 3)
+        return false, err
+    end
+    sem_lua2cs = ok
+
+    shm_handle:seek("set")
+    shm_handle:write(string.pack("<I4I4I4I4I4I4", MAGIC, 2, 0, 0, 0, 0))
+
+    log("Shared memory IPC initialized", 1)
+    return true
 end
 
-local function getCallbackClient()
-    log('Waiting for a callback client...', 0)
-	if not callback_server then
-		log("Cannot bind to callback_server, probably the port is already in use", 3)
-	else
-		while true do
-			local status, client, err = pcall(callback_server.accept, callback_server)
-			if status and client then
-				return client
-			else
-				log(err, 3)
-			end
-		end
-	end
+function qsutils.connect(...)
+    -- игнорируем старые параметры сокетов
+    if is_connected then return true end
+
+    local ok, err = init_shm()
+    if not ok then
+        log("IPC initialization failed: " .. tostring(err), 3)
+        return false
+    end
+
+    is_connected = true
+    log("QUIK# connected via shared memory", 1)
+    return true
 end
-
-function qsutils.connect(response_host, response_port, callback_host, callback_port)
-    if not response_server then
-        response_server = socket.bind(response_host, response_port, 1)
-    end
-    if not callback_server then
-        callback_server = socket.bind(callback_host, callback_port, 1)
-    end
-
+-- Получение запроса от C#
+function qsutils.receiveRequest(timeout_sec)
     if not is_connected then
-        log('QUIK# is waiting for client connection...', 1)
-        if response_client then
-            log("is_connected is false but the response client is not nil", 3)
-            -- Quik crashes without pcall
-            pcall(response_client.close, response_client)
-        end
-        if callback_client then
-            log("is_connected is false but the callback client is not nil", 3)
-            -- Quik crashes without pcall
-            pcall(callback_client.close, callback_client)
-        end
-        response_client = getResponseServer()
-        callback_client = getCallbackClient()
-        if response_client and callback_client then
-            is_connected = true
-            log('QUIK# client connected', 1)
-        end
+        return nil, "not connected"
     end
+
+    timeout_sec = timeout_sec or 5.0
+
+    -- ждём сигнала от семафора (C# > Lua)
+    local success = sem_cs2lua:dec(timeout_sec)
+    if not success then
+        return nil, "timeout"
+    end
+
+    shm_handle:seek("set")
+    local header = shm_handle:read(HEADER_SIZE)
+    if not header or #header < HEADER_SIZE then
+        sem_lua2cs:inc()   -- освобождаем семафор, чтобы не заблокировать очередь
+        return nil, "header read error"
+    end
+
+    local magic, ver, req_id, msg_type, body_len, _ = string.unpack("<I4I4I4I4I4I4", header)
+
+    if magic ~= MAGIC then
+        sem_lua2cs:inc()
+        return nil, "bad magic number"
+    end
+
+    -- ------------------------------------------------
+    -- Случай пустого тела — это нормальная ситуация
+    -- (heartbeat, ping без данных, некоторые команды)
+    -- ------------------------------------------------
+    if body_len == 0 then
+        -- Мы НЕ инкрементим семафор здесь — это делает вызывающий код
+        return nil, "empty body", req_id
+    end
+
+    if body_len > 4*1024*1024 then   -- защита от слишком больших сообщений
+        sem_lua2cs:inc()
+        return nil, "body too large: " .. body_len
+    end
+
+    shm_handle:seek("set", HEADER_SIZE)
+    local body = shm_handle:read(body_len)
+    if not body or #body ~= body_len then
+        sem_lua2cs:inc()
+        return nil, "body read error"
+    end
+
+    local tbl, pos, err = json.decode(body, 1, json.null)
+    if not tbl then
+        sem_lua2cs:inc()
+        log("JSON decode failed: " .. tostring(err), 3)
+        return nil, "json decode failed: " .. tostring(err)
+    end
+
+    -- Успех — возвращаем распарсенный объект и req_id
+    return tbl, req_id
 end
 
-local function disconnected()
+-- Отправка ответа или колбэка в C#
+local function send_message(msg_table, msg_type, is_callback)
+    local sem_to_use = is_callback and sem_lua2cs_callback or sem_lua2cs_sync
+    if not is_connected then return nil, "not connected" end
+
+    local str = to_json(msg_table)
+    local len = #str
+
+    shm_handle:seek("set", HEADER_SIZE)
+    shm_handle:write(str)
+
+    shm_handle:seek("set")
+    shm_handle:write(string.pack("<I4I4I4I4I4I4",
+        MAGIC, 2, msg_table.req_id or 0, msg_type, len, 0))
+
+    local ok = sem_to_use:inc()
+    if not ok then
+        return nil, "sem inc failed"
+    end
+    log("Отправляемый JSON (длина " .. #str .. "): " .. str, 1)
+    return true
+end
+
+function qsutils.sendResponse(msg_table)
+    return send_message(msg_table, 2, false)   -- sync
+end
+
+function qsutils.sendCallback(msg_table)
+    return send_message(msg_table, 2, true)    -- callback
+end
+
+function qsutils.Close()
+    if shm_handle then shm_handle:close() end
+    if sem_cs2lua then sem_cs2lua:close() end
+    if sem_lua2cs then sem_lua2cs:close() end
     is_connected = false
-    log('QUIK# client disconnected', 1)
-    if response_client then
-        pcall(response_client.close, response_client)
-        response_client = nil
-    end
-    if callback_client then
-        pcall(callback_client.close, callback_client)
-        callback_client = nil
-    end
-    OnQuikSharpDisconnected()
+    log("IPC closed", 1)
 end
 
---- get a decoded message as a table
-function receiveRequest()
-    if not is_connected then
-        return nil, "not conencted"
-    end
-    local status, requestString= pcall(response_client.receive, response_client)
-    if status and requestString then
-        local msg_table, err = from_json(requestString)
-        if err then
-            log(err, 3)
-            return nil, err
-        else
-            return msg_table
-        end
-    else
-        disconnected()
-        return nil, err
-    end
-end
-
-function sendResponse(msg_table)
-    -- if not set explicitly then set CreatedTime "t" property here
-    -- if not msg_table.t then msg_table.t = timemsec() end
-    local responseString = to_json(msg_table)
-    if is_connected then
-        local status, res = pcall(response_client.send, response_client, responseString..'\n')
-        if status and res then
-            return true
-        else
-            disconnected()
-            return nil, err
-        end
-    end
-end
-
-function sendCallback(msg_table)
-    -- if not set explicitly then set CreatedTime "t" property here
-    -- if not msg_table.t then msg_table.t = timemsec() end
-    local callback_string = to_json(msg_table)
-   -- log("MSG"..callback_string, 0)
-    if is_connected then
-        local status, res = pcall(callback_client.send, callback_client, callback_string..'\n')
-        if status and res then
-            return true
-        else
-            disconnected()
-            return nil, err
-        end
-    end
-end
+qsutils.is_connected = function() return is_connected end
 
 return qsutils

@@ -40,7 +40,7 @@ namespace QuikSharp
             Candles = new CandleFunctions(port, host);
             QuikService.Candles = Candles;
             QuikService.StopOrders = StopOrders;
-            QuikService.WorkingFolder = Service.GetWorkingFolder().Result;
+            QuikService.WorkingFolder = Service.GetWorkingFolder(30000).Result;
         }
 
         // Если запуск "сервиса" (потоков работы с Lua) происходит в конструкторе Quik, то возможности остановить "сервис" нет.
