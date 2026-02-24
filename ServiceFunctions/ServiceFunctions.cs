@@ -9,7 +9,7 @@ namespace QuikSharp
     /// <summary>
     /// Реализация сервисных функций QUIK через любой транспорт (TCP / SHM)
     /// </summary>
-    public class ServiceFunctions : IServiceFunctions
+    public class ServiceFunctions
     {
         private readonly IQuikTransport _transport;
 
@@ -147,16 +147,16 @@ namespace QuikSharp
             return true;
         }
 
-        public void InitializeCorrelationId(int startCorrelationId)
-        {
-            if (_transport is IQuikTransportEx transportEx)
-            {
-                transportEx.InitializeCorrelationId(startCorrelationId);
-            }
-            else
-            {
-                throw new NotSupportedException("Transport does not support correlation ID initialization.");
-            }
-        }
+        //public void InitializeCorrelationId(int startCorrelationId)
+        //{
+        //    if (_transport is IQuikTransportEx transportEx)
+        //    {
+        //        transportEx.InitializeCorrelationId(startCorrelationId);
+        //    }
+        //    else
+        //    {
+        //        throw new NotSupportedException("Transport does not support correlation ID initialization.");
+        //    }
+        //}
     }
 }

@@ -11,6 +11,10 @@ namespace QuikSharp.DataStructures
     /// </summary>
     public class QuikDateTime
     {
+        //public DateTime ToDateTime(this QuikDateTime qdt)
+        //{
+        //    return new DateTime(qdt.year, qdt.month, qdt.day, qdt.hour, qdt.min, qdt.sec);
+        //}   
         // ReSharper disable InconsistentNaming
         /// <summary>
         /// Микросекунды игнорируются в текущей версии.
@@ -98,5 +102,6 @@ namespace QuikSharp.DataStructures
                 week_day = (int)dt.DayOfWeek == 0 ? 7 : (int)dt.DayOfWeek // воскресенье  в QUIK — 7
             };
         }
+
     }
 }

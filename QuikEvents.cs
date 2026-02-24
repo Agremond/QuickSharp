@@ -128,12 +128,7 @@ namespace QuikSharp
 
     internal class QuikEvents : IQuikEvents
     {
-        public QuikEvents(QuikService service)
-        {
-            QuikService = service;
-        }
-
-        public QuikService QuikService { get; private set; }
+     
 
         /// <summary>
         /// Событие вызывается когда библиотека QuikSharp успешно подключилась к Quik'у
@@ -318,40 +313,6 @@ namespace QuikSharp
         /// </summary>
         public event OrderHandler OnOrder;
 
-        internal void OnOrderCall(Order order)
-        {
-            OnOrder?.Invoke(order);
-            // invoke event specific for the transaction
-            string correlationId = order.TransID.ToString();
-
-            #region Totally untested code or handling manual transactions
-
-            if (!QuikService.Storage.Contains(correlationId))
-            {
-                correlationId = "manual:" + order.OrderNum + ":" + correlationId;
-                var fakeTrans = new Transaction()
-                {
-                    Comment = correlationId,
-                    IsManual = true
-                    // TODO map order properties back to transaction
-                    // ideally, make C# property names consistent (Lua names are set as JSON.NET properties via an attribute)
-                };
-                QuikService.Storage.Set<Transaction>(correlationId, fakeTrans);
-            }
-
-            #endregion Totally untested code or handling manual transactions
-
-            var tr = QuikService.Storage.Get<Transaction>(correlationId);
-            if (tr != null)
-            {
-                lock (tr)
-                {
-                    tr.OnOrderCall(order);
-                }
-            }
-
-            Trace.Assert(tr != null, "Transaction must exist in persistent storage until it is completed and all order messages are recieved");
-        }
 
         /// <summary>
         /// Функция вызывается терминалом QUIK при при изменении текущих параметров.
@@ -388,117 +349,17 @@ namespace QuikSharp
         /// </summary>
         public event StopOrderHandler OnStopOrder;
 
-        internal void OnStopOrderCall(StopOrder stopOrder)
-        {
-            //if (OnStopOrder != null) OnStopOrder(stopOrder);
-            OnStopOrder?.Invoke(stopOrder);
-            // invoke event specific for the transaction
-            string correlationId = stopOrder.TransId.ToString();
-
-            #region Totally untested code or handling manual transactions
-
-            if (!QuikService.Storage.Contains(correlationId))
-            {
-                correlationId = "manual:" + stopOrder.OrderNum + ":" + correlationId;
-                var fakeTrans = new Transaction()
-                {
-                    Comment = correlationId,
-                    IsManual = true
-                    // TODO map order properties back to transaction
-                    // ideally, make C# property names consistent (Lua names are set as JSON.NET properties via an attribute)
-                };
-                QuikService.Storage.Set<Transaction>(correlationId, fakeTrans);
-            }
-
-            #endregion Totally untested code or handling manual transactions
-
-            var tr = QuikService.Storage.Get<Transaction>(correlationId);
-            if (tr != null)
-            {
-                lock (tr)
-                {
-                    tr.OnStopOrderCall(stopOrder);
-                }
-            }
-
-            Trace.Assert(tr != null, "Transaction must exist in persistent storage until it is completed and all order messages are recieved");
-        }
-
         /// <summary>
         /// Функция вызывается терминалом QUIK при получении сделки.
         /// </summary>
         public event TradeHandler OnTrade;
 
-        internal void OnTradeCall(Trade trade)
-        {
-            OnTrade?.Invoke(trade);
-            // invoke event specific for the transaction
-            string correlationId = trade.Comment;
-
-            // ignore unknown transactions
-            if (string.IsNullOrWhiteSpace(correlationId))
-            {
-                return;
-            }
-
-            #region Totally untested code or handling manual transactions
-
-            if (!QuikService.Storage.Contains(correlationId))
-            {
-                correlationId = "manual:" + trade.OrderNum + ":" + correlationId;
-                var fakeTrans = new Transaction()
-                {
-                    Comment = correlationId,
-                    IsManual = true
-                    // TODO map order properties back to transaction
-                    // ideally, make C# property names consistent (Lua names are set as JSON.NET properties via an attribute)
-                };
-                QuikService.Storage.Set<Transaction>(correlationId, fakeTrans);
-            }
-
-            #endregion Totally untested code or handling manual transactions
-
-            var tr = QuikService.Storage.Get<Transaction>(correlationId);
-            if (tr != null)
-            {
-                lock (tr)
-                {
-                    tr.OnTradeCall(trade);
-                    // persist transaction with added trade
-                    QuikService.Storage.Set(correlationId, tr);
-                }
-            }
-
-            // ignore unknown transactions
-            //Trace.Assert(tr != null, "Transaction must exist in persistent storage until it is completed and all trades messages are recieved");
-        }
 
         /// <summary>
         /// Функция вызывается терминалом QUIK при получении ответа на транзакцию пользователя.
         /// </summary>
         public event TransReplyHandler OnTransReply;
 
-        internal void OnTransReplyCall(TransactionReply reply)
-        {
-            OnTransReply?.Invoke(reply);
-
-            // invoke event specific for the transaction
-            if (string.IsNullOrEmpty(reply.Comment)) //"Initialization user successful" transaction doesn't contain comment
-                return;
-
-            if (QuikService.Storage.Contains(reply.Comment))
-            {
-                var tr = QuikService.Storage.Get<Transaction>(reply.Comment);
-                lock (tr)
-                {
-                    tr.OnTransReplyCall(reply);
-                }
-            }
-            else
-            {
-                // NB ignore unmatched transactions
-                //Trace.Fail("Transaction must exist in persistent storage until it is completed and its reply is recieved");
-            }
-        }
+      
     }
 }

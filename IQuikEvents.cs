@@ -40,7 +40,7 @@ namespace QuikSharp
     /// OnTrade - новая сделка
     /// OnTransReply - ответ на транзакцию
     /// </summary>
-    public interface IQuikEvents : IQuikService
+    public interface IQuikEvents
     {
         /// <summary>
         /// Событие вызывается когда библиотека QuikSharp успешно подключилась к Quik'у

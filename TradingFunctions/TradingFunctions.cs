@@ -11,7 +11,7 @@ using QuikSharp.Transports;
 
 namespace QuikSharp
 {
-    public class TradingFunctions : ITradingFunctions
+    public class TradingFunctions
     {
         private readonly IQuikTransport _transport;
 
@@ -208,12 +208,17 @@ namespace QuikSharp
         // Остальные методы
         // ------------------------------------------------------------------------
 
-        public async Task<DateTime> GetTradeDate()
-        {
-            var result = await _transport.SendAsync<Message, QuikDateTime>(
-                new Message("", "getTradeDate"), "getTradeDate").ConfigureAwait(false);
-            return result?.ToDateTime() ?? default;
-        }
+        //public async Task<DateTime> GetTradeDate()
+        //{
+        //    // отправляем запрос на транспорт
+        //    var result = await _transport.SendAsync<Message, QuikDateTime>(
+        //        new Message("", "getTradeDate"),
+        //        "getTradeDate"
+        //    ).ConfigureAwait(false);
+
+        //    // безопасно преобразуем к DateTime через расширение
+        //    return result?.ToDateTime() ?? default;
+        //}
 
         public async Task<CalcBuySellResult> CalcBuySell(
             string classCode, string secCode, string clientCode, string trdAccId,
