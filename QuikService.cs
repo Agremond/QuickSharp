@@ -581,182 +581,144 @@ namespace QuikSharp
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var parsed = Enum.TryParse(message.Command, ignoreCase: true, out EventNames eventName);
-            if (parsed)
+            var msg = message as Message;
+            if (msg == null)
             {
-                // TODO use as instead of assert+is+cast
-                switch (eventName)
-                {
-                    case EventNames.OnAccountBalance:
-                        Trace.Assert(message is Message<AccountBalance>);
-                        var accBal = ((Message<AccountBalance>) message).Data;
-                        Events.OnAccountBalanceCall(accBal);
-                        break;
-
-                    case EventNames.OnAccountPosition:
-                        Trace.Assert(message is Message<AccountPosition>);
-                        var accPos = ((Message<AccountPosition>) message).Data;
-                        Events.OnAccountPositionCall(accPos);
-                        break;
-
-                    case EventNames.OnAllTrade:
-                        Trace.Assert(message is Message<AllTrade>);
-                        var allTrade = ((Message<AllTrade>) message).Data;
-                        allTrade.LuaTimeStamp = message.CreatedTime;
-                        Events.OnAllTradeCall(allTrade);
-                        break;
-
-                    case EventNames.OnCleanUp:
-                        Trace.Assert(message is Message<string>);
-                        Events.OnCleanUpCall();
-                        break;
-
-                    case EventNames.OnClose:
-                        Trace.Assert(message is Message<string>);
-                        Events.OnCloseCall();
-                        break;
-
-                    case EventNames.OnConnected:
-                        Trace.Assert(message is Message<string>);
-                        Events.OnConnectedCall();
-                        break;
-
-                    case EventNames.OnDepoLimit:
-                        Trace.Assert(message is Message<DepoLimitEx>);
-                        var dLimit = ((Message<DepoLimitEx>) message).Data;
-                        Events.OnDepoLimitCall(dLimit);
-                        break;
-
-                    case EventNames.OnDepoLimitDelete:
-                        Trace.Assert(message is Message<DepoLimitDelete>);
-                        var dLimitDel = ((Message<DepoLimitDelete>) message).Data;
-                        Events.OnDepoLimitDeleteCall(dLimitDel);
-                        break;
-
-                    case EventNames.OnDisconnected:
-                        Trace.Assert(message is Message<string>);
-                        Events.OnDisconnectedCall();
-                        break;
-
-                    case EventNames.OnFirm:
-                        Trace.Assert(message is Message<Firm>);
-                        var frm = ((Message<Firm>) message).Data;
-                        Events.OnFirmCall(frm);
-                        break;
-
-                    case EventNames.OnFuturesClientHolding:
-                        Trace.Assert(message is Message<FuturesClientHolding>);
-                        var futPos = ((Message<FuturesClientHolding>) message).Data;
-                        Events.OnFuturesClientHoldingCall(futPos);
-                        break;
-
-                    case EventNames.OnFuturesLimitChange:
-                        Trace.Assert(message is Message<FuturesLimits>);
-                        var futLimit = ((Message<FuturesLimits>) message).Data;
-                        Events.OnFuturesLimitChangeCall(futLimit);
-                        break;
-
-                    case EventNames.OnFuturesLimitDelete:
-                        Trace.Assert(message is Message<FuturesLimitDelete>);
-                        var limDel = ((Message<FuturesLimitDelete>) message).Data;
-                        Events.OnFuturesLimitDeleteCall(limDel);
-                        break;
-
-                    case EventNames.OnInit:
-                        // Этот callback никогда не будет вызван так как на момент получения вызова OnInit в lua скрипте
-                        // соединение с библиотекой QuikSharp не будет еще установлено. То есть этот callback не имеет смысла.
-                        break;
-
-                    case EventNames.OnMoneyLimit:
-                        Trace.Assert(message is Message<MoneyLimitEx>);
-                        var mLimit = ((Message<MoneyLimitEx>) message).Data;
-                        Events.OnMoneyLimitCall(mLimit);
-                        break;
-
-                    case EventNames.OnMoneyLimitDelete:
-                        Trace.Assert(message is Message<MoneyLimitDelete>);
-                        var mLimitDel = ((Message<MoneyLimitDelete>) message).Data;
-                        Events.OnMoneyLimitDeleteCall(mLimitDel);
-                        break;
-
-                    case EventNames.OnNegDeal:
-                        break;
-
-                    case EventNames.OnNegTrade:
-                        break;
-
-                    case EventNames.OnOrder:
-                        Trace.Assert(message is Message<Order>);
-                        var ord = ((Message<Order>) message).Data;
-                        ord.LuaTimeStamp = message.CreatedTime;
-                        Events.OnOrderCall(ord);
-                        break;
-
-                    case EventNames.OnParam:
-                        Trace.Assert(message is Message<Param>);
-                        var data = ((Message<Param>) message).Data;
-                        Events.OnParamCall(data);
-                        break;
-
-                    case EventNames.OnQuote:
-                        Trace.Assert(message is Message<OrderBook>);
-                        var ob = ((Message<OrderBook>) message).Data;
-                        ob.LuaTimeStamp = message.CreatedTime;
-                        Events.OnQuoteCall(ob);
-                        break;
-
-                    case EventNames.OnStop:
-                        Trace.Assert(message is Message<string>);
-                        Events.OnStopCall(int.Parse(((Message<string>) message).Data));
-                        break;
-
-                    case EventNames.OnStopOrder:
-                        Trace.Assert(message is Message<StopOrder>);
-                        StopOrder stopOrder = ((Message<StopOrder>) message).Data;
-                        //StopOrders.RaiseNewStopOrderEvent(stopOrder);
-                        Events.OnStopOrderCall(stopOrder);
-                        break;
-
-                    case EventNames.OnTrade:
-                        Trace.Assert(message is Message<Trade>);
-                        var trade = ((Message<Trade>) message).Data;
-                        trade.LuaTimeStamp = message.CreatedTime;
-                        Events.OnTradeCall(trade);
-                        break;
-
-                    case EventNames.OnTransReply:
-                        Trace.Assert(message is Message<TransactionReply>);
-                        var trReply = ((Message<TransactionReply>) message).Data;
-                        trReply.LuaTimeStamp = message.CreatedTime;
-                        Events.OnTransReplyCall(trReply);
-                        break;
-
-                    case EventNames.NewCandle:
-                        Trace.Assert(message is Message<Candle>);
-                        var candle = ((Message<Candle>) message).Data;
-                        Candles.RaiseNewCandleEvent(candle);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                throw new InvalidOperationException("Message must be of type Message (BaseMessage)");
             }
-            else
-            {
-                switch (message.Command)
-                {
-                    // an error from an event not request (from req is caught is response loop)
-                    case "lua_error":
-                        Trace.Assert(message is Message<string>);
-                        Trace.TraceError(((Message<string>) message).Data);
-                        break;
 
-                    default:
-                        throw new InvalidOperationException("Unknown command in a message: " + message.Command);
-                }
+            // Проверка на ошибки Lua
+            if (!string.IsNullOrEmpty(msg.LuaError))
+            {
+                Trace.TraceError(msg.LuaError);
+                return;
+            }
+
+            if (!Enum.TryParse(msg.Command, ignoreCase: true, out EventNames eventName))
+            {
+                // неизвестная команда
+                Trace.TraceWarning("Unknown command in message: " + msg.Command);
+                return;
+            }
+
+            switch (eventName)
+            {
+                case EventNames.OnAccountBalance:
+                    Events.OnAccountBalanceCall(msg.GetData<AccountBalance>());
+                    break;
+
+                case EventNames.OnAccountPosition:
+                    Events.OnAccountPositionCall(msg.GetData<AccountPosition>());
+                    break;
+
+                case EventNames.OnAllTrade:
+                    var allTrade = msg.GetData<AllTrade>();
+                    allTrade.LuaTimeStamp = msg.CreatedTime;
+                    Events.OnAllTradeCall(allTrade);
+                    break;
+
+                case EventNames.OnCleanUp:
+                    Events.OnCleanUpCall();
+                    break;
+
+                case EventNames.OnClose:
+                    Events.OnCloseCall();
+                    break;
+
+                case EventNames.OnConnected:
+                    Events.OnConnectedCall();
+                    break;
+
+                case EventNames.OnDepoLimit:
+                    Events.OnDepoLimitCall(msg.GetData<DepoLimitEx>());
+                    break;
+
+                case EventNames.OnDepoLimitDelete:
+                    Events.OnDepoLimitDeleteCall(msg.GetData<DepoLimitDelete>());
+                    break;
+
+                case EventNames.OnDisconnected:
+                    Events.OnDisconnectedCall();
+                    break;
+
+                case EventNames.OnFirm:
+                    Events.OnFirmCall(msg.GetData<Firm>());
+                    break;
+
+                case EventNames.OnFuturesClientHolding:
+                    Events.OnFuturesClientHoldingCall(msg.GetData<FuturesClientHolding>());
+                    break;
+
+                case EventNames.OnFuturesLimitChange:
+                    Events.OnFuturesLimitChangeCall(msg.GetData<FuturesLimits>());
+                    break;
+
+                case EventNames.OnFuturesLimitDelete:
+                    Events.OnFuturesLimitDeleteCall(msg.GetData<FuturesLimitDelete>());
+                    break;
+
+                case EventNames.OnInit:
+                    // не используется
+                    break;
+
+                case EventNames.OnMoneyLimit:
+                    Events.OnMoneyLimitCall(msg.GetData<MoneyLimitEx>());
+                    break;
+
+                case EventNames.OnMoneyLimitDelete:
+                    Events.OnMoneyLimitDeleteCall(msg.GetData<MoneyLimitDelete>());
+                    break;
+
+                case EventNames.OnNegDeal:
+                case EventNames.OnNegTrade:
+                    // пока игнорируем
+                    break;
+
+                case EventNames.OnOrder:
+                    var ord = msg.GetData<Order>();
+                    ord.LuaTimeStamp = msg.CreatedTime;
+                    Events.OnOrderCall(ord);
+                    break;
+
+                case EventNames.OnParam:
+                    Events.OnParamCall(msg.GetData<Param>());
+                    break;
+
+                case EventNames.OnQuote:
+                    var ob = msg.GetData<OrderBook>();
+                    ob.LuaTimeStamp = msg.CreatedTime;
+                    Events.OnQuoteCall(ob);
+                    break;
+
+                case EventNames.OnStop:
+                    Events.OnStopCall(int.Parse(msg.GetData<string>()));
+                    break;
+
+                case EventNames.OnStopOrder:
+                    Events.OnStopOrderCall(msg.GetData<StopOrder>());
+                    break;
+
+                case EventNames.OnTrade:
+                    var trade = msg.GetData<Trade>();
+                    trade.LuaTimeStamp = msg.CreatedTime;
+                    Events.OnTradeCall(trade);
+                    break;
+
+                case EventNames.OnTransReply:
+                    var trReply = msg.GetData<TransactionReply>();
+                    trReply.LuaTimeStamp = msg.CreatedTime;
+                    Events.OnTransReplyCall(trReply);
+                    break;
+
+                //case EventNames.NewCandle:
+                //    Candles.RaiseNewCandleEvent(msg.GetData<Candle>());
+                //    break;
+
+                default:
+                    Trace.TraceWarning("Unhandled event name: " + msg.Command);
+                    break;
             }
         }
-
         /// <summary>
         /// Generate a new unique ID for current session
         /// </summary>

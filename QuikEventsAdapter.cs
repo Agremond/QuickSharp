@@ -17,7 +17,6 @@ namespace QuikSharp
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
 
             // Проброс событий транспорта на делегаты интерфейса
-       //     _transport.OnNewCandle += (c) => OnNewCandle?.Invoke(c);
             _transport.OnOrder += (o) => OnOrder?.Invoke(o);
             _transport.OnTrade += (t) => OnTrade?.Invoke(t);
             _transport.OnTransReply += (r) => OnTransReply?.Invoke(r);
@@ -39,8 +38,8 @@ namespace QuikSharp
             _transport.OnDisconnected += () => OnDisconnected?.Invoke();
         }
 
-        // ======== Реализация интерфейса IQuikEvents с правильными делегатами ========
-      //  public event CandleHandler OnNewCandle;
+        // ======== Реализация интерфейса IQuikEvents ========
+        public event CandleHandler OnNewCandle;
         public event OrderHandler OnOrder;
         public event TradeHandler OnTrade;
         public event TransReplyHandler OnTransReply;
@@ -61,14 +60,14 @@ namespace QuikSharp
         public event VoidHandler OnConnected;
         public event VoidHandler OnDisconnected;
 
-        // Новые события интерфейса, которые нужно реализовать
-        public event VoidHandler OnInit;
+        // Новые события интерфейса IQuikEvents
+        public event InitHandler OnInit;
         public event VoidHandler OnCleanUp;
         public event VoidHandler OnClose;
-        public event VoidHandler OnConnectedToQuik;
-        public event VoidHandler OnDisconnectedFromQuik;
-  //      public event NegDealHandler OnNegDeal;
-  //      public event NegTradeHandler OnNegTrade;
+        public event InitHandler OnConnectedToQuik;
+        public event InitHandler OnDisconnectedFromQuik;
+        public event NegDealHandler OnNegDeal;
+        public event NegTradeHandler OnNegTrade;
         public event StopHandler OnStop;
     }
 }

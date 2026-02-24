@@ -31,13 +31,21 @@ namespace QuikSharp
         public OrderBookFunctions OrderBook { get; private set; }
 
         // ================== Торговые функции ==================
-        public ITradingFunctions Trading { get; private set; }
+        public TradingFunctions Trading { get; private set; }
         public StopOrderFunctions StopOrders { get; private set; }
         public OrderFunctions Orders { get; private set; }
         public CandleFunctions Candles { get; private set; }
 
         // ================== Настройки ==================
         public TimeZoneInfo TimeZoneInfo { get; set; } = TimeZoneInfo.Local;
+
+        // Таймаут по умолчанию для SendAsync, используется если не передан CancellationToken
+        private TimeSpan _defaultSendTimeout = TimeSpan.FromSeconds(5);
+        public TimeSpan DefaultSendTimeout
+        {
+            get => _defaultSendTimeout;
+            set => _defaultSendTimeout = value;
+        }
 
         /// <summary>
         /// Конструктор Quik с передачей транспорта и опционального PersistentStorage
@@ -61,7 +69,7 @@ namespace QuikSharp
             // ========== Торговые функции ==========
             Trading = new TradingFunctions(_transport);
             StopOrders = new StopOrderFunctions(_transport, Trading);
-            Orders = new OrderFunctions(_transport); // Quik передаём для SendTransaction
+            Orders = new OrderFunctions(_transport);
             Candles = new CandleFunctions(_transport);
         }
 
@@ -88,13 +96,19 @@ namespace QuikSharp
             _transport.Dispose();
         }
 
+        // ================== Вспомогательные методы ==================
+
         /// <summary>
-        /// Таймаут по умолчанию для отправки запросов
+        /// Возвращает CancellationToken с дефолтным таймаутом
         /// </summary>
-        public TimeSpan DefaultSendTimeout
+        /// <param name="ct">Приоритетный токен отмены</param>
+        /// <returns>CancellationToken с таймаутом</returns>
+        public CancellationToken GetCancellationTokenWithDefaultTimeout(CancellationToken ct = default)
         {
-            get => _transport.DefaultSendTimeout;
-            set => _transport.DefaultSendTimeout = value;
+            if (ct != default) return ct;
+
+            var cts = new CancellationTokenSource(_defaultSendTimeout);
+            return cts.Token;
         }
 
         // ================== IDisposable ==================
