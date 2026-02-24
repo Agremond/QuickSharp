@@ -1,0 +1,8 @@
+C:\Programming\QuikSharp\Examples\QuikSharpDemo\obj\Debug\QuikSharpDemo.csproj.AssemblyReference.cache
+C:\Programming\QuikSharp\Examples\QuikSharpDemo\obj\Debug\QuikSharpDemo.FormOrderBook.resources
+C:\Programming\QuikSharp\Examples\QuikSharpDemo\obj\Debug\QuikSharpDemo.FormOutputTable.resources
+C:\Programming\QuikSharp\Examples\QuikSharpDemo\obj\Debug\QuikSharpDemo.FormMain.resources
+C:\Programming\QuikSharp\Examples\QuikSharpDemo\obj\Debug\QuikSharpDemo.FormRequestValue.resources
+C:\Programming\QuikSharp\Examples\QuikSharpDemo\obj\Debug\QuikSharpDemo.Properties.Resources.resources
+C:\Programming\QuikSharp\Examples\QuikSharpDemo\obj\Debug\QuikSharpDemo.csproj.GenerateResource.cache
+C:\Programming\QuikSharp\Examples\QuikSharpDemo\obj\Debug\QuikSharpDemo.csproj.CoreCompileInputs.cache

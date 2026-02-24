@@ -1,28 +1,22 @@
---~ Copyright (c) 2014-2020 QUIKSharp Authors https://github.com/finsight/QUIKSharp/blob/master/AUTHORS.md. All rights reserved.
---~ Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
-
+-- qscallbacks.lua (без изменений, но убедимся, что sendCallback используется правильно)
 package.path = package.path..";"..".\\?.lua;"..".\\?.luac"
-
+local qsutils = require("qsutils")
 local qscallbacks = {}
-
 local function CleanUp()
     closeLog()
 end
-
 function OnQuikSharpDisconnected()
     -- TODO any recovery or risk management logic here
 end
-
 function OnError(message)
-	if is_connected then
-		local msg = {}
-		msg.t = timemsec()
-		msg.cmd = "lua_error"
-		msg.data = "Lua error: " .. message
-		sendCallback(msg)
-	end
+if is_connected then
+local msg = {}
+msg.t = timemsec()
+msg.cmd = "lua_error"
+msg.data = "Lua error: " .. message
+sendCallback(msg)
 end
-
+end
 function OnDisconnected()
     local msg = {}
     msg.cmd = "OnDisconnected"
@@ -30,7 +24,6 @@ function OnDisconnected()
     msg.data = ""
     sendCallback(msg)
 end
-
 function OnConnected()
     local msg = {}
     msg.cmd = "OnConnected"
@@ -38,7 +31,6 @@ function OnConnected()
     msg.data = ""
     sendCallback(msg)
 end
-
 function OnAllTrade(alltrade)
     if is_connected then
         local msg = {}
@@ -48,7 +40,6 @@ function OnAllTrade(alltrade)
         sendCallback(msg)
     end
 end
-
 function OnClose()
     if is_connected then
         local msg = {}
@@ -59,7 +50,6 @@ function OnClose()
     end
     CleanUp()
 end
-
 function OnInit(script_path)
     if is_connected then
         local msg = {}
@@ -70,7 +60,6 @@ function OnInit(script_path)
     end
     log("QUIK# is initialized from "..script_path, 0)
 end
-
 function OnOrder(order)
     local msg = {}
     msg.t = timemsec()
@@ -79,7 +68,6 @@ function OnOrder(order)
     msg.cmd = "OnOrder"
     sendCallback(msg)
 end
-
 function OnQuote(class_code, sec_code)
     if is_connected then
         local msg = {}
@@ -88,24 +76,22 @@ function OnQuote(class_code, sec_code)
         local server_time = getInfoParam("SERVERTIME")
        -- log("OnQuote callback"..server_time.."Sec:"..sec_code, 0)
         local status, ql2 = pcall(getQuoteLevel2, class_code, sec_code)
-        
+       
         if status then
-         --   log("OnQuote status: true", 0)
+         -- log("OnQuote status: true", 0)
             msg.data = ql2
             msg.data.class_code = class_code
             msg.data.sec_code = sec_code
             msg.data.server_time = server_time
             sendCallback(msg)
         else
-         --   log("OnQuote status: false", 0)
+         -- log("OnQuote status: false", 0)
             OnError(ql2)
         end
     end
 end
-
 function OnStop(s)
     is_started = false
-
     if is_connected then
         local msg = {}
         msg.cmd = "OnStop"
@@ -115,10 +101,9 @@ function OnStop(s)
     end
     log("QUIK# stopped. You could keep script running when closing QUIK and the script will start automatically the next time you start QUIK", 1)
     CleanUp()
-    --	send disconnect
+    -- send disconnect
     return 1000
 end
-
 function OnTrade(trade)
     local msg = {}
     msg.t = timemsec()
@@ -127,7 +112,6 @@ function OnTrade(trade)
     msg.cmd = "OnTrade"
     sendCallback(msg)
 end
-
 function OnTransReply(trans_reply)
     local msg = {}
     msg.t = timemsec()
@@ -136,26 +120,23 @@ function OnTransReply(trans_reply)
     msg.cmd = "OnTransReply"
     sendCallback(msg)
 end
-
 function OnStopOrder(stop_order)
-	local msg = {}
+local msg = {}
     msg.t = timemsec()
     msg.data = stop_order
     msg.cmd = "OnStopOrder"
     sendCallback(msg)
 end
-
 function OnParam(class_code, sec_code)
     local msg = {}
     msg.cmd = "OnParam"
     msg.t = timemsec()
-	local dat = {}
-	dat.class_code = class_code
-	dat.sec_code = sec_code
+local dat = {}
+dat.class_code = class_code
+dat.sec_code = sec_code
     msg.data = dat
     sendCallback(msg)
 end
-
 function OnAccountBalance(acc_bal)
     local msg = {}
     msg.t = timemsec()
@@ -163,7 +144,6 @@ function OnAccountBalance(acc_bal)
     msg.cmd = "OnAccountBalance"
     sendCallback(msg)
 end
-
 function OnAccountPosition(acc_pos)
     local msg = {}
     msg.t = timemsec()
@@ -171,7 +151,6 @@ function OnAccountPosition(acc_pos)
     msg.cmd = "OnAccountPosition"
     sendCallback(msg)
 end
-
 function OnDepoLimit(dlimit)
     local msg = {}
     msg.t = timemsec()
@@ -179,7 +158,6 @@ function OnDepoLimit(dlimit)
     msg.cmd = "OnDepoLimit"
     sendCallback(msg)
 end
-
 function OnDepoLimitDelete(dlimit_del)
     local msg = {}
     msg.t = timemsec()
@@ -187,7 +165,6 @@ function OnDepoLimitDelete(dlimit_del)
     msg.cmd = "OnDepoLimitDelete"
     sendCallback(msg)
 end
-
 function OnFirm(firm)
     local msg = {}
     msg.t = timemsec()
@@ -195,7 +172,6 @@ function OnFirm(firm)
     msg.cmd = "OnFirm"
     sendCallback(msg)
 end
-
 function OnFuturesClientHolding(fut_pos)
     local msg = {}
     msg.t = timemsec()
@@ -203,7 +179,6 @@ function OnFuturesClientHolding(fut_pos)
     msg.cmd = "OnFuturesClientHolding"
     sendCallback(msg)
 end
-
 function OnFuturesLimitChange(fut_limit)
     local msg = {}
     msg.t = timemsec()
@@ -211,7 +186,6 @@ function OnFuturesLimitChange(fut_limit)
     msg.cmd = "OnFuturesLimitChange"
     sendCallback(msg)
 end
-
 function OnFuturesLimitDelete(lim_del)
     local msg = {}
     msg.t = timemsec()
@@ -219,7 +193,6 @@ function OnFuturesLimitDelete(lim_del)
     msg.cmd = "OnFuturesLimitDelete"
     sendCallback(msg)
 end
-
 function OnMoneyLimit(mlimit)
     local msg = {}
     msg.t = timemsec()
@@ -227,7 +200,6 @@ function OnMoneyLimit(mlimit)
     msg.cmd = "OnMoneyLimit"
     sendCallback(msg)
 end
-
 function OnMoneyLimitDelete(mlimit_del)
     local msg = {}
     msg.t = timemsec()
@@ -235,5 +207,6 @@ function OnMoneyLimitDelete(mlimit_del)
     msg.cmd = "OnMoneyLimitDelete"
     sendCallback(msg)
 end
-
 return qscallbacks
+--~ Copyright (c) 2014-2020 QUIKSharp Authors https://github.com/finsight/QUIKSharp/blob/master/AUTHORS.md. All rights reserved.
+--~ Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.

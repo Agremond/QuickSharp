@@ -370,7 +370,6 @@ namespace QuikSharp
 
         internal void OnQuoteCall(OrderBook orderBook)
         {
-
             OnQuote?.Invoke(orderBook);
         }
 

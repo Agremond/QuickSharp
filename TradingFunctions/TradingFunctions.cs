@@ -3,6 +3,7 @@
 
 using QuikSharp.DataStructures;
 using QuikSharp.DataStructures.Transaction;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -99,9 +100,8 @@ namespace QuikSharp
         /// </summary>
         /// <param name="classCode"></param>
         /// <param name="secCode"></param>
-        /// <param name="series"></param>
         /// <returns></returns>
-        Task<List<OptionBoard>> GetOptionBoard(string classCode, string secCode, string series);
+        Task<List<OptionBoard>> GetOptionBoard(string classCode, string secCode);
 
         /// <summary>
         /// Функция заказывает получение параметров Таблицы текущих торгов
@@ -172,10 +172,10 @@ namespace QuikSharp
         /////  функция для получения информации по инструменту
         ///// </summary>
         //Task<string> getSecurityInfo();
-        ///// <summary>
-        /////  функция для получения даты торговой сессии
-        ///// </summary>
-        //Task<string> getTradeDate();
+        /// <summary>
+        ///  функция для получения даты торговой сессии
+        /// </summary>
+        Task<DateTime> GetTradeDate();
 
         /// <summary>
         /// Функция отправляет транзакцию на сервер QUIK и сохраняет ее в словаре транзакций
@@ -203,14 +203,15 @@ namespace QuikSharp
         /// </summary>
         Task<PortfolioInfoEx> GetPortfolioInfoEx(string firmId, string clientCode, int limitKind);
 
-        ///// <summary>
-        /////  функция для получения параметров таблицы «Купить/Продать»
-        ///// </summary>
-        //Task<string> getBuySellInfo();
-        ///// <summary>
-        /////  функция для получения параметров (включая вид лимита) таблицы «Купить/Продать»
-        ///// </summary>
-        //Task<string> getBuySellInfoEx();
+        /// <summary>
+        ///  функция для получения параметров таблицы «Купить/Продать»
+        /// </summary>
+        Task<BuySellInfo> GetBuySellInfo(string firmId, string clientCode, string classCode, string secCode, double price);
+
+        /// <summary>
+        ///  функция для получения параметров (включая вид лимита) таблицы «Купить/Продать»
+        /// </summary>
+        Task<BuySellInfo> GetBuySellInfoEx(string firmId, string clientCode, string classCode, string secCode, double price);
 
         /// <summary>
         /// Функция возвращает торговый счет срочного рынка, соответствующий коду клиента фондового рынка с единой денежной позицией
@@ -494,9 +495,9 @@ namespace QuikSharp
             return response.Data;
         }
 
-        public async Task<List<OptionBoard>> GetOptionBoard(string classCode, string secCode, string series)
+        public async Task<List<OptionBoard>> GetOptionBoard(string classCode, string secCode)
         {
-            var message = new Message<string>(classCode + "|" + secCode + "|" + series, "getOptionBoard");
+            var message = new Message<string>(classCode + "|" + secCode, "getOptionBoard");
             Message<List<OptionBoard>> response =
                 await QuikService.Send<Message<List<OptionBoard>>>(message).ConfigureAwait(false);
             return response.Data;
@@ -523,6 +524,13 @@ namespace QuikSharp
             return response.Data;
         }
 
+        public async Task<DateTime> GetTradeDate()
+        {
+            var response = await QuikService.Send<Message<QuikDateTime>>(
+                (new Message<string>("", "getTradeDate"))).ConfigureAwait(false);
+            return ((DateTime)response.Data);
+        }
+
         public async Task<PortfolioInfo> GetPortfolioInfo(string firmId, string clientCode)
         {
             var response = await QuikService.Send<Message<PortfolioInfo>>(
@@ -534,6 +542,20 @@ namespace QuikSharp
         {
             var response = await QuikService.Send<Message<PortfolioInfoEx>>(
                 (new Message<string>(firmId + "|" + clientCode + "|" + limitKind, "getPortfolioInfoEx"))).ConfigureAwait(false);
+            return response.Data;
+        }
+
+        public async Task<BuySellInfo> GetBuySellInfo(string firmId, string clientCode, string classCode, string secCode, double price)
+        {
+            var response = await QuikService.Send<Message<BuySellInfo>>(
+                (new Message<string>(firmId + "|" + clientCode + "|" + classCode + "|" + secCode + "|" + price, "getBuySellInfo"))).ConfigureAwait(false);
+            return response.Data;
+        }
+
+        public async Task<BuySellInfo> GetBuySellInfoEx(string firmId, string clientCode, string classCode, string secCode, double price)
+        {
+            var response = await QuikService.Send<Message<BuySellInfo>>(
+                (new Message<string>(firmId + "|" + clientCode + "|" + classCode + "|" + secCode + "|" + price, "getBuySellInfoEx"))).ConfigureAwait(false);
             return response.Data;
         }
 
@@ -588,7 +610,10 @@ namespace QuikSharp
             Trace.Assert(!transaction.TRANS_ID.HasValue, "TRANS_ID should be assigned automatically in SendTransaction functions");
 
             //transaction.TRANS_ID = QuikService.GetNewUniqueId();
-            transaction.TRANS_ID = QuikService.GetUniqueTransactionId();
+            if (!transaction.TRANS_ID.HasValue || transaction.TRANS_ID == 0)
+            {
+                transaction.TRANS_ID = QuikService.GetUniqueTransactionId();
+            }
 
             //    Console.WriteLine("Trans Id from function = {0}", transaction.TRANS_ID);
 

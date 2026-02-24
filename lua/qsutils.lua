@@ -1,8 +1,7 @@
--- qsutils.lua (исправленная версия)
-
+-- qsutils.lua
 local json = require "dkjson"
-local shm  = require "ipc.shm"
-local sem  = require "ipc.sem"
+local ipcshm = require "ipc.shm"  -- ipc.shm для shared memory
+local ipcsem = require "ipc.sem"  -- ipc.sem для семафоров
 
 local qsutils = {}
 
@@ -16,16 +15,16 @@ function delay(msec)
 end
 
 script_path = getScriptPath()
-
 local time_offset = 0
 local last_os_time = os.time()
+
 function timemsec()
     local now = os.time()
     if now > last_os_time then
         time_offset = 0
         last_os_time = now
     end
-    time_offset = time_offset + 50   -- грубая эмуляция
+    time_offset = time_offset + 50 -- грубая эмуляция
     return (now * 1000) + time_offset % 1000
 end
 
@@ -41,9 +40,7 @@ end
 
 is_debug = false
 
-
 -- log files
-
 function openLog()
     os.execute("mkdir \""..script_path.."\\logs\"")
     local lf = io.open (script_path.. "\\logs\\QUIK#_"..os.date("%Y%m%d")..".log", "a")
@@ -68,10 +65,9 @@ function paramsFromConfig(scriptName)
     local params = {}
     -- just default values
     table.insert(params, "127.0.0.1") -- responseHostname
-    table.insert(params, 34130)       -- responsePort
+    table.insert(params, 34130) -- responsePort
     table.insert(params, "127.0.0.1") -- callbackHostname
-    table.insert(params, 34131)       -- callbackPort
-
+    table.insert(params, 34131) -- callbackPort
     local config = readConfigAsJson()
     if not config or not config.servers then
         return nil
@@ -95,7 +91,6 @@ function paramsFromConfig(scriptName)
             end
         end
     end
-
     if found then
         return params
     else
@@ -167,175 +162,263 @@ function to_json(msg)
 end
 
 -- =============================================================================
--- ТРАНСПОРТ: shared memory + семафоры
+-- ТРАНСПОРТ: shared memory + семафоры + mutex (Вариант 2: отдельные буферы)
 -- =============================================================================
 
-local SHM_NAME    = "QuikSharp_SHM_v2"
-local SEM_CS2LUA  = "QuikSharp_CS2Lua"   -- C# > Lua (запрос готов)
-local SEM_LUA2CS  = "QuikSharp_Lua2CS"   -- Lua > C# (ответ готов)
-local SEM_LUA2CS_SYNC     = "QuikSharp_Lua2CS_Sync"
-local SEM_LUA2CS_CALLBACK = "QuikSharp_Lua2CS_Callback"
+-- Имена объектов (глобальные в системе)
+local REQ_SHM_NAME = "QuikSharp_Request_Shmem"  -- Для запросов C# -> Lua
+local RESP_SHM_NAME = "QuikSharp_Response_Shmem"  -- Для синхронных ответов Lua -> C#
+local CB_SHM_NAME = "QuikSharp_Callback_Shmem"  -- Для асинхронных callbacks Lua -> C#
 
+local REQ_SEM_NAME = "QuikSharp_Request_Sem"  -- Сигнал о новом запросе (C# post)
+local RESP_SEM_NAME = "QuikSharp_Response_Sem"  -- Сигнал о новом ответе (Lua post)
+local CB_SEM_NAME = "QuikSharp_Callback_Sem"  -- Сигнал о новом callback (Lua post)
 
-local shm_handle
-local sem_cs2lua
-local sem_lua2cs
+local REQ_MTX_NAME = "QuikSharp_Request_MutexSem"  -- Защита Request shmem
+local RESP_MTX_NAME = "QuikSharp_Response_MutexSem"  -- Защита Response shmem
+local CB_MTX_NAME = "QuikSharp_Callback_MutexSem"  -- Защита Callback shmem
+
+-- Размеры буферов (4MB общий в оригинале — разделим: 1MB request, 1MB response, 2MB callback для объёмных данных)
+local SHM_SIZE_REQ = 1024 * 1024  -- 1MB
+local SHM_SIZE_RESP = 1024 * 1024  -- 1MB
+local SHM_SIZE_CB = 2 * 1024 * 1024  -- 2MB
+
+local HEADER_SIZE = 24  -- Как в оригинале: 6x uint32 (magic, ver, req_id, msg_type, body_len, reserved)
+local MAGIC = 0x5155494B  -- "QUIK"
+local VERSION = 2
+
+-- Хэндлы ресурсов
+local req_shm, resp_shm, cb_shm
+local req_sem, resp_sem, cb_sem
+local req_mtx, resp_mtx, cb_mtx
+
 local is_connected = false
 
-local HEADER_SIZE = 24
-local MAGIC = 0x5155494B   -- "QUIK"
-
 local function init_shm()
-    if shm_handle then return true end
+    if req_shm then return true end  -- Уже инициализировано
 
-    local ok, err = shm.create(SHM_NAME, 4*1024*1024)
+    -- Создаём/открываем shared memory (create — если не существует, создаст; иначе откроет)
+    local ok, err = ipcshm.create(REQ_SHM_NAME, SHM_SIZE_REQ)
     if not ok then
-        log("shm.create failed: " .. tostring(err), 3)
+        log("ipcshm.create failed for REQ: " .. tostring(err), 3)
         return false, err
     end
-    shm_handle = ok
+    req_shm = ok
 
-	ok, err = sem.open(SEM_LUA2CS_SYNC, 1)
-	sem_lua2cs_sync = ok
-	
-	ok, err = sem.open(SEM_LUA2CS_CALLBACK, 1)
-	sem_lua2cs_callback = ok
-
-
-    ok, err = sem.open(SEM_CS2LUA, 1)
+    ok, err = ipcshm.create(RESP_SHM_NAME, SHM_SIZE_RESP)
     if not ok then
-        log("sem.open CS2Lua failed: " .. tostring(err), 3)
+        log("ipcshm.create failed for RESP: " .. tostring(err), 3)
         return false, err
     end
-    sem_cs2lua = ok
+    resp_shm = ok
 
-    ok, err = sem.open(SEM_LUA2CS, 1)
+    ok, err = ipcshm.create(CB_SHM_NAME, SHM_SIZE_CB)
     if not ok then
-        log("sem.open Lua2CS failed: " .. tostring(err), 3)
+        log("ipcshm.create failed for CB: " .. tostring(err), 3)
         return false, err
     end
-    sem_lua2cs = ok
+    cb_shm = ok
 
-    shm_handle:seek("set")
-    shm_handle:write(string.pack("<I4I4I4I4I4I4", MAGIC, 2, 0, 0, 0, 0))
+    -- Семафоры (open with initial 0 — ждём сигнала)
+    ok, err = ipcsem.open(REQ_SEM_NAME, 1)
+    if not ok then
+        log("ipcsem.open failed for REQ: " .. tostring(err), 3)
+        return false, err
+    end
+    req_sem = ok
+   req_sem:dec()
 
-    log("Shared memory IPC initialized", 1)
+    ok, err = ipcsem.open(RESP_SEM_NAME, 1)
+    if not ok then
+        log("ipcsem.open failed for RESP: " .. tostring(err), 3)
+        return false, err
+    end
+    resp_sem = ok
+    resp_sem:dec()
+
+    ok, err = ipcsem.open(CB_SEM_NAME, 1)
+    if not ok then
+        log("ipcsem.open failed for CB: " .. tostring(err), 3)
+        return false, err
+    end
+    cb_sem = ok
+    cb_sem:dec()
+
+    -- Мьютексы (open with initial 1 — unlocked)
+    ok, err = ipcsem.open(REQ_MTX_NAME, 1)
+    if not ok then
+        log("ipcmtx.open failed for REQ: " .. tostring(err), 3)
+        return false, err
+    end
+    req_mtx = ok
+
+    ok, err = ipcsem.open(RESP_MTX_NAME, 1)
+    if not ok then
+        log("ipcmtx.open failed for RESP: " .. tostring(err), 3)
+        return false, err
+    end
+    resp_mtx = ok
+
+    ok, err = ipcsem.open(CB_MTX_NAME, 1)
+    if not ok then
+        log("ipcmtx.open failed for CB: " .. tostring(err), 3)
+        return false, err
+    end
+    cb_mtx = ok
+
+    -- Инициализируем заголовки (опционально, но для чистоты)
+    req_shm:seek("set")
+    req_shm:write(string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0))
+    resp_shm:seek("set")
+    resp_shm:write(string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0))
+    cb_shm:seek("set")
+    cb_shm:write(string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0))
+
+    log("Shared memory IPC (Variant 2: separate buffers) initialized", 1)
     return true
 end
 
 function qsutils.connect(...)
-    -- игнорируем старые параметры сокетов
+    -- Игнорируем старые параметры сокетов (TCP)
     if is_connected then return true end
-
     local ok, err = init_shm()
     if not ok then
         log("IPC initialization failed: " .. tostring(err), 3)
         return false
     end
-
     is_connected = true
-    log("QUIK# connected via shared memory", 1)
+    log("QUIK# connected via shared memory (Variant 2)", 1)
     return true
 end
+
 -- Получение запроса от C#
 function qsutils.receiveRequest(timeout_sec)
     if not is_connected then
         return nil, "not connected"
     end
-
     timeout_sec = timeout_sec or 5.0
 
-    -- ждём сигнала от семафора (C# > Lua)
-    local success = sem_cs2lua:dec(timeout_sec)
+    -- Ждём сигнала о новом запросе (C# > Lua)
+    local success = req_sem:dec(timeout_sec)  -- dec/wait с таймаутом
     if not success then
         return nil, "timeout"
     end
 
-    shm_handle:seek("set")
-    local header = shm_handle:read(HEADER_SIZE)
+    -- Захватываем мьютекс для чтения
+    req_mtx:dec()
+
+    req_shm:seek("set")
+    local header = req_shm:read(HEADER_SIZE)
     if not header or #header < HEADER_SIZE then
-        sem_lua2cs:inc()   -- освобождаем семафор, чтобы не заблокировать очередь
+        req_mtx:inc()
         return nil, "header read error"
     end
-
     local magic, ver, req_id, msg_type, body_len, _ = string.unpack("<I4I4I4I4I4I4", header)
-
     if magic ~= MAGIC then
-        sem_lua2cs:inc()
+        req_mtx:inc()
         return nil, "bad magic number"
     end
 
-    -- ------------------------------------------------
-    -- Случай пустого тела — это нормальная ситуация
-    -- (heartbeat, ping без данных, некоторые команды)
-    -- ------------------------------------------------
+    -- Случай пустого тела — heartbeat или ping без данных
     if body_len == 0 then
-        -- Мы НЕ инкрементим семафор здесь — это делает вызывающий код
+        req_mtx:inc()
         return nil, "empty body", req_id
     end
 
-    if body_len > 4*1024*1024 then   -- защита от слишком больших сообщений
-        sem_lua2cs:inc()
+    if body_len > SHM_SIZE_REQ - HEADER_SIZE then  -- Защита от overflow
+        req_mtx:inc()
         return nil, "body too large: " .. body_len
     end
 
-    shm_handle:seek("set", HEADER_SIZE)
-    local body = shm_handle:read(body_len)
+    req_shm:seek("set", HEADER_SIZE)
+    local body = req_shm:read(body_len)
     if not body or #body ~= body_len then
-        sem_lua2cs:inc()
+        req_mtx:inc()
         return nil, "body read error"
     end
 
     local tbl, pos, err = json.decode(body, 1, json.null)
     if not tbl then
-        sem_lua2cs:inc()
+        req_mtx:inc()
         log("JSON decode failed: " .. tostring(err), 3)
         return nil, "json decode failed: " .. tostring(err)
     end
 
-    -- Успех — возвращаем распарсенный объект и req_id
+    -- Успех — освобождаем мьютекс и возвращаем
+    req_mtx:inc()
     return tbl, req_id
 end
 
 -- Отправка ответа или колбэка в C#
-local function send_message(msg_table, msg_type, is_callback)
-    local sem_to_use = is_callback and sem_lua2cs_callback or sem_lua2cs_sync
+local function send_message(msg_table, is_callback)
+    local shm_to_use = is_callback and cb_shm or resp_shm
+    local mtx_to_use = is_callback and cb_mtx or resp_mtx
+    local sem_to_use = is_callback and cb_sem or resp_sem
+    local shm_size = is_callback and SHM_SIZE_CB or SHM_SIZE_RESP
+
     if not is_connected then return nil, "not connected" end
 
     local str = to_json(msg_table)
     local len = #str
+    if len > shm_size - HEADER_SIZE then
+        return nil, "message too large: " .. len
+    end
 
-    shm_handle:seek("set", HEADER_SIZE)
-    shm_handle:write(str)
+    -- Захватываем мьютекс для записи
+    mtx_to_use:dec()
 
-    shm_handle:seek("set")
-    shm_handle:write(string.pack("<I4I4I4I4I4I4",
-        MAGIC, 2, msg_table.req_id or 0, msg_type, len, 0))
+    -- Пишем тело
+    shm_to_use:seek("set", HEADER_SIZE)
+    shm_to_use:write(str)
 
+    -- Пишем заголовок
+    shm_to_use:seek("set")
+    shm_to_use:write(string.pack("<I4I4I4I4I4I4",
+        MAGIC, VERSION, msg_table.req_id or 0, 2, len, 0))  -- msg_type=2 для ответов/callbacks
+
+    -- Освобождаем мьютекс
+    mtx_to_use:inc()
+
+    -- Сигнализируем о готовности
     local ok = sem_to_use:inc()
     if not ok then
         return nil, "sem inc failed"
     end
-    log("Отправляемый JSON (длина " .. #str .. "): " .. str, 1)
+
+    log("Отправляемый JSON (длина " .. #str .. ", callback=" .. tostring(is_callback) .. "): " .. str, 1)
     return true
 end
 
 function qsutils.sendResponse(msg_table)
-    return send_message(msg_table, 2, false)   -- sync
+    return send_message(msg_table, false)  -- sync response
 end
 
 function qsutils.sendCallback(msg_table)
-    return send_message(msg_table, 2, true)    -- callback
+    return send_message(msg_table, true)  -- async callback
 end
 
 function qsutils.Close()
-    if shm_handle then shm_handle:close() end
-    if sem_cs2lua then sem_cs2lua:close() end
-    if sem_lua2cs then sem_lua2cs:close() end
+    -- Закрываем все ресурсы
+    if req_shm then req_shm:close() end
+    if resp_shm then resp_shm:close() end
+    if cb_shm then cb_shm:close() end
+
+    if req_sem then req_sem:close() end
+    if resp_sem then resp_sem:close() end
+    if cb_sem then cb_sem:close() end
+
+    if req_mtx then req_mtx:close() end
+    if resp_mtx then resp_mtx:close() end
+    if cb_mtx then cb_mtx:close() end
+
     is_connected = false
-    log("IPC closed", 1)
+    log("IPC closed (all resources released)", 1)
 end
 
 qsutils.is_connected = function() return is_connected end
+sendResponse = qsutils.sendResponse
+sendCallback = qsutils.sendCallback
 
 return qsutils
+--~ Copyright (c) 2014-2020 QUIKSharp Authors https://github.com/finsight/QUIKSharp/blob/master/AUTHORS.md. All rights reserved.
+--~ Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.

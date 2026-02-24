@@ -6,110 +6,84 @@ using System;
 namespace QuikSharp.DataStructures
 {
     /// <summary>
-    /// Представляет дату и время в формате, используемом таблицами Quik.
-    /// Все параметры должны быть заданы для корректного отображения даты и времени.
+    /// Формат даты и времени, используемый таблицах.
+    /// Для корректного отображения даты и времени все параметры должны быть заданы.
     /// </summary>
     public class QuikDateTime
     {
-        private int _mcs;
-        private int _ms;
-        private int _sec;
-        private int _min;
-        private int _hour;
-        private int _day;
-        private int _month;
-        private int _year;
-
+        // ReSharper disable InconsistentNaming
         /// <summary>
-        /// Получает или задает микросекунды (игнорируются в текущей версии).
+        /// Микросекунды игнорируются в текущей версии.
         /// </summary>
-        public int mcs
-        {
-            get => _mcs;
-            set => _mcs = value >= 0 ? value : throw new ArgumentOutOfRangeException(nameof(value), "Микросекунды не могут быть отрицательными");
-        }
+        public int mcs { get; set; }
 
         /// <summary>
-        /// Получает или задает миллисекунды (0–999).
+        ///
         /// </summary>
-        public int ms
-        {
-            get => _ms;
-            set => _ms = value is >= 0 and <= 999 ? value : throw new ArgumentOutOfRangeException(nameof(value), "Миллисекунды должны быть в диапазоне 0–999");
-        }
+        public int ms { get; set; }
 
         /// <summary>
-        /// Получает или задает секунды (0–59).
+        ///
         /// </summary>
-        public int sec
-        {
-            get => _sec;
-            set => _sec = value is >= 0 and <= 59 ? value : throw new ArgumentOutOfRangeException(nameof(value), "Секунды должны быть в диапазоне 0–59");
-        }
+        public int sec { get; set; }
 
         /// <summary>
-        /// Получает или задает минуты (0–59).
+        ///
         /// </summary>
-        public int min
-        {
-            get => _min;
-            set => _min = value is >= 0 and <= 59 ? value : throw new ArgumentOutOfRangeException(nameof(value), "Минуты должны быть в диапазоне 0–59");
-        }
+        public int min { get; set; }
 
         /// <summary>
-        /// Получает или задает часы (0–23).
+        ///
         /// </summary>
-        public int hour
-        {
-            get => _hour;
-            set => _hour = value is >= 0 and <= 23 ? value : throw new ArgumentOutOfRangeException(nameof(value), "Часы должны быть в диапазоне 0–23");
-        }
+        public int hour { get; set; }
 
         /// <summary>
-        /// Получает или задает день месяца (1–31).
+        ///
         /// </summary>
-        public int day
-        {
-            get => _day;
-            set => _day = value is >= 1 and <= 31 ? value : throw new ArgumentOutOfRangeException(nameof(value), "День должен быть в диапазоне 1–31");
-        }
+        public int day { get; set; }
 
         /// <summary>
-        /// Получает или задает день недели (1 – понедельник, 7 – воскресенье).
+        /// Monday is 1
         /// </summary>
         public int week_day { get; set; }
 
         /// <summary>
-        /// Получает или задает месяц (1–12).
+        ///
         /// </summary>
-        public int month
-        {
-            get => _month;
-            set => _month = value is >= 1 and <= 12 ? value : throw new ArgumentOutOfRangeException(nameof(value), "Месяц должен03 должен быть в диапазоне 1–12");
-        }
+        public int month { get; set; }
 
         /// <summary>
-        /// Получает или задает год (например, 2025).
+        ///
         /// </summary>
-        public int year
-        {
-            get => _year;
-            set => _year = value >= 1970 ? value : throw new ArgumentOutOfRangeException(nameof(value), "Год должен быть не ранее 1970");
-        }
+        public int year { get; set; }
+
+        // ReSharper restore InconsistentNaming
 
         /// <summary>
-        /// Преобразует QuikDateTime в DateTime.
+        ///
         /// </summary>
+        /// <param name="qdt"></param>
+        /// <returns></returns>
         public static explicit operator DateTime(QuikDateTime qdt)
         {
-            return new DateTime(qdt.year, qdt.month, qdt.day, qdt.hour, qdt.min, qdt.sec, qdt.ms);
+            var dt = new DateTime(qdt.year, qdt.month, qdt.day, qdt.hour, qdt.min, qdt.sec);
+            // 1 микросекунда = 10 тиков (1000 наносекунд / 100 наносекунд на тик). // приоритет mcs
+            long ticks = qdt.mcs > 0 ? qdt.mcs * 10L : qdt.ms * 1000L;
+            return dt.AddTicks(ticks); // Добавляем вычисленные тики к базовому времени.
         }
 
         /// <summary>
-        /// Преобразует DateTime в QuikDateTime.
+        ///
         /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
         public static explicit operator QuikDateTime(DateTime dt)
         {
+            // Вычисляем тики, которые составляют дробную часть текущей секунды. TimeSpan.TicksPerSecond = 10,000,000.
+            // Оператор остатка (%) мгновенно дает нам тики внутри секунды (от 0 до 9,999,999).
+            long fractionalTicks = dt.Ticks % TimeSpan.TicksPerSecond;
+            int totalMicroseconds = (int)(fractionalTicks / 10);
+
             return new QuikDateTime
             {
                 year = dt.Year,
@@ -119,8 +93,9 @@ namespace QuikSharp.DataStructures
                 min = dt.Minute,
                 sec = dt.Second,
                 ms = dt.Millisecond,
-                mcs = 0,
-                week_day = dt.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)dt.DayOfWeek
+                mcs = totalMicroseconds,
+                //week_day = (int) dt.DayOfWeek
+                week_day = (int)dt.DayOfWeek == 0 ? 7 : (int)dt.DayOfWeek // воскресенье  в QUIK — 7
             };
         }
     }

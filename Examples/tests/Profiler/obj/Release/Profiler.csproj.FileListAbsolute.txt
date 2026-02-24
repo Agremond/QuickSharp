@@ -1,0 +1,2 @@
+C:\Programming\QuikSharp\Examples\tests\Profiler\obj\Release\Profiler.csproj.AssemblyReference.cache
+C:\Programming\QuikSharp\Examples\tests\Profiler\obj\Release\Profiler.csproj.CoreCompileInputs.cache
