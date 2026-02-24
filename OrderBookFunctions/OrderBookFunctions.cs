@@ -28,13 +28,13 @@ namespace QuikSharp
         public async Task<bool> Subscribe(string class_code, string sec_code)
         {
             var payload = $"{class_code}|{sec_code}";
+            var request = new Message(payload, "Subscribe_Level_II_Quotes");
 
-            var response = await _transport.SendAsync<Message<string>, Message<bool>>(
-                new Message<string>(payload, "Subscribe_Level_II_Quotes"),
-                "Subscribe_Level_II_Quotes"
-            ).ConfigureAwait(false);
+            // Новый синтаксис: SendAsync<Message, T>
+            var response = await _transport.SendAsync<Message, bool>(request, "Subscribe_Level_II_Quotes")
+                                           .ConfigureAwait(false);
 
-            return response.Data;
+            return response;
         }
 
         public async Task<bool> Unsubscribe(ISecurity security)
@@ -45,13 +45,12 @@ namespace QuikSharp
         public async Task<bool> Unsubscribe(string class_code, string sec_code)
         {
             var payload = $"{class_code}|{sec_code}";
+            var request = new Message(payload, "Unsubscribe_Level_II_Quotes");
 
-            var response = await _transport.SendAsync<Message<string>, Message<bool>>(
-                new Message<string>(payload, "Unsubscribe_Level_II_Quotes"),
-                "Unsubscribe_Level_II_Quotes"
-            ).ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, bool>(request, "Unsubscribe_Level_II_Quotes")
+                                           .ConfigureAwait(false);
 
-            return response.Data;
+            return response;
         }
 
         public async Task<bool> IsSubscribed(ISecurity security)
@@ -62,25 +61,23 @@ namespace QuikSharp
         public async Task<bool> IsSubscribed(string class_code, string sec_code)
         {
             var payload = $"{class_code}|{sec_code}";
+            var request = new Message(payload, "IsSubscribed_Level_II_Quotes");
 
-            var response = await _transport.SendAsync<Message<string>, Message<bool>>(
-                new Message<string>(payload, "IsSubscribed_Level_II_Quotes"),
-                "IsSubscribed_Level_II_Quotes"
-            ).ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, bool>(request, "IsSubscribed_Level_II_Quotes")
+                                           .ConfigureAwait(false);
 
-            return response.Data;
+            return response;
         }
 
         public async Task<OrderBook> GetQuoteLevel2(string class_code, string sec_code)
         {
             var payload = $"{class_code}|{sec_code}";
+            var request = new Message(payload, "GetQuoteLevel2");
 
-            var response = await _transport.SendAsync<Message<string>, Message<OrderBook>>(
-                new Message<string>(payload, "GetQuoteLevel2"),
-                "GetQuoteLevel2"
-            ).ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, OrderBook>(request, "GetQuoteLevel2")
+                                           .ConfigureAwait(false);
 
-            return response.Data;
+            return response;
         }
     }
 }

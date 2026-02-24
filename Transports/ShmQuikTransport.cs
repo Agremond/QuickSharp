@@ -149,9 +149,9 @@
                 var msg = new Message
                 {
                     Id = reqId,
-                    Cmd = command,
+                    Command = command,
                     Data = request,
-                    t = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                    CreatedTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
                 };
 
                 string json = JsonSerializer.Serialize(msg, _jsonOpts);
@@ -305,7 +305,7 @@
             {
                 try
                 {
-                    switch (msg.Cmd?.ToLowerInvariant())
+                    switch (msg.Command?.ToLowerInvariant())
                     {
                         case "newcandle": OnNewCandle?.Invoke(msg.GetData<Candle>()); break;
                         case "onorder": OnOrder?.Invoke(msg.GetData<Order>()); break;
@@ -327,7 +327,7 @@
                         case "onmoneylimitdelete": OnMoneyLimitDelete?.Invoke(msg.GetData<MoneyLimitDelete>()); break;
 
                         default:
-                            OnUnknownCallback?.Invoke(msg.Cmd ?? "unknown");
+                            OnUnknownCallback?.Invoke(msg.Command ?? "unknown");
                             break;
                     }
                 }

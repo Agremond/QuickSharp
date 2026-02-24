@@ -16,8 +16,8 @@ namespace QuikSharp
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
 
-            // Проброс всех событий транспорта в интерфейс IQuikEvents
-            _transport.OnNewCandle += (c) => OnNewCandle?.Invoke(c);
+            // Проброс событий транспорта на делегаты интерфейса
+       //     _transport.OnNewCandle += (c) => OnNewCandle?.Invoke(c);
             _transport.OnOrder += (o) => OnOrder?.Invoke(o);
             _transport.OnTrade += (t) => OnTrade?.Invoke(t);
             _transport.OnTransReply += (r) => OnTransReply?.Invoke(r);
@@ -39,26 +39,36 @@ namespace QuikSharp
             _transport.OnDisconnected += () => OnDisconnected?.Invoke();
         }
 
-        // Проброс событий интерфейса IQuikEvents
-        public event Action<Candle> OnNewCandle;
-        public event Action<Order> OnOrder;
-        public event Action<Trade> OnTrade;
-        public event Action<TransactionReply> OnTransReply;
-        public event Action<StopOrder> OnStopOrder;
-        public event Action<AllTrade> OnAllTrade;
-        public event Action<OrderBook> OnQuote;
-        public event Action<Param> OnParam;
-        public event Action<AccountBalance> OnAccountBalance;
-        public event Action<AccountPosition> OnAccountPosition;
-        public event Action<DepoLimitEx> OnDepoLimit;
-        public event Action<DepoLimitDelete> OnDepoLimitDelete;
-        public event Action<Firm> OnFirm;
-        public event Action<FuturesClientHolding> OnFuturesClientHolding;
-        public event Action<FuturesLimits> OnFuturesLimitChange;
-        public event Action<FuturesLimitDelete> OnFuturesLimitDelete;
-        public event Action<MoneyLimitEx> OnMoneyLimit;
-        public event Action<MoneyLimitDelete> OnMoneyLimitDelete;
-        public event Action OnConnected;
-        public event Action OnDisconnected;
+        // ======== Реализация интерфейса IQuikEvents с правильными делегатами ========
+      //  public event CandleHandler OnNewCandle;
+        public event OrderHandler OnOrder;
+        public event TradeHandler OnTrade;
+        public event TransReplyHandler OnTransReply;
+        public event StopOrderHandler OnStopOrder;
+        public event AllTradeHandler OnAllTrade;
+        public event QuoteHandler OnQuote;
+        public event ParamHandler OnParam;
+        public event AccountBalanceHandler OnAccountBalance;
+        public event AccountPositionHandler OnAccountPosition;
+        public event DepoLimitHandler OnDepoLimit;
+        public event DepoLimitDeleteHandler OnDepoLimitDelete;
+        public event FirmHandler OnFirm;
+        public event FuturesClientHoldingHandler OnFuturesClientHolding;
+        public event FuturesLimitHandler OnFuturesLimitChange;
+        public event FuturesLimitDeleteHandler OnFuturesLimitDelete;
+        public event MoneyLimitHandler OnMoneyLimit;
+        public event MoneyLimitDeleteHandler OnMoneyLimitDelete;
+        public event VoidHandler OnConnected;
+        public event VoidHandler OnDisconnected;
+
+        // Новые события интерфейса, которые нужно реализовать
+        public event VoidHandler OnInit;
+        public event VoidHandler OnCleanUp;
+        public event VoidHandler OnClose;
+        public event VoidHandler OnConnectedToQuik;
+        public event VoidHandler OnDisconnectedFromQuik;
+  //      public event NegDealHandler OnNegDeal;
+  //      public event NegTradeHandler OnNegTrade;
+        public event StopHandler OnStop;
     }
 }

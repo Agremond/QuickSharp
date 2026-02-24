@@ -13,7 +13,7 @@ namespace QuikSharp
     public class StopOrderFunctions
     {
         private readonly IQuikTransport _transport;
-        private readonly ITradingFunctions _trading;  // для отправки транзакций
+        private readonly TradingFunctions _trading;  // для отправки транзакций
 
         public delegate void StopOrderHandler(StopOrder stopOrder);
         public event StopOrderHandler? NewStopOrder;
@@ -23,7 +23,7 @@ namespace QuikSharp
             NewStopOrder?.Invoke(stopOrder);
         }
 
-        public StopOrderFunctions(IQuikTransport transport, ITradingFunctions trading)
+        public StopOrderFunctions(IQuikTransport transport, TradingFunctions trading)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _trading = trading ?? throw new ArgumentNullException(nameof(trading));
@@ -34,13 +34,11 @@ namespace QuikSharp
         /// </summary>
         public async Task<List<StopOrder>> GetStopOrders()
         {
-            var response = await _transport
-                .SendAsync<Message<string>, Message<List<StopOrder>>>(
-                    new Message<string>("", "get_stop_orders"),
+            return await _transport
+                .SendAsync<Message, List<StopOrder>>(
+                    new Message("", "get_stop_orders"),
                     "get_stop_orders")
-                .ConfigureAwait(false);
-
-            return response.Data ?? new List<StopOrder>();
+                .ConfigureAwait(false) ?? new List<StopOrder>();
         }
 
         /// <summary>
@@ -49,13 +47,11 @@ namespace QuikSharp
         public async Task<List<StopOrder>> GetStopOrders(string classCode, string secCode)
         {
             var payload = $"{classCode}|{secCode}";
-            var response = await _transport
-                .SendAsync<Message<string>, Message<List<StopOrder>>>(
-                    new Message<string>(payload, "get_stop_orders"),
+            return await _transport
+                .SendAsync<Message, List<StopOrder>>(
+                    new Message(payload, "get_stop_orders"),
                     "get_stop_orders")
-                .ConfigureAwait(false);
-
-            return response.Data ?? new List<StopOrder>();
+                .ConfigureAwait(false) ?? new List<StopOrder>();
         }
 
         /// <summary>
