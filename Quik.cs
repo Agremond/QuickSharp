@@ -90,7 +90,7 @@ namespace QuikSharp
             OrderBook = new OrderBookFunctions(_transport);
             Trading = new TradingFunctions(_transport);
             StopOrders = new StopOrderFunctions(_transport, this);
-            Orders = new OrderFunctions(_transport, this);
+            Orders = new OrderFunctions(_transport);
             Candles = new CandleFunctions(_transport);
         }
 
