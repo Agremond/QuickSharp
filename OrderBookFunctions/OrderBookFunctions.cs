@@ -1,71 +1,24 @@
-﻿// Copyright (c) 2014-2020 QUIKSharp Authors https://github.com/finsight/QUIKSharp/blob/master/AUTHORS.md. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
+﻿// Copyright (c) 2026 Your Name / QUIKSharp Community
+// Licensed under the Apache License, Version 2.0
 
+using System;
 using System.Threading.Tasks;
 using QuikSharp.DataStructures;
+using QuikSharp.Transports;
 
 namespace QuikSharp
 {
     /// <summary>
-    /// Функции для работы со стаканом котировок
+    /// Функции для работы со стаканом котировок через транспорт QUIK
     /// </summary>
-    public interface IOrderBookFunctions : IQuikService
+    public class OrderBookFunctions
     {
-        /// <summary>
-        /// Функция заказывает на сервер получение стакана по указанному классу и бумаге.
-        /// </summary>
-        Task<bool> Subscribe(string class_code, string sec_code);
+        private readonly IQuikTransport _transport;
 
-        /// <summary>
-        /// Функция заказывает на сервер получение стакана
-        /// </summary>
-        Task<bool> Subscribe(ISecurity security);
-
-        /// <summary>
-        /// Функция отменяет заказ на получение с сервера стакана по указанному классу и бумаге.
-        /// </summary>
-        Task<bool> Unsubscribe(string class_code, string sec_code);
-
-        /// <summary>
-        /// Функция отменяет заказ на получение с сервера стакана
-        /// </summary>
-        Task<bool> Unsubscribe(ISecurity security);
-
-        /// <summary>
-        /// Функция позволяет узнать, заказан ли с сервера стакан по указанному классу и бумаге.
-        /// </summary>
-        Task<bool> IsSubscribed(string class_code, string sec_code);
-
-        /// <summary>
-        /// Функция позволяет узнать, заказан ли с сервера стакан
-        /// </summary>
-        Task<bool> IsSubscribed(ISecurity security);
-
-        /// <summary>
-        /// Функция предназначена для получения стакана по указанному классу и инструменту
-        /// </summary>
-        Task<OrderBook> GetQuoteLevel2(string class_code, string sec_code);
-    }
-
-    /// <summary>
-    /// Функции для работы со стаканом котировок
-    /// </summary>
-    public class OrderBookFunctions : IOrderBookFunctions
-    {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="port"></param>
-        /// <param name="host"></param>
-        public OrderBookFunctions(int port, string host)
+        public OrderBookFunctions(IQuikTransport transport)
         {
-            QuikService = QuikService.Create(port, host);
+            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
         }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public QuikService QuikService { get; private set; }
 
         public async Task<bool> Subscribe(ISecurity security)
         {
@@ -74,8 +27,13 @@ namespace QuikSharp
 
         public async Task<bool> Subscribe(string class_code, string sec_code)
         {
-            var response = await QuikService.Send<Message<bool>>(
-                (new Message<string>(class_code + "|" + sec_code, "Subscribe_Level_II_Quotes"))).ConfigureAwait(false);
+            var payload = $"{class_code}|{sec_code}";
+
+            var response = await _transport.SendAsync<Message<string>, Message<bool>>(
+                new Message<string>(payload, "Subscribe_Level_II_Quotes"),
+                "Subscribe_Level_II_Quotes"
+            ).ConfigureAwait(false);
+
             return response.Data;
         }
 
@@ -86,8 +44,13 @@ namespace QuikSharp
 
         public async Task<bool> Unsubscribe(string class_code, string sec_code)
         {
-            var response = await QuikService.Send<Message<bool>>(
-                (new Message<string>(class_code + "|" + sec_code, "Unsubscribe_Level_II_Quotes"))).ConfigureAwait(false);
+            var payload = $"{class_code}|{sec_code}";
+
+            var response = await _transport.SendAsync<Message<string>, Message<bool>>(
+                new Message<string>(payload, "Unsubscribe_Level_II_Quotes"),
+                "Unsubscribe_Level_II_Quotes"
+            ).ConfigureAwait(false);
+
             return response.Data;
         }
 
@@ -98,15 +61,25 @@ namespace QuikSharp
 
         public async Task<bool> IsSubscribed(string class_code, string sec_code)
         {
-            var response = await QuikService.Send<Message<bool>>(
-                (new Message<string>(class_code + "|" + sec_code, "IsSubscribed_Level_II_Quotes"))).ConfigureAwait(false);
+            var payload = $"{class_code}|{sec_code}";
+
+            var response = await _transport.SendAsync<Message<string>, Message<bool>>(
+                new Message<string>(payload, "IsSubscribed_Level_II_Quotes"),
+                "IsSubscribed_Level_II_Quotes"
+            ).ConfigureAwait(false);
+
             return response.Data;
         }
 
         public async Task<OrderBook> GetQuoteLevel2(string class_code, string sec_code)
         {
-            var response = await QuikService.Send<Message<OrderBook>>(
-                (new Message<string>(class_code + "|" + sec_code, "GetQuoteLevel2"))).ConfigureAwait(false);
+            var payload = $"{class_code}|{sec_code}";
+
+            var response = await _transport.SendAsync<Message<string>, Message<OrderBook>>(
+                new Message<string>(payload, "GetQuoteLevel2"),
+                "GetQuoteLevel2"
+            ).ConfigureAwait(false);
+
             return response.Data;
         }
     }

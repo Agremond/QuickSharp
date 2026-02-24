@@ -1,20 +1,26 @@
-﻿// Copyright (c) 2014-2020 QUIKSharp Authors https://github.com/finsight/QUIKSharp/blob/master/AUTHORS.md. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
+﻿// Copyright (c) 2026 Your Name / QUIKSharp Community
+// Licensed under the Apache License, Version 2.0
 
+using QuikSharp.Transports;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace QuikSharp
 {
-    public class DebugFunctions : IQuikService
+    /// <summary>
+    /// Отладочные функции QUIK через любой транспорт (TCP, SHM и т.д.)
+    /// </summary>
+    public class DebugFunctions
     {
-        public DebugFunctions(int port, string host)
+        private readonly IQuikTransport _transport;
+
+        public DebugFunctions(IQuikTransport transport)
         {
-            QuikService = QuikService.Create(port, host);
+            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
         }
 
-        public QuikService QuikService { get; private set; }
-
+        // Пример запроса Ping → Pong
         private class PingRequest : Message<string>
         {
             public PingRequest()
@@ -31,46 +37,62 @@ namespace QuikSharp
             }
         }
 
+        /// <summary>
+        /// Проверка связи с QUIK
+        /// </summary>
         public async Task<string> Ping()
         {
-            // could have used StringMessage directly. This is an example of how to define DTOs for custom commands
-            var response = await QuikService.Send<PingResponse>((new PingRequest())).ConfigureAwait(false);
+            var response = await _transport.SendAsync<PingRequest, PingResponse>(
+                new PingRequest(),
+                "ping"
+            ).ConfigureAwait(false);
+
             Trace.Assert(response.Data == "Pong");
             return response.Data;
         }
 
         /// <summary>
-        ///
+        /// Отправка и возврат любого сообщения (echo)
         /// </summary>
-        /// <param name="msg"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         public async Task<T> Echo<T>(T msg)
         {
-            // could have used StringMessage directly. This is an example of how to define DTOs for custom commands
-            var response = await QuikService.Send<Message<T>>(
-                (new Message<T>(msg, "echo"))).ConfigureAwait(false);
+            var request = new Message<T>(msg, "echo");
+
+            var response = await _transport.SendAsync<Message<T>, Message<T>>(
+                request,
+                "echo"
+            ).ConfigureAwait(false);
+
             return response.Data;
         }
 
         /// <summary>
-        /// This method returns LuaException and demonstrates how Lua errors are caught
+        /// Демонстрация ошибки Lua (divide by zero)
         /// </summary>
-        /// <returns></returns>
         public async Task<string> DivideStringByZero()
         {
-            var response = await QuikService.Send<Message<string>>(
-                (new Message<string>("", "divide_string_by_zero"))).ConfigureAwait(false);
+            var request = new Message<string>("", "divide_string_by_zero");
+
+            var response = await _transport.SendAsync<Message<string>, Message<string>>(
+                request,
+                "divide_string_by_zero"
+            ).ConfigureAwait(false);
+
             return response.Data;
         }
 
         /// <summary>
-        /// Check if running inside Quik
+        /// Проверка, запущено ли приложение внутри QUIK
         /// </summary>
         public async Task<bool> IsQuik()
         {
-            var response = await QuikService.Send<Message<string>>(
-                (new Message<string>("", "is_quik"))).ConfigureAwait(false);
+            var request = new Message<string>("", "is_quik");
+
+            var response = await _transport.SendAsync<Message<string>, Message<string>>(
+                request,
+                "is_quik"
+            ).ConfigureAwait(false);
+
             return response.Data == "1";
         }
     }

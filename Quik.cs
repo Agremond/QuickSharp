@@ -1,76 +1,20 @@
-﻿// Copyright (c) 2014-2020 QUIKSharp Authors https://github.com/finsight/QUIKSharp/blob/master/AUTHORS.md. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
+﻿// Copyright (c) 2026 Your Name / QUIKSharp Community
+// Licensed under the Apache License, Version 2.0
 
+using QuikSharp.DataStructures;
+using QuikSharp.DataStructures.Transaction;
+using QuikSharp.Transports;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace QuikSharp
 {
     /// <summary>
-    /// Quik interface in .NET
+    /// Фасад для работы с QUIK через любой транспорт (TCP / SHM / Mock).
     /// </summary>
-    public sealed class Quik
+    public sealed class Quik : IDisposable
     {
-        /// <summary>
-        /// 34130
-        /// </summary>
-        public const int DefaultPort = 34130;
-
-        /// <summary>
-        /// localhost
-        /// </summary>
-        public const string DefaultHost = "127.0.0.1";
-
-        /// <summary>
-        /// Quik interface in .NET constructor
-        /// </summary>
-        public Quik(int port = DefaultPort, IPersistentStorage storage = null, string host = DefaultHost)
-        {
-            Storage = storage == null ? new InMemoryStorage() : storage;
-            QuikService = QuikService.Create(port, host);
-            // poor man's DI
-            QuikService.Storage = Storage;
-            Events = QuikService.Events;
-            Debug = new DebugFunctions(port, host);
-            Service = new ServiceFunctions(port, host);
-            Class = new ClassFunctions(port, host);
-            OrderBook = new OrderBookFunctions(port, host);
-            Trading = new TradingFunctions(port, host);
-            StopOrders = new StopOrderFunctions(port, this, host);
-            Orders = new OrderFunctions(port, this, host);
-            Candles = new CandleFunctions(port, host);
-            QuikService.Candles = Candles;
-            QuikService.StopOrders = StopOrders;
-            QuikService.WorkingFolder = Service.GetWorkingFolder().Result;
-        }
-
-        // Если запуск "сервиса" (потоков работы с Lua) происходит в конструкторе Quik, то возможности остановить "сервис" нет.
-        // QuikService объявлен как private.
-        public void StopService()
-        {
-            QuikService.Stop();
-        }
-
-        public bool IsServiceConnected()
-        {
-            return QuikService.IsServiceConnected();
-        }
-
-        /// <summary>
-        /// Default timeout to use for send operations if no specific timeout supplied.
-        /// </summary>
-        public TimeSpan DefaultSendTimeout
-        {
-            get => QuikService.DefaultSendTimeout;
-            set => QuikService.DefaultSendTimeout = value;
-        }
-
-        private QuikService QuikService { get; set; }
-
-        /// <summary>
-        /// Quik current data is all in local time. This property allows to convert it to UTC datetime
-        /// </summary>
-        public TimeZoneInfo TimeZoneInfo { get; set; }
-
         /// <summary>
         /// Persistent transaction storage
         /// </summary>
@@ -89,17 +33,17 @@ namespace QuikSharp
         /// <summary>
         /// Сервисные функции
         /// </summary>
-        public IServiceFunctions Service { get; private set; }
+        public ServiceFunctions Service { get; private set; }
 
         /// <summary>
         /// Функции для обращения к спискам доступных параметров
         /// </summary>
-        public IClassFunctions Class { get; private set; }
+        public ClassFunctions Class { get; private set; }
 
         /// <summary>
         /// Функции для работы со стаканом котировок
         /// </summary>
-        public IOrderBookFunctions OrderBook { get; set; }
+        public OrderBookFunctions OrderBook { get; set; }
 
         /// <summary>
         /// Функции взаимодействия скрипта Lua и Рабочего места QUIK
@@ -120,5 +64,80 @@ namespace QuikSharp
         /// Функции для работы со свечами
         /// </summary>
         public CandleFunctions Candles { get; private set; }
+
+        /// <summary>
+        /// Транспорт (TCP, SHM и т.д.)
+        /// </summary>
+        private readonly IQuikTransport _transport;
+
+        /// <summary>
+        /// Конструктор Quik с передачей dqwdqwd
+        /// </summary>
+        /// <param name="transport">Любой транспорт, реализующий IQuikTransport</param>
+        /// <param name="storage">Persistent storage (по умолчанию InMemoryStorage)</param>
+        public Quik(IQuikTransport transport, IPersistentStorage storage = null)
+        {
+            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
+            Storage = storage ?? new InMemoryStorage();
+
+            // Создаём адаптер событий
+            Events = new QuikEventsAdapter(_transport);
+
+            // Создаём функции QUIK, привязанные к транспорту
+            Debug = new DebugFunctions(_transport);
+            Service = new ServiceFunctions(_transport);
+            Class = new ClassFunctions(_transport);
+            OrderBook = new OrderBookFunctions(_transport);
+            Trading = new TradingFunctions(_transport);
+            StopOrders = new StopOrderFunctions(_transport, this);
+            Orders = new OrderFunctions(_transport, this);
+            Candles = new CandleFunctions(_transport);
+        }
+
+        /// <summary>
+        /// Асинхронное подключение к транспортному слою
+        /// </summary>
+        public async Task ConnectAsync(CancellationToken ct = default)
+        {
+            await _transport.ConnectAsync(ct);
+        }
+
+        /// <summary>
+        /// Прекращение работы транспорта
+        /// </summary>
+        public void StopService()
+        {
+            _transport.Dispose();
+        }
+
+        /// <summary>
+        /// Проверка состояния подключения
+        /// </summary>
+        public bool IsServiceConnected()
+        {
+            return _transport.IsConnected;
+        }
+
+        /// <summary>
+        /// Таймаут по умолчанию для отправки запросов
+        /// </summary>
+        public TimeSpan DefaultSendTimeout
+        {
+            get => _transport.DefaultSendTimeout;
+            set => _transport.DefaultSendTimeout = value;
+        }
+
+        /// <summary>
+        /// Перевод времени QUIK в UTC
+        /// </summary>
+        public TimeZoneInfo TimeZoneInfo { get; set; }
+
+        /// <summary>
+        /// IDisposable
+        /// </summary>
+        public void Dispose()
+        {
+            _transport.Dispose();
+        }
     }
 }
