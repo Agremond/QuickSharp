@@ -1,5 +1,5 @@
 -- qsfunctions.lua
--- Copyright (c) 2014-2020 QUIKSharp Authors
+-- Copyright (c) 2014-2020 QuikSharp Authors
 -- Licensed under the Apache License, Version 2.0
 
 local json = require("dkjson")

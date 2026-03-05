@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuikSharp", "QuikSharp.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuikSharp.Tests", "Examples\tests\QuikSharp.Tests\QuikSharp.Tests.csproj", "{E8381C47-9297-4BD3-B384-CD366037F587}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QS.Tests", "QS.Tests\QS.Tests.csproj", "{0EA8FA7A-E640-481B-A3A0-5CD5E0AED4E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E8381C47-9297-4BD3-B384-CD366037F587}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8381C47-9297-4BD3-B384-CD366037F587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8381C47-9297-4BD3-B384-CD366037F587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EA8FA7A-E640-481B-A3A0-5CD5E0AED4E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA8FA7A-E640-481B-A3A0-5CD5E0AED4E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA8FA7A-E640-481B-A3A0-5CD5E0AED4E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA8FA7A-E640-481B-A3A0-5CD5E0AED4E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

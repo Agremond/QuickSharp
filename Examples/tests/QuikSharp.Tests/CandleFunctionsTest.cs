@@ -10,6 +10,8 @@ namespace QuikSharp.Tests
     [TestFixture]
     public class CandleFunctionsTest
     {
+        // Создаем транспорт (SHM)
+        IQuikTransport transport = new ShmQuikTransport();
         [Test]
         public void GetCandlesTest()
         {

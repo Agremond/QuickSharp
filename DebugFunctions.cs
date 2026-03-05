@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Your Name / QUIKSharp Community
+﻿// Copyright (c) 2026 Your Name / QuikSharp Community
 // Licensed under the Apache License, Version 2.0
 
 using QuikSharp.Transports;

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2026 QUIKSharp Community
+// Copyright (c) 2014-2026 QuikSharp Community
 // Licensed under the Apache License, Version 2.0
 
 using Newtonsoft.Json;

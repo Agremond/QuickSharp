@@ -1,4 +1,4 @@
--- shmipc.lua Ч IPC через shared memory дл€ QUIKSharp (Windows-оптимизировано)
+-- shmipc.lua Ч IPC через shared memory дл€ QuikSharp (Windows-оптимизировано)
 local shm = require "ipc.shm"
 local sem = require "ipc.sem"
 local dkjson = require "dkjson"

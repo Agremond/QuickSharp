@@ -385,7 +385,7 @@ local function send_message(msg_table, is_callback)
         return nil, "sem inc failed"
     end
 
-    log("Отправляемый JSON (длина " .. #str .. ", callback=" .. tostring(is_callback) .. "): " .. str, 1)
+ --   log("Отправляемый JSON (длина " .. #str .. ", callback=" .. tostring(is_callback) .. "): " .. str, 1)
     return true
 end
 
@@ -420,5 +420,5 @@ sendResponse = qsutils.sendResponse
 sendCallback = qsutils.sendCallback
 
 return qsutils
---~ Copyright (c) 2014-2020 QUIKSharp Authors https://github.com/finsight/QUIKSharp/blob/master/AUTHORS.md. All rights reserved.
+--~ Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 --~ Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.

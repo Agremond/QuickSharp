@@ -1,5 +1,5 @@
 -- ipc_quik.lua
--- Обёртка над lua-luaipc для QUIKSharp (два канала: запросы и ответы)
+-- Обёртка над lua-luaipc для QuikSharp (два канала: запросы и ответы)
 
 local M = {}
 
