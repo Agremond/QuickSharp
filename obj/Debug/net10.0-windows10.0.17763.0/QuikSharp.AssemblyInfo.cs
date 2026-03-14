@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyDescriptionAttribute("QUIK# (QUIK Sharp) is the QUIK Lua interface ported to .NET. QUIK# exposes all fu" +
     "nctions and events available in QLUA as C# async functions and events.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("2.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0+fb758574b9bc5e913059f013c79b678349642e52")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0+a642ef8086562d276b7aa5e9d9d6e037cf5eea6c")]
 [assembly: System.Reflection.AssemblyProductAttribute("QUIKSharp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QUIKSharp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("2.0.0.0")]
