@@ -28,7 +28,7 @@
         <DebugSymbols>true</DebugSymbols>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PlatformTarget>AnyCPU</PlatformTarget>
-        <LangVersion>9.0</LangVersion>
+        <LangVersion>10.0</LangVersion>
         <TargetFramework>net10.0-windows10.0.17763.0</TargetFramework>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
