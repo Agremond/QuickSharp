@@ -1,0 +1,21 @@
+2026-02-15 17:07:28.981 LOG 0: Detected Quik version: 1208 and using cpath: C:\QUIK_VTB\?.dll;C:\QUIK_VTB\..\lib\lua\5.3\?.dll;C:\QUIK_VTB\loadall.dll;.\?.dll;C:\Programming\QuikSharp\lua\clibs64\53_MD\?.dll;.\clibs64\53_MD\?.dll
+2026-02-15 17:07:28.981 LOG 0: QUIK# is initialized from C:\Programming\QuikSharp\lua\QuikSharp.lua
+2026-02-15 17:07:28.981 LOG 0: Running from QuikSharp, params: response 127.0.0.1:34130, callback  127.0.0.1:34131
+2026-02-15 17:07:28.981 LOG 0: Entered main function
+2026-02-15 17:07:28.981 LOG 3: C:\Programming\QuikSharp\lua\QuikSharp.lua:72: attempt to call a nil value (field 'wait_command')
+2026-02-15 17:07:34.137 LOG 0: Detected Quik version: 1208 and using cpath: C:\QUIK_VTB\?.dll;C:\QUIK_VTB\..\lib\lua\5.3\?.dll;C:\QUIK_VTB\loadall.dll;.\?.dll;C:\Programming\QuikSharp\lua\clibs64\53_MD\?.dll;.\clibs64\53_MD\?.dll
+2026-02-15 17:07:34.137 LOG 0: QUIK# is initialized from C:\Programming\QuikSharp\lua\QuikSharp.lua
+2026-02-15 17:07:34.153 LOG 0: Running from QuikSharp, params: response 127.0.0.1:34130, callback  127.0.0.1:34131
+2026-02-15 17:07:34.153 LOG 0: Entered main function
+2026-02-15 17:07:34.153 LOG 3: C:\Programming\QuikSharp\lua\QuikSharp.lua:72: attempt to call a nil value (field 'wait_command')
+2026-02-15 17:08:32.113 LOG 0: Detected Quik version: 1208 and using cpath: C:\QUIK_VTB\?.dll;C:\QUIK_VTB\..\lib\lua\5.3\?.dll;C:\QUIK_VTB\loadall.dll;.\?.dll;C:\Programming\QuikSharp\lua\clibs64\53_MD\?.dll;.\clibs64\53_MD\?.dll
+2026-02-15 17:08:32.113 LOG 0: QUIK# is initialized from C:\Programming\QuikSharp\lua\QuikSharp.lua
+2026-02-15 17:08:32.113 LOG 0: Running from QuikSharp, params: response 127.0.0.1:34130, callback  127.0.0.1:34131
+2026-02-15 17:08:32.113 LOG 0: Entered main function
+2026-02-15 17:08:32.113 LOG 3: C:\Programming\QuikSharp\lua\QuikSharp.lua:72: attempt to call a nil value (field 'wait_command')
+2026-02-15 17:08:34.317 LOG 0: Detected Quik version: 1208 and using cpath: C:\QUIK_VTB\?.dll;C:\QUIK_VTB\..\lib\lua\5.3\?.dll;C:\QUIK_VTB\loadall.dll;.\?.dll;C:\Programming\QuikSharp\lua\clibs64\53_MD\?.dll;.\clibs64\53_MD\?.dll
+2026-02-15 17:08:34.317 LOG 0: QUIK# is initialized from C:\Programming\QuikSharp\lua\QuikSharp.lua
+2026-02-15 17:08:34.317 LOG 0: Running from QuikSharp, params: response 127.0.0.1:34130, callback  127.0.0.1:34131
+2026-02-15 17:08:34.317 LOG 0: Entered main function
+2026-02-15 17:08:34.317 LOG 3: C:\Programming\QuikSharp\lua\QuikSharp.lua:72: attempt to call a nil value (field 'wait_command')
+2026-02-15 17:29:17.000 LOG 0: Detected Quik version: 1208 and using cpath: C:\QUIK_VTB\?.dll;C:\QUIK_VTB\..\lib\lua\5.3\?.dll;C:\QUIK_VTB\loadall.dll;.\?.dll;C:\Programming\QuikSharp\lua\clibs64\53_MD\?.dll;.\clibs64\53_MD\?.dll

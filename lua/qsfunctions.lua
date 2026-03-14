@@ -260,10 +260,7 @@ function qsfunctions.getClassesList(msg)
 end
 
 function qsfunctions.getClassInfo(msg)
-    log("Вызвана " .. msg.cmd .. ", req_id=" .. tostring(msg.req_id or "?"), 0)
- 
     msg.data = getClassInfo(msg.data)
-    if msg.data then log(msg.data.name) else log("getClassInfo  returned nil") end
     return msg
 end
 

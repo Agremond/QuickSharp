@@ -31,7 +31,7 @@ namespace QuikSharp
             var request = new Message(payload, "Subscribe_Level_II_Quotes");
 
             // Новый синтаксис: SendAsync<Message, T>
-            var response = await _transport.SendAsync<Message, bool>(request)
+            var response = await _transport.SendAsync<Message, bool>(request, "Subscribe_Level_II_Quotes")
                                            .ConfigureAwait(false);
 
             return response;
@@ -47,7 +47,7 @@ namespace QuikSharp
             var payload = $"{class_code}|{sec_code}";
             var request = new Message(payload, "Unsubscribe_Level_II_Quotes");
 
-            var response = await _transport.SendAsync<Message, bool>(request)
+            var response = await _transport.SendAsync<Message, bool>(request, "Unsubscribe_Level_II_Quotes")
                                            .ConfigureAwait(false);
 
             return response;
@@ -63,7 +63,7 @@ namespace QuikSharp
             var payload = $"{class_code}|{sec_code}";
             var request = new Message(payload, "IsSubscribed_Level_II_Quotes");
 
-            var response = await _transport.SendAsync<Message, bool>(request)
+            var response = await _transport.SendAsync<Message, bool>(request, "IsSubscribed_Level_II_Quotes")
                                            .ConfigureAwait(false);
 
             return response;
@@ -74,7 +74,7 @@ namespace QuikSharp
             var payload = $"{class_code}|{sec_code}";
             var request = new Message(payload, "GetQuoteLevel2");
 
-            var response = await _transport.SendAsync<Message, OrderBook>(request)
+            var response = await _transport.SendAsync<Message, OrderBook>(request, "GetQuoteLevel2")
                                            .ConfigureAwait(false);
 
             return response;

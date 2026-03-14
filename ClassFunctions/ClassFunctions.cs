@@ -24,7 +24,7 @@ namespace QuikSharp
         public async Task<string[]> GetClassesList()
         {
             var message = new Message("", "getClassesList");
-            var response = await _transport.SendAsync<Message, string>(message).ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, string>(message, "getClassesList").ConfigureAwait(false);
 
             return string.IsNullOrEmpty(response)
                 ? Array.Empty<string>()
@@ -34,14 +34,14 @@ namespace QuikSharp
         public async Task<ClassInfo> GetClassInfo(string classID)
         {
             var message = new Message(classID, "getClassInfo");
-            return await _transport.SendAsync<Message, ClassInfo>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, ClassInfo>(message, "getClassInfo").ConfigureAwait(false);
         }
 
         public async Task<SecurityInfo> GetSecurityInfo(string classCode, string secCode)
         {
             var payload = $"{classCode}|{secCode}";
             var message = new Message(payload, "getSecurityInfo");
-            return await _transport.SendAsync<Message, SecurityInfo>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, SecurityInfo>(message, "getSecurityInfo").ConfigureAwait(false);
         }
 
         public async Task<SecurityInfo> GetSecurityInfo(ISecurity security)
@@ -52,7 +52,7 @@ namespace QuikSharp
         public async Task<string[]> GetClassSecurities(string classID)
         {
             var message = new Message(classID, "getClassSecurities");
-            var response = await _transport.SendAsync<Message, string>(message).ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, string>(message, "getClassSecurities").ConfigureAwait(false);
 
             return string.IsNullOrEmpty(response)
                 ? Array.Empty<string>()
@@ -63,31 +63,31 @@ namespace QuikSharp
         {
             var payload = $"{classesList}|{secCode}";
             var message = new Message(payload, "getSecurityClass");
-            return await _transport.SendAsync<Message, string>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, string>(message, "getSecurityClass").ConfigureAwait(false);
         }
 
         public async Task<string> GetClientCode()
         {
             var message = new Message("", "getClientCode");
-            return await _transport.SendAsync<Message, string>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, string>(message, "getClientCode").ConfigureAwait(false);
         }
 
         public async Task<List<string>> GetClientCodes()
         {
             var message = new Message("", "getClientCodes");
-            return await _transport.SendAsync<Message, List<string>>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, List<string>>(message, "getClientCodes").ConfigureAwait(false);
         }
 
         public async Task<string> GetTradeAccount(string classCode)
         {
             var message = new Message(classCode, "getTradeAccount");
-            return await _transport.SendAsync<Message, string>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, string>(message, "getTradeAccount").ConfigureAwait(false);
         }
 
         public async Task<List<TradesAccounts>> GetTradeAccounts()
         {
             var message = new Message("", "getTradeAccounts");
-            return await _transport.SendAsync<Message, List<TradesAccounts>>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, List<TradesAccounts>>(message, "getTradeAccounts").ConfigureAwait(false);
         }
     }
 }

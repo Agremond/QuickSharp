@@ -1,0 +1,15 @@
+C:\Programming\QuikSharp\QS.Tests\bin\Debug\net10.0\QS.Tests.exe
+C:\Programming\QuikSharp\QS.Tests\bin\Debug\net10.0\QS.Tests.deps.json
+C:\Programming\QuikSharp\QS.Tests\bin\Debug\net10.0\QS.Tests.runtimeconfig.json
+C:\Programming\QuikSharp\QS.Tests\bin\Debug\net10.0\QS.Tests.dll
+C:\Programming\QuikSharp\QS.Tests\bin\Debug\net10.0\QS.Tests.pdb
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\QS.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\QS.Tests.AssemblyInfoInputs.cache
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\QS.Tests.AssemblyInfo.cs
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\QS.Tests.csproj.CoreCompileInputs.cache
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\QS.Tests.sourcelink.json
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\QS.Tests.dll
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\refint\QS.Tests.dll
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\QS.Tests.pdb
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\QS.Tests.genruntimeconfig.cache
+C:\Programming\QuikSharp\QS.Tests\obj\Debug\net10.0\ref\QS.Tests.dll

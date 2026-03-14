@@ -39,7 +39,7 @@ namespace QuikSharp
             };
 
             var message = new Message(txn, "send_transaction");
-            var resp = await Transport.SendAsync<Message, Message>(message , ct).ConfigureAwait(false);
+            var resp = await Transport.SendAsync<Message, Message>(message, "send_transaction", ct).ConfigureAwait(false);
 
             return resp.GetData<long>();
         }
@@ -58,7 +58,7 @@ namespace QuikSharp
             };
 
             var message = new Message(txn, "send_transaction");
-            var resp = await Transport.SendAsync<Message, Message>(message, ct).ConfigureAwait(false);
+            var resp = await Transport.SendAsync<Message, Message>(message, "send_transaction", ct).ConfigureAwait(false);
 
             return resp.GetData<long>();
         }
@@ -69,7 +69,7 @@ namespace QuikSharp
         public async Task<Order> GetOrder(string classCode, long orderId, CancellationToken ct = default)
         {
             var msg = new Message($"{classCode}|{orderId}", "get_order_by_number");
-            var resp = await Transport.SendAsync<Message, Message>(msg, ct).ConfigureAwait(false);
+            var resp = await Transport.SendAsync<Message, Message>(msg, "get_order_by_number", ct).ConfigureAwait(false);
 
             return resp.GetData<Order>();
         }
@@ -80,7 +80,7 @@ namespace QuikSharp
         public async Task<List<Order>> GetOrders(CancellationToken ct = default)
         {
             var msg = new Message("", "get_orders");
-            var resp = await Transport.SendAsync<Message, Message>(msg, ct).ConfigureAwait(false);
+            var resp = await Transport.SendAsync<Message, Message>(msg, "get_orders", ct).ConfigureAwait(false);
 
             return resp.GetData<List<Order>>();
         }
@@ -91,7 +91,7 @@ namespace QuikSharp
         public async Task<List<Order>> GetOrders(string classCode, string securityCode, CancellationToken ct = default)
         {
             var msg = new Message($"{classCode}|{securityCode}", "get_orders");
-            var resp = await Transport.SendAsync<Message, Message>(msg, ct).ConfigureAwait(false);
+            var resp = await Transport.SendAsync<Message, Message>(msg, "get_orders", ct).ConfigureAwait(false);
 
             return resp.GetData<List<Order>>();
         }
@@ -102,7 +102,7 @@ namespace QuikSharp
         public async Task<Order> GetOrder_by_transID(string classCode, string securityCode, long transId, CancellationToken ct = default)
         {
             var msg = new Message($"{classCode}|{securityCode}|{transId}", "get_order_by_transID");
-            var resp = await Transport.SendAsync<Message, Message>(msg, ct).ConfigureAwait(false);
+            var resp = await Transport.SendAsync<Message, Message>(msg, "get_order_by_transID", ct).ConfigureAwait(false);
 
             return resp.GetData<Order>();
         }
@@ -113,7 +113,7 @@ namespace QuikSharp
         public async Task<Order> GetOrder_by_Number(long orderNum, CancellationToken ct = default)
         {
             var msg = new Message($"{orderNum}", "get_order_by_number");
-            var resp = await Transport.SendAsync<Message, Message>(msg, ct).ConfigureAwait(false);
+            var resp = await Transport.SendAsync<Message, Message>(msg, "get_order_by_number", ct).ConfigureAwait(false);
 
             return resp.GetData<Order>();
         }

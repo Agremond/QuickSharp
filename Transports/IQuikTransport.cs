@@ -28,13 +28,15 @@ namespace QuikSharp.Transports
         /// <summary>
         /// Универсальный метод отправки запроса и получения ответа
         /// </summary>
-        /// <typeparam name="Message">Тип данных запроса (обычно object, анонимный тип или конкретный класс)</typeparam>
+        /// <typeparam name="TRequest">Тип данных запроса (обычно object, анонимный тип или конкретный класс)</typeparam>
         /// <typeparam name="TResponse">Ожидаемый тип данных в поле Data ответа</typeparam>
         /// <param name="request">Данные запроса → попадут в Message.Data</param>
+        /// <param name="command">Имя команды (getSecurityInfo, sendTransaction, get_num_candles и т.д.)</param>
         /// <param name="ct">Токен отмены (для таймаутов)</param>
         /// <returns>Типизированный ответ из поля Data</returns>
-        Task<TResponse> SendAsync<Message, TResponse>(
-            Message request,
+        Task<TResponse> SendAsync<TRequest, TResponse>(
+            TRequest request,
+            string command,
             CancellationToken ct = default);
 
         // ────────────────────────────────────────────────

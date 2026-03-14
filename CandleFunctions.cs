@@ -42,7 +42,7 @@ namespace QuikSharp
         public async Task<int> GetNumCandles(string graphicTag)
         {
             var message = new Message(graphicTag, "get_num_candles");
-            return await _transport.SendAsync<Message, int>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, int>(message, "get_num_candles").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace QuikSharp
         {
             var payload = $"{graphicTag}|{line}|{first}|{count}";
             var message = new Message(payload, "get_candles");
-            return await _transport.SendAsync<Message, List<Candle>>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, List<Candle>>(message, "get_candles").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}|{count}";
             var message = new Message(payload, "get_candles_from_data_source");
-            return await _transport.SendAsync<Message, List<Candle>>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, List<Candle>>(message, "get_candles_from_data_source").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}";
             var message = new Message(payload, "subscribe_to_candles");
-            await _transport.SendAsync<Message, string>(message).ConfigureAwait(false);
+            await _transport.SendAsync<Message, string>(message, "subscribe_to_candles").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}";
             var message = new Message(payload, "unsubscribe_from_candles");
-            await _transport.SendAsync<Message, string>(message).ConfigureAwait(false);
+            await _transport.SendAsync<Message, string>(message, "unsubscribe_from_candles").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}";
             var message = new Message(payload, "is_subscribed");
-            return await _transport.SendAsync<Message, bool>(message).ConfigureAwait(false);
+            return await _transport.SendAsync<Message, bool>(message, "is_subscribed").ConfigureAwait(false);
         }
     }
 }
