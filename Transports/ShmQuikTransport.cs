@@ -117,7 +117,8 @@
                     _semReq = new Semaphore(0, 1, REQ_SEM);
                     _semResp = new Semaphore(0, 1, RESP_SEM);
                     _semCb = new Semaphore(0, int.MaxValue, CB_SEM);
-
+                    _semCb = new Semaphore(0, 1, CB_SEM);
+                    
                     _mtxReq = new Semaphore(1, 1, REQ_MTX);
                     _mtxResp = new Semaphore(1, 1, RESP_MTX);
                     _mtxCb = new Semaphore(1, 1, CB_MTX);
@@ -139,22 +140,15 @@
 
             public async Task<TResponse> SendAsync<TRequest, TResponse>(
                 TRequest request,
-                string command,
                 CancellationToken ct = default)
             {
                 if (!_running) throw new InvalidOperationException("Transport not running");
 
                 long reqId = Interlocked.Increment(ref _nextRequestId);
 
-                var msg = new Message
-                {
-                    Id = reqId,
-                    Command = command,
-                    Data = request,
-                    CreatedTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
-                };
-
-                string json = JsonSerializer.Serialize(msg, _jsonOpts);
+                
+                
+                string json = JsonSerializer.Serialize(request, _jsonOpts);
                 byte[] payload = Encoding.UTF8.GetBytes(json);
 
                 if (payload.Length > REQ_SIZE - HEADER)
@@ -196,7 +190,7 @@
                     if (winner != responseTask)
                     {
                         _pending.TryRemove(reqId, out _);
-                        throw new TimeoutException($"Request {reqId} ({command}) timed out after 45s");
+                        throw new TimeoutException($"Request {reqId}  timed out after 45s");
                     }
 
                     var response = await responseTask;
@@ -305,7 +299,7 @@
             {
                 try
                 {
-                    switch (msg.Command?.ToLowerInvariant())
+                    switch (msg.cmd?.ToLowerInvariant())
                     {
                         case "newcandle": OnNewCandle?.Invoke(msg.GetData<Candle>()); break;
                         case "onorder": OnOrder?.Invoke(msg.GetData<Order>()); break;
@@ -327,7 +321,7 @@
                         case "onmoneylimitdelete": OnMoneyLimitDelete?.Invoke(msg.GetData<MoneyLimitDelete>()); break;
 
                         default:
-                            OnUnknownCallback?.Invoke(msg.Command ?? "unknown");
+                            OnUnknownCallback?.Invoke(msg.cmd ?? "unknown");
                             break;
                     }
                 }

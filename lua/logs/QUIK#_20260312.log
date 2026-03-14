@@ -1,0 +1,436 @@
+2026-03-12 21:29:11.50 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-12 21:29:11.100 LOG 1: QuikSharp: запуск...
+2026-03-12 21:29:11.150 LOG 1: Shared memory IPC (Variant 2: separate buffers) initialized
+2026-03-12 21:29:11.200 LOG 1: QUIK# connected via shared memory (Variant 2)
+2026-03-12 21:29:22.50 LOG 0: Запрос от C# (req_id=1): {"cmd":"getClassesList","createdTime":1773340157848,"data":{"cmd":"getClassesList","createdTime":1773340157842,"data":""},"id":1}
+2026-03-12 21:29:22.100 LOG 0: Вызвана getClassesList, req_id=?
+2026-03-12 21:29:22.150 LOG 1: После dispatch: cmd=getClassesList, data тип=string, data="TQTE,TQCB,TQOE,TQRD,TQUD,TQED,FQBR,SPBFUT,SPBOPT,USDRUB,OPTSPOT,OPTCURNCY,OPTCOMDTY,OPTIDX,RTSIDX,EQRP_INFO,FUTCLT,SPBXM,SPBDE,SPBEQRU,SPBRU,SPBRUBND,SPBRU_USD,PSSPBRUBNDDO,REPORT,REPORTFORTS,VTB_OTC,CROSSRATE,QT_BN,INDX,TQIF_HOL,TQTF_HOL,TQTF_W_HOL,UP,CETS,CETS_MTL,TQFD,TQFE,OCTR,TQTY,MTQR,SMAL,TQBR,TQOB,TQIF,TQTF,TQTF_W,TQBD,TQTD,TQOD,TQOY,TQTF_F_HOL,EES_OTC,TQTF_F,SMS,ALGO_ICEBERG,ALGO_VOLATIL,ALGO_TWAP,ALGO_VWAP,ALGO_GTD,MPAU,PSAU_FREE,PSAU,PSSU,PSSU_YAD,PACY,QT_EQ,"
+2026-03-12 21:30:25.50 LOG 1: IPC closed (all resources released)
+2026-03-12 21:30:31.50 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-12 21:30:31.100 LOG 1: QuikSharp: запуск...
+2026-03-12 21:30:31.150 LOG 1: Shared memory IPC (Variant 2: separate buffers) initialized
+2026-03-12 21:30:31.200 LOG 1: QUIK# connected via shared memory (Variant 2)
+2026-03-12 21:30:34.50 LOG 0: Запрос от C# (req_id=1): {"data":{"data":"","cmd":"getClassesList","createdTime":1773340234705},"cmd":"getClassesList","id":1,"createdTime":1773340234707}
+2026-03-12 21:30:34.100 LOG 0: Вызвана getClassesList, req_id=?
+2026-03-12 21:30:34.150 LOG 1: После dispatch: cmd=getClassesList, data тип=string, data="TQTE,TQCB,TQOE,TQRD,TQUD,TQED,FQBR,SPBFUT,SPBOPT,USDRUB,OPTSPOT,OPTCURNCY,OPTCOMDTY,OPTIDX,RTSIDX,EQRP_INFO,FUTCLT,SPBXM,SPBDE,SPBEQRU,SPBRU,SPBRUBND,SPBRU_USD,PSSPBRUBNDDO,REPORT,REPORTFORTS,VTB_OTC,CROSSRATE,QT_BN,INDX,TQIF_HOL,TQTF_HOL,TQTF_W_HOL,UP,CETS,CETS_MTL,TQFD,TQFE,OCTR,TQTY,MTQR,SMAL,TQBR,TQOB,TQIF,TQTF,TQTF_W,TQBD,TQTD,TQOD,TQOY,TQTF_F_HOL,EES_OTC,TQTF_F,SMS,ALGO_ICEBERG,ALGO_VOLATIL,ALGO_TWAP,ALGO_VWAP,ALGO_GTD,MPAU,PSAU_FREE,PSAU,PSSU,PSSU_YAD,PACY,QT_EQ,"
+2026-03-12 21:30:51.50 LOG 1: IPC closed (all resources released)
+2026-03-12 21:30:57.50 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-12 21:30:57.100 LOG 1: QuikSharp: запуск...
+2026-03-12 21:30:57.150 LOG 1: Shared memory IPC (Variant 2: separate buffers) initialized
+2026-03-12 21:30:57.200 LOG 1: QUIK# connected via shared memory (Variant 2)
+2026-03-12 21:31:00.50 LOG 0: Запрос от C# (req_id=1): {"id":1,"data":{"data":"","createdTime":1773340260536,"cmd":"getClassesList"},"createdTime":1773340260538,"cmd":"getClassesList"}
+2026-03-12 21:31:00.100 LOG 0: Вызвана getClassesList, req_id=?
+2026-03-12 21:31:00.150 LOG 1: После dispatch: cmd=getClassesList, data тип=string, data="TQTE,TQCB,TQOE,TQRD,TQUD,TQED,FQBR,SPBFUT,SPBOPT,USDRUB,OPTSPOT,OPTCURNCY,OPTCOMDTY,OPTIDX,RTSIDX,EQRP_INFO,FUTCLT,SPBXM,SPBDE,SPBEQRU,SPBRU,SPBRUBND,SPBRU_USD,PSSPBRUBNDDO,REPORT,REPORTFORTS,VTB_OTC,CROSSRATE,QT_BN,INDX,TQIF_HOL,TQTF_HOL,TQTF_W_HOL,UP,CETS,CETS_MTL,TQFD,TQFE,OCTR,TQTY,MTQR,SMAL,TQBR,TQOB,TQIF,TQTF,TQTF_W,TQBD,TQTD,TQOD,TQOY,TQTF_F_HOL,EES_OTC,TQTF_F,SMS,ALGO_ICEBERG,ALGO_VOLATIL,ALGO_TWAP,ALGO_VWAP,ALGO_GTD,MPAU,PSAU_FREE,PSAU,PSSU,PSSU_YAD,PACY,QT_EQ,"
+2026-03-12 21:31:00.200 LOG 0: Запрос от C# (req_id=2): {"id":2,"data":{"data":"","createdTime":1773340260672,"cmd":"getClassesList"},"createdTime":1773340260672,"cmd":"getClassesList"}
+2026-03-12 21:31:00.250 LOG 0: Вызвана getClassesList, req_id=?
+2026-03-12 21:31:00.300 LOG 1: После dispatch: cmd=getClassesList, data тип=string, data="TQTE,TQCB,TQOE,TQRD,TQUD,TQED,FQBR,SPBFUT,SPBOPT,USDRUB,OPTSPOT,OPTCURNCY,OPTCOMDTY,OPTIDX,RTSIDX,EQRP_INFO,FUTCLT,SPBXM,SPBDE,SPBEQRU,SPBRU,SPBRUBND,SPBRU_USD,PSSPBRUBNDDO,REPORT,REPORTFORTS,VTB_OTC,CROSSRATE,QT_BN,INDX,TQIF_HOL,TQTF_HOL,TQTF_W_HOL,UP,CETS,CETS_MTL,TQFD,TQFE,OCTR,TQTY,MTQR,SMAL,TQBR,TQOB,TQIF,TQTF,TQTF_W,TQBD,TQTD,TQOD,TQOY,TQTF_F_HOL,EES_OTC,TQTF_F,SMS,ALGO_ICEBERG,ALGO_VOLATIL,ALGO_TWAP,ALGO_VWAP,ALGO_GTD,MPAU,PSAU_FREE,PSAU,PSSU,PSSU_YAD,PACY,QT_EQ,"
+2026-03-12 21:31:00.350 LOG 0: Запрос от C# (req_id=3): {"id":3,"data":{"data":"TQTE","createdTime":1773340260674,"cmd":"getClassInfo"},"createdTime":1773340260675,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.400 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.450 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.500 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.550 LOG 0: Запрос от C# (req_id=4): {"id":4,"data":{"data":"TQCB","createdTime":1773340260684,"cmd":"getClassInfo"},"createdTime":1773340260684,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.600 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.650 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.700 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.750 LOG 0: Запрос от C# (req_id=5): {"id":5,"data":{"data":"TQOE","createdTime":1773340260691,"cmd":"getClassInfo"},"createdTime":1773340260691,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.800 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.850 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.900 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.950 LOG 0: Запрос от C# (req_id=6): {"id":6,"data":{"data":"TQRD","createdTime":1773340260693,"cmd":"getClassInfo"},"createdTime":1773340260693,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.0 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.50 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.100 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.150 LOG 0: Запрос от C# (req_id=7): {"id":7,"data":{"data":"TQUD","createdTime":1773340260695,"cmd":"getClassInfo"},"createdTime":1773340260695,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.200 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.250 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.300 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.350 LOG 0: Запрос от C# (req_id=8): {"id":8,"data":{"data":"TQED","createdTime":1773340260696,"cmd":"getClassInfo"},"createdTime":1773340260696,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.400 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.450 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.500 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.550 LOG 0: Запрос от C# (req_id=9): {"id":9,"data":{"data":"FQBR","createdTime":1773340260698,"cmd":"getClassInfo"},"createdTime":1773340260698,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.600 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.650 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.700 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.750 LOG 0: Запрос от C# (req_id=10): {"id":10,"data":{"data":"SPBFUT","createdTime":1773340260699,"cmd":"getClassInfo"},"createdTime":1773340260699,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.800 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.850 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.900 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.950 LOG 0: Запрос от C# (req_id=11): {"id":11,"data":{"data":"SPBOPT","createdTime":1773340260728,"cmd":"getClassInfo"},"createdTime":1773340260728,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.0 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.50 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.100 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.150 LOG 0: Запрос от C# (req_id=12): {"id":12,"data":{"data":"USDRUB","createdTime":1773340260760,"cmd":"getClassInfo"},"createdTime":1773340260760,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.200 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.250 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.300 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.350 LOG 0: Запрос от C# (req_id=13): {"id":13,"data":{"data":"OPTSPOT","createdTime":1773340260775,"cmd":"getClassInfo"},"createdTime":1773340260775,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.400 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.450 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.500 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.550 LOG 0: Запрос от C# (req_id=14): {"id":14,"data":{"data":"OPTCURNCY","createdTime":1773340260778,"cmd":"getClassInfo"},"createdTime":1773340260778,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.600 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.650 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.700 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.750 LOG 0: Запрос от C# (req_id=15): {"id":15,"data":{"data":"OPTCOMDTY","createdTime":1773340260796,"cmd":"getClassInfo"},"createdTime":1773340260796,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.800 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.850 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.900 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.950 LOG 0: Запрос от C# (req_id=16): {"id":16,"data":{"data":"OPTIDX","createdTime":1773340260837,"cmd":"getClassInfo"},"createdTime":1773340260837,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.0 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.50 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.100 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.150 LOG 0: Запрос от C# (req_id=17): {"id":17,"data":{"data":"RTSIDX","createdTime":1773340260842,"cmd":"getClassInfo"},"createdTime":1773340260842,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.200 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.250 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.300 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.350 LOG 0: Запрос от C# (req_id=18): {"id":18,"data":{"data":"EQRP_INFO","createdTime":1773340260845,"cmd":"getClassInfo"},"createdTime":1773340260845,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.400 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.450 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.500 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.550 LOG 0: Запрос от C# (req_id=19): {"id":19,"data":{"data":"FUTCLT","createdTime":1773340260847,"cmd":"getClassInfo"},"createdTime":1773340260847,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.600 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.650 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.700 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.750 LOG 0: Запрос от C# (req_id=20): {"id":20,"data":{"data":"SPBXM","createdTime":1773340260850,"cmd":"getClassInfo"},"createdTime":1773340260850,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.800 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.850 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.900 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.950 LOG 0: Запрос от C# (req_id=21): {"id":21,"data":{"data":"SPBDE","createdTime":1773340260852,"cmd":"getClassInfo"},"createdTime":1773340260852,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.0 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.50 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.100 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.150 LOG 0: Запрос от C# (req_id=22): {"id":22,"data":{"data":"SPBEQRU","createdTime":1773340260853,"cmd":"getClassInfo"},"createdTime":1773340260853,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.200 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.250 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.300 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.350 LOG 0: Запрос от C# (req_id=23): {"id":23,"data":{"data":"SPBRU","createdTime":1773340260854,"cmd":"getClassInfo"},"createdTime":1773340260854,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.400 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.450 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.500 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.550 LOG 0: Запрос от C# (req_id=24): {"id":24,"data":{"data":"SPBRUBND","createdTime":1773340260855,"cmd":"getClassInfo"},"createdTime":1773340260855,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.600 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.650 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.700 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.750 LOG 0: Запрос от C# (req_id=25): {"id":25,"data":{"data":"SPBRU_USD","createdTime":1773340260857,"cmd":"getClassInfo"},"createdTime":1773340260857,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.800 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.850 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.900 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.950 LOG 0: Запрос от C# (req_id=26): {"id":26,"data":{"data":"PSSPBRUBNDDO","createdTime":1773340260861,"cmd":"getClassInfo"},"createdTime":1773340260861,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.0 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.50 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.100 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.150 LOG 0: Запрос от C# (req_id=27): {"id":27,"data":{"data":"REPORT","createdTime":1773340260866,"cmd":"getClassInfo"},"createdTime":1773340260866,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.200 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.250 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.300 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.350 LOG 0: Запрос от C# (req_id=28): {"id":28,"data":{"data":"REPORTFORTS","createdTime":1773340260871,"cmd":"getClassInfo"},"createdTime":1773340260871,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.400 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.450 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.500 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:00.550 LOG 0: Запрос от C# (req_id=29): {"id":29,"data":{"data":"VTB_OTC","createdTime":1773340260885,"cmd":"getClassInfo"},"createdTime":1773340260885,"cmd":"getClassInfo"}
+2026-03-12 21:31:00.600 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:00.650 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:00.700 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=30): {"id":30,"data":{"data":"CROSSRATE","createdTime":1773340260988,"cmd":"getClassInfo"},"createdTime":1773340260988,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.150 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.200 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.250 LOG 0: Запрос от C# (req_id=31): {"id":31,"data":{"data":"QT_BN","createdTime":1773340261010,"cmd":"getClassInfo"},"createdTime":1773340261010,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.300 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.350 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.400 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.450 LOG 0: Запрос от C# (req_id=32): {"id":32,"data":{"data":"INDX","createdTime":1773340261014,"cmd":"getClassInfo"},"createdTime":1773340261014,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.500 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.550 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.600 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.650 LOG 0: Запрос от C# (req_id=33): {"id":33,"data":{"data":"TQIF_HOL","createdTime":1773340261015,"cmd":"getClassInfo"},"createdTime":1773340261015,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.700 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.750 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.800 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.850 LOG 0: Запрос от C# (req_id=34): {"id":34,"data":{"data":"TQTF_HOL","createdTime":1773340261018,"cmd":"getClassInfo"},"createdTime":1773340261018,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.900 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.950 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.0 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=35): {"id":35,"data":{"data":"TQTF_W_HOL","createdTime":1773340261019,"cmd":"getClassInfo"},"createdTime":1773340261019,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.150 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.200 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.250 LOG 0: Запрос от C# (req_id=36): {"id":36,"data":{"data":"UP","createdTime":1773340261020,"cmd":"getClassInfo"},"createdTime":1773340261020,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.300 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.350 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.400 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.450 LOG 0: Запрос от C# (req_id=37): {"id":37,"data":{"data":"CETS","createdTime":1773340261022,"cmd":"getClassInfo"},"createdTime":1773340261022,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.500 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.550 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.600 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.650 LOG 0: Запрос от C# (req_id=38): {"id":38,"data":{"data":"CETS_MTL","createdTime":1773340261024,"cmd":"getClassInfo"},"createdTime":1773340261024,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.700 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.750 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.800 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.850 LOG 0: Запрос от C# (req_id=39): {"id":39,"data":{"data":"TQFD","createdTime":1773340261025,"cmd":"getClassInfo"},"createdTime":1773340261025,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.900 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.950 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.0 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=40): {"id":40,"data":{"data":"TQFE","createdTime":1773340261028,"cmd":"getClassInfo"},"createdTime":1773340261028,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.150 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.200 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.250 LOG 0: Запрос от C# (req_id=41): {"id":41,"data":{"data":"OCTR","createdTime":1773340261033,"cmd":"getClassInfo"},"createdTime":1773340261033,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.300 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.350 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.400 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.450 LOG 0: Запрос от C# (req_id=42): {"id":42,"data":{"data":"TQTY","createdTime":1773340261036,"cmd":"getClassInfo"},"createdTime":1773340261036,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.500 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.550 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.600 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.650 LOG 0: Запрос от C# (req_id=43): {"id":43,"data":{"data":"MTQR","createdTime":1773340261037,"cmd":"getClassInfo"},"createdTime":1773340261037,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.700 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.750 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.800 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.850 LOG 0: Запрос от C# (req_id=44): {"id":44,"data":{"data":"SMAL","createdTime":1773340261040,"cmd":"getClassInfo"},"createdTime":1773340261040,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.900 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.950 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.0 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=45): {"id":45,"data":{"data":"TQBR","createdTime":1773340261043,"cmd":"getClassInfo"},"createdTime":1773340261043,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.150 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.200 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.250 LOG 0: Запрос от C# (req_id=46): {"id":46,"data":{"data":"TQOB","createdTime":1773340261045,"cmd":"getClassInfo"},"createdTime":1773340261045,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.300 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.350 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.400 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.450 LOG 0: Запрос от C# (req_id=47): {"id":47,"data":{"data":"TQIF","createdTime":1773340261047,"cmd":"getClassInfo"},"createdTime":1773340261047,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.500 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.550 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.600 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.650 LOG 0: Запрос от C# (req_id=48): {"id":48,"data":{"data":"TQTF","createdTime":1773340261049,"cmd":"getClassInfo"},"createdTime":1773340261049,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.700 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.750 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.800 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.850 LOG 0: Запрос от C# (req_id=49): {"id":49,"data":{"data":"TQTF_W","createdTime":1773340261053,"cmd":"getClassInfo"},"createdTime":1773340261053,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.900 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.950 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.0 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=50): {"id":50,"data":{"data":"TQBD","createdTime":1773340261057,"cmd":"getClassInfo"},"createdTime":1773340261057,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.150 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.200 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.250 LOG 0: Запрос от C# (req_id=51): {"id":51,"data":{"data":"TQTD","createdTime":1773340261061,"cmd":"getClassInfo"},"createdTime":1773340261062,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.300 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.350 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.400 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.450 LOG 0: Запрос от C# (req_id=52): {"id":52,"data":{"data":"TQOD","createdTime":1773340261064,"cmd":"getClassInfo"},"createdTime":1773340261064,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.500 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.550 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.600 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.650 LOG 0: Запрос от C# (req_id=53): {"id":53,"data":{"data":"TQOY","createdTime":1773340261066,"cmd":"getClassInfo"},"createdTime":1773340261066,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.700 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.750 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.800 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.850 LOG 0: Запрос от C# (req_id=54): {"id":54,"data":{"data":"TQTF_F_HOL","createdTime":1773340261068,"cmd":"getClassInfo"},"createdTime":1773340261068,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.900 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.950 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.0 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=55): {"id":55,"data":{"data":"EES_OTC","createdTime":1773340261071,"cmd":"getClassInfo"},"createdTime":1773340261071,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.150 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.200 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.250 LOG 0: Запрос от C# (req_id=56): {"id":56,"data":{"data":"TQTF_F","createdTime":1773340261072,"cmd":"getClassInfo"},"createdTime":1773340261072,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.300 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.350 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.400 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.450 LOG 0: Запрос от C# (req_id=57): {"id":57,"data":{"data":"SMS","createdTime":1773340261075,"cmd":"getClassInfo"},"createdTime":1773340261075,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.500 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.550 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.600 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.650 LOG 0: Запрос от C# (req_id=58): {"id":58,"data":{"data":"ALGO_ICEBERG","createdTime":1773340261078,"cmd":"getClassInfo"},"createdTime":1773340261078,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.700 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.750 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.800 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.850 LOG 0: Запрос от C# (req_id=59): {"id":59,"data":{"data":"ALGO_VOLATIL","createdTime":1773340261079,"cmd":"getClassInfo"},"createdTime":1773340261079,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.900 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.950 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.0 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=60): {"id":60,"data":{"data":"ALGO_TWAP","createdTime":1773340261080,"cmd":"getClassInfo"},"createdTime":1773340261080,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.150 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.200 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.250 LOG 0: Запрос от C# (req_id=61): {"id":61,"data":{"data":"ALGO_VWAP","createdTime":1773340261081,"cmd":"getClassInfo"},"createdTime":1773340261081,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.300 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.350 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.400 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.450 LOG 0: Запрос от C# (req_id=62): {"id":62,"data":{"data":"ALGO_GTD","createdTime":1773340261082,"cmd":"getClassInfo"},"createdTime":1773340261082,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.500 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.550 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.600 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.650 LOG 0: Запрос от C# (req_id=63): {"id":63,"data":{"data":"MPAU","createdTime":1773340261085,"cmd":"getClassInfo"},"createdTime":1773340261085,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.700 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.750 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.800 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.850 LOG 0: Запрос от C# (req_id=64): {"id":64,"data":{"data":"PSAU_FREE","createdTime":1773340261088,"cmd":"getClassInfo"},"createdTime":1773340261088,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.900 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.950 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.0 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=65): {"id":65,"data":{"data":"PSAU","createdTime":1773340261091,"cmd":"getClassInfo"},"createdTime":1773340261091,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.150 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.200 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.250 LOG 0: Запрос от C# (req_id=66): {"id":66,"data":{"data":"PSSU","createdTime":1773340261092,"cmd":"getClassInfo"},"createdTime":1773340261092,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.300 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.350 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.400 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.450 LOG 0: Запрос от C# (req_id=67): {"id":67,"data":{"data":"PSSU_YAD","createdTime":1773340261096,"cmd":"getClassInfo"},"createdTime":1773340261096,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.500 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.550 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.600 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.650 LOG 0: Запрос от C# (req_id=68): {"id":68,"data":{"data":"PACY","createdTime":1773340261097,"cmd":"getClassInfo"},"createdTime":1773340261097,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.700 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.750 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.800 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.850 LOG 0: Запрос от C# (req_id=69): {"id":69,"data":{"data":"QT_EQ","createdTime":1773340261100,"cmd":"getClassInfo"},"createdTime":1773340261100,"cmd":"getClassInfo"}
+2026-03-12 21:31:01.900 LOG 0: Вызвана getClassInfo, req_id=?
+2026-03-12 21:31:01.950 LOG 0: getClassInfo  returned nil
+2026-03-12 21:31:01.0 LOG 1: После dispatch: cmd=getClassInfo, data тип=nil, data=[]
+2026-03-12 21:31:01.50 LOG 0: Запрос от C# (req_id=70): {"id":70,"data":{"data":"","createdTime":1773340261102,"cmd":"getClassesList"},"createdTime":1773340261102,"cmd":"getClassesList"}
+2026-03-12 21:31:01.100 LOG 0: Вызвана getClassesList, req_id=?
+2026-03-12 21:31:01.150 LOG 1: После dispatch: cmd=getClassesList, data тип=string, data="TQTE,TQCB,TQOE,TQRD,TQUD,TQED,FQBR,SPBFUT,SPBOPT,USDRUB,OPTSPOT,OPTCURNCY,OPTCOMDTY,OPTIDX,RTSIDX,EQRP_INFO,FUTCLT,SPBXM,SPBDE,SPBEQRU,SPBRU,SPBRUBND,SPBRU_USD,PSSPBRUBNDDO,REPORT,REPORTFORTS,VTB_OTC,CROSSRATE,QT_BN,INDX,TQIF_HOL,TQTF_HOL,TQTF_W_HOL,UP,CETS,CETS_MTL,TQFD,TQFE,OCTR,TQTY,MTQR,SMAL,TQBR,TQOB,TQIF,TQTF,TQTF_W,TQBD,TQTD,TQOD,TQOY,TQTF_F_HOL,EES_OTC,TQTF_F,SMS,ALGO_ICEBERG,ALGO_VOLATIL,ALGO_TWAP,ALGO_VWAP,ALGO_GTD,MPAU,PSAU_FREE,PSAU,PSSU,PSSU_YAD,PACY,QT_EQ,"
+2026-03-12 21:31:01.200 LOG 0: Запрос от C# (req_id=71): {"id":71,"data":{"data":"TQTE","createdTime":1773340261104,"cmd":"getClassSecurities"},"createdTime":1773340261104,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.250 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.300 LOG 0: Запрос от C# (req_id=72): {"id":72,"data":{"data":"TQCB","createdTime":1773340261105,"cmd":"getClassSecurities"},"createdTime":1773340261105,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.350 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.400 LOG 0: Запрос от C# (req_id=73): {"id":73,"data":{"data":"TQOE","createdTime":1773340261107,"cmd":"getClassSecurities"},"createdTime":1773340261107,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.450 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.500 LOG 0: Запрос от C# (req_id=74): {"id":74,"data":{"data":"TQRD","createdTime":1773340261108,"cmd":"getClassSecurities"},"createdTime":1773340261108,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.550 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.600 LOG 0: Запрос от C# (req_id=75): {"id":75,"data":{"data":"TQUD","createdTime":1773340261109,"cmd":"getClassSecurities"},"createdTime":1773340261109,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.650 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.700 LOG 0: Запрос от C# (req_id=76): {"id":76,"data":{"data":"TQED","createdTime":1773340261110,"cmd":"getClassSecurities"},"createdTime":1773340261110,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.750 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.800 LOG 0: Запрос от C# (req_id=77): {"id":77,"data":{"data":"FQBR","createdTime":1773340261110,"cmd":"getClassSecurities"},"createdTime":1773340261110,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.850 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.900 LOG 0: Запрос от C# (req_id=78): {"id":78,"data":{"data":"SPBFUT","createdTime":1773340261115,"cmd":"getClassSecurities"},"createdTime":1773340261115,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.950 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.0 LOG 0: Запрос от C# (req_id=79): {"id":79,"data":{"data":"SPBOPT","createdTime":1773340261116,"cmd":"getClassSecurities"},"createdTime":1773340261116,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.50 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.100 LOG 0: Запрос от C# (req_id=80): {"id":80,"data":{"data":"USDRUB","createdTime":1773340261117,"cmd":"getClassSecurities"},"createdTime":1773340261117,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.150 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.200 LOG 0: Запрос от C# (req_id=81): {"id":81,"data":{"data":"OPTSPOT","createdTime":1773340261117,"cmd":"getClassSecurities"},"createdTime":1773340261117,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.250 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.300 LOG 0: Запрос от C# (req_id=82): {"id":82,"data":{"data":"OPTCURNCY","createdTime":1773340261118,"cmd":"getClassSecurities"},"createdTime":1773340261118,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.350 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.400 LOG 0: Запрос от C# (req_id=83): {"id":83,"data":{"data":"OPTCOMDTY","createdTime":1773340261119,"cmd":"getClassSecurities"},"createdTime":1773340261119,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.450 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.500 LOG 0: Запрос от C# (req_id=84): {"id":84,"data":{"data":"OPTIDX","createdTime":1773340261120,"cmd":"getClassSecurities"},"createdTime":1773340261120,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.550 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.600 LOG 0: Запрос от C# (req_id=85): {"id":85,"data":{"data":"RTSIDX","createdTime":1773340261121,"cmd":"getClassSecurities"},"createdTime":1773340261121,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.650 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.700 LOG 0: Запрос от C# (req_id=86): {"id":86,"data":{"data":"EQRP_INFO","createdTime":1773340261121,"cmd":"getClassSecurities"},"createdTime":1773340261121,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.750 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.800 LOG 0: Запрос от C# (req_id=87): {"id":87,"data":{"data":"FUTCLT","createdTime":1773340261122,"cmd":"getClassSecurities"},"createdTime":1773340261122,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.850 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.900 LOG 0: Запрос от C# (req_id=88): {"id":88,"data":{"data":"SPBXM","createdTime":1773340261123,"cmd":"getClassSecurities"},"createdTime":1773340261123,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.950 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.0 LOG 0: Запрос от C# (req_id=89): {"id":89,"data":{"data":"SPBDE","createdTime":1773340261123,"cmd":"getClassSecurities"},"createdTime":1773340261123,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.50 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.100 LOG 0: Запрос от C# (req_id=90): {"id":90,"data":{"data":"SPBEQRU","createdTime":1773340261124,"cmd":"getClassSecurities"},"createdTime":1773340261124,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.150 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.200 LOG 0: Запрос от C# (req_id=91): {"id":91,"data":{"data":"SPBRU","createdTime":1773340261125,"cmd":"getClassSecurities"},"createdTime":1773340261125,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.250 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.300 LOG 0: Запрос от C# (req_id=92): {"id":92,"data":{"data":"SPBRUBND","createdTime":1773340261126,"cmd":"getClassSecurities"},"createdTime":1773340261126,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.350 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.400 LOG 0: Запрос от C# (req_id=93): {"id":93,"data":{"data":"SPBRU_USD","createdTime":1773340261130,"cmd":"getClassSecurities"},"createdTime":1773340261130,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.450 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.500 LOG 0: Запрос от C# (req_id=94): {"id":94,"data":{"data":"PSSPBRUBNDDO","createdTime":1773340261131,"cmd":"getClassSecurities"},"createdTime":1773340261131,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.550 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.600 LOG 0: Запрос от C# (req_id=95): {"id":95,"data":{"data":"REPORT","createdTime":1773340261132,"cmd":"getClassSecurities"},"createdTime":1773340261132,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.650 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.700 LOG 0: Запрос от C# (req_id=96): {"id":96,"data":{"data":"REPORTFORTS","createdTime":1773340261133,"cmd":"getClassSecurities"},"createdTime":1773340261133,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.750 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.800 LOG 0: Запрос от C# (req_id=97): {"id":97,"data":{"data":"VTB_OTC","createdTime":1773340261134,"cmd":"getClassSecurities"},"createdTime":1773340261134,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.850 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.900 LOG 0: Запрос от C# (req_id=98): {"id":98,"data":{"data":"CROSSRATE","createdTime":1773340261134,"cmd":"getClassSecurities"},"createdTime":1773340261134,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.950 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.0 LOG 0: Запрос от C# (req_id=99): {"id":99,"data":{"data":"QT_BN","createdTime":1773340261135,"cmd":"getClassSecurities"},"createdTime":1773340261135,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.50 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.100 LOG 0: Запрос от C# (req_id=100): {"id":100,"data":{"data":"INDX","createdTime":1773340261136,"cmd":"getClassSecurities"},"createdTime":1773340261136,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.150 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.200 LOG 0: Запрос от C# (req_id=101): {"id":101,"data":{"data":"TQIF_HOL","createdTime":1773340261136,"cmd":"getClassSecurities"},"createdTime":1773340261136,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.250 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.300 LOG 0: Запрос от C# (req_id=102): {"id":102,"data":{"data":"TQTF_HOL","createdTime":1773340261137,"cmd":"getClassSecurities"},"createdTime":1773340261137,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.350 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.400 LOG 0: Запрос от C# (req_id=103): {"id":103,"data":{"data":"TQTF_W_HOL","createdTime":1773340261138,"cmd":"getClassSecurities"},"createdTime":1773340261138,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.450 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.500 LOG 0: Запрос от C# (req_id=104): {"id":104,"data":{"data":"UP","createdTime":1773340261139,"cmd":"getClassSecurities"},"createdTime":1773340261139,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.550 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.600 LOG 0: Запрос от C# (req_id=105): {"id":105,"data":{"data":"CETS","createdTime":1773340261140,"cmd":"getClassSecurities"},"createdTime":1773340261140,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.650 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.700 LOG 0: Запрос от C# (req_id=106): {"id":106,"data":{"data":"CETS_MTL","createdTime":1773340261140,"cmd":"getClassSecurities"},"createdTime":1773340261140,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.750 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.800 LOG 0: Запрос от C# (req_id=107): {"id":107,"data":{"data":"TQFD","createdTime":1773340261141,"cmd":"getClassSecurities"},"createdTime":1773340261141,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.850 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.900 LOG 0: Запрос от C# (req_id=108): {"id":108,"data":{"data":"TQFE","createdTime":1773340261142,"cmd":"getClassSecurities"},"createdTime":1773340261142,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.950 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.0 LOG 0: Запрос от C# (req_id=109): {"id":109,"data":{"data":"OCTR","createdTime":1773340261142,"cmd":"getClassSecurities"},"createdTime":1773340261142,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.50 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.100 LOG 0: Запрос от C# (req_id=110): {"id":110,"data":{"data":"TQTY","createdTime":1773340261148,"cmd":"getClassSecurities"},"createdTime":1773340261148,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.150 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.200 LOG 0: Запрос от C# (req_id=111): {"id":111,"data":{"data":"MTQR","createdTime":1773340261149,"cmd":"getClassSecurities"},"createdTime":1773340261149,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.250 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.300 LOG 0: Запрос от C# (req_id=112): {"id":112,"data":{"data":"SMAL","createdTime":1773340261150,"cmd":"getClassSecurities"},"createdTime":1773340261150,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.350 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.400 LOG 0: Запрос от C# (req_id=113): {"id":113,"data":{"data":"TQBR","createdTime":1773340261151,"cmd":"getClassSecurities"},"createdTime":1773340261151,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.450 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.500 LOG 0: Запрос от C# (req_id=114): {"id":114,"data":{"data":"TQOB","createdTime":1773340261152,"cmd":"getClassSecurities"},"createdTime":1773340261152,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.550 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.600 LOG 0: Запрос от C# (req_id=115): {"id":115,"data":{"data":"TQIF","createdTime":1773340261153,"cmd":"getClassSecurities"},"createdTime":1773340261153,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.650 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.700 LOG 0: Запрос от C# (req_id=116): {"id":116,"data":{"data":"TQTF","createdTime":1773340261153,"cmd":"getClassSecurities"},"createdTime":1773340261153,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.750 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.800 LOG 0: Запрос от C# (req_id=117): {"id":117,"data":{"data":"TQTF_W","createdTime":1773340261154,"cmd":"getClassSecurities"},"createdTime":1773340261154,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.850 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.900 LOG 0: Запрос от C# (req_id=118): {"id":118,"data":{"data":"TQBD","createdTime":1773340261155,"cmd":"getClassSecurities"},"createdTime":1773340261155,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.950 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.0 LOG 0: Запрос от C# (req_id=119): {"id":119,"data":{"data":"TQTD","createdTime":1773340261156,"cmd":"getClassSecurities"},"createdTime":1773340261156,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.50 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.100 LOG 0: Запрос от C# (req_id=120): {"id":120,"data":{"data":"TQOD","createdTime":1773340261157,"cmd":"getClassSecurities"},"createdTime":1773340261157,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.150 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.200 LOG 0: Запрос от C# (req_id=121): {"id":121,"data":{"data":"TQOY","createdTime":1773340261158,"cmd":"getClassSecurities"},"createdTime":1773340261158,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.250 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.300 LOG 0: Запрос от C# (req_id=122): {"id":122,"data":{"data":"TQTF_F_HOL","createdTime":1773340261158,"cmd":"getClassSecurities"},"createdTime":1773340261158,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.350 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.400 LOG 0: Запрос от C# (req_id=123): {"id":123,"data":{"data":"EES_OTC","createdTime":1773340261162,"cmd":"getClassSecurities"},"createdTime":1773340261162,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.450 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.500 LOG 0: Запрос от C# (req_id=124): {"id":124,"data":{"data":"TQTF_F","createdTime":1773340261163,"cmd":"getClassSecurities"},"createdTime":1773340261163,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.550 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.600 LOG 0: Запрос от C# (req_id=125): {"id":125,"data":{"data":"SMS","createdTime":1773340261163,"cmd":"getClassSecurities"},"createdTime":1773340261163,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.650 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.700 LOG 0: Запрос от C# (req_id=126): {"id":126,"data":{"data":"ALGO_ICEBERG","createdTime":1773340261164,"cmd":"getClassSecurities"},"createdTime":1773340261164,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.750 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.800 LOG 0: Запрос от C# (req_id=127): {"id":127,"data":{"data":"ALGO_VOLATIL","createdTime":1773340261165,"cmd":"getClassSecurities"},"createdTime":1773340261165,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.850 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.900 LOG 0: Запрос от C# (req_id=128): {"id":128,"data":{"data":"ALGO_TWAP","createdTime":1773340261166,"cmd":"getClassSecurities"},"createdTime":1773340261166,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.950 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.0 LOG 0: Запрос от C# (req_id=129): {"id":129,"data":{"data":"ALGO_VWAP","createdTime":1773340261166,"cmd":"getClassSecurities"},"createdTime":1773340261166,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.50 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.100 LOG 0: Запрос от C# (req_id=130): {"id":130,"data":{"data":"ALGO_GTD","createdTime":1773340261167,"cmd":"getClassSecurities"},"createdTime":1773340261167,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.150 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.200 LOG 0: Запрос от C# (req_id=131): {"id":131,"data":{"data":"MPAU","createdTime":1773340261168,"cmd":"getClassSecurities"},"createdTime":1773340261168,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.250 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.300 LOG 0: Запрос от C# (req_id=132): {"id":132,"data":{"data":"PSAU_FREE","createdTime":1773340261168,"cmd":"getClassSecurities"},"createdTime":1773340261168,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.350 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.400 LOG 0: Запрос от C# (req_id=133): {"id":133,"data":{"data":"PSAU","createdTime":1773340261169,"cmd":"getClassSecurities"},"createdTime":1773340261169,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.450 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.500 LOG 0: Запрос от C# (req_id=134): {"id":134,"data":{"data":"PSSU","createdTime":1773340261170,"cmd":"getClassSecurities"},"createdTime":1773340261170,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.550 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.600 LOG 0: Запрос от C# (req_id=135): {"id":135,"data":{"data":"PSSU_YAD","createdTime":1773340261171,"cmd":"getClassSecurities"},"createdTime":1773340261171,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.650 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.700 LOG 0: Запрос от C# (req_id=136): {"id":136,"data":{"data":"PACY","createdTime":1773340261172,"cmd":"getClassSecurities"},"createdTime":1773340261172,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.750 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.800 LOG 0: Запрос от C# (req_id=137): {"id":137,"data":{"data":"QT_EQ","createdTime":1773340261173,"cmd":"getClassSecurities"},"createdTime":1773340261173,"cmd":"getClassSecurities"}
+2026-03-12 21:31:01.850 LOG 1: После dispatch: cmd=getClassSecurities, data тип=nil, data=[]
+2026-03-12 21:31:01.900 LOG 0: Запрос от C# (req_id=138): {"id":138,"data":{"data":"SPBFUT|RIM6","createdTime":1773340261181,"cmd":"getSecurityInfo"},"createdTime":1773340261181,"cmd":"getSecurityInfo"}
+2026-03-12 21:31:01.950 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"data":"SPBFUT|RIM6","createdTime":1773340261181,"cmd":"getSecurityInfo"}
+2026-03-12 21:31:01.0 LOG 0: Запрос от C# (req_id=139): {"id":139,"data":{"data":"TQBR|LKOH","createdTime":1773340261395,"cmd":"getSecurityInfo"},"createdTime":1773340261395,"cmd":"getSecurityInfo"}
+2026-03-12 21:31:01.50 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"data":"TQBR|LKOH","createdTime":1773340261395,"cmd":"getSecurityInfo"}
+2026-03-12 21:34:21.50 LOG 1: IPC closed (all resources released)

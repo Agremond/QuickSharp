@@ -21,8 +21,7 @@ namespace QuikSharp
         public async Task<string> GetWorkingFolder()
         {
             return await _transport.SendAsync<Message, string>(
-                new Message("", "getWorkingFolder"),
-                "getWorkingFolder"
+                new Message("", "getWorkingFolder")
             ).ConfigureAwait(false);
         }
 
@@ -30,7 +29,6 @@ namespace QuikSharp
         {
             var result = await _transport.SendAsync<Message, string>(
                 new Message("", "isConnected"),
-                "isConnected",
                 CancellationToken.None
             ).ConfigureAwait(false);
 
@@ -40,16 +38,14 @@ namespace QuikSharp
         public async Task<string> GetScriptPath()
         {
             return await _transport.SendAsync<Message, string>(
-                new Message("", "getScriptPath"),
-                "getScriptPath"
+                new Message("", "getScriptPath")
             ).ConfigureAwait(false);
         }
 
         public async Task<string> GetInfoParam(InfoParams param)
         {
             return await _transport.SendAsync<Message, string>(
-                new Message(param.ToString(), "getInfoParam"),
-                "getInfoParam"
+                new Message(param.ToString(), "getInfoParam")
             ).ConfigureAwait(false);
         }
 
@@ -64,8 +60,7 @@ namespace QuikSharp
             };
 
             await _transport.SendAsync<Message, string>(
-                new Message(message, command),
-                command
+                new Message(message, command)
             ).ConfigureAwait(false);
 
             return true;
@@ -74,8 +69,7 @@ namespace QuikSharp
         public async Task<bool> PrintDbgStr(string message)
         {
             await _transport.SendAsync<Message, string>(
-                new Message(message, "PrintDbgStr"),
-                "PrintDbgStr"
+                new Message(message, "PrintDbgStr")
             ).ConfigureAwait(false);
 
             return true;
@@ -86,8 +80,7 @@ namespace QuikSharp
             string payload = $"{price}|{curDate}|{curTime}|{hint}|{path}|{tag}|{alignment}|{backgnd}";
 
             return await _transport.SendAsync<Message, double>(
-                new Message(payload, "addLabel"),
-                "addLabel"
+                new Message(payload, "addLabel")
             ).ConfigureAwait(false);
         }
 
@@ -98,8 +91,7 @@ namespace QuikSharp
             string payload = $"{chartTag}|{yValue}|{strDate}|{strTime}|{text}|{imagePath}|{alignment}|{hint}|{r}|{g}|{b}|{transparency}|{tranBackgrnd}|{fontName}|{fontHeight}";
 
             return await _transport.SendAsync<Message, double>(
-                new Message(payload, "addLabel2"),
-                "addLabel2"
+                new Message(payload, "addLabel2")
             ).ConfigureAwait(false);
         }
 
@@ -110,8 +102,7 @@ namespace QuikSharp
             string payload = $"{chartTag}|{labelId}|{yValue}|{strDate}|{strTime}|{text}|{imagePath}|{alignment}|{hint}|{r}|{g}|{b}|{transparency}|{tranBackgrnd}|{fontName}|{fontHeight}";
 
             return await _transport.SendAsync<Message, bool>(
-                new Message(payload, "setLabelParams"),
-                "setLabelParams"
+                new Message(payload, "setLabelParams")
             ).ConfigureAwait(false);
         }
 
@@ -120,8 +111,7 @@ namespace QuikSharp
             string payload = $"{chartTag}|{labelId}";
 
             return await _transport.SendAsync<Message, Label>(
-                new Message(payload, "getLabelParams"),
-                "getLabelParams"
+                new Message(payload, "getLabelParams")
             ).ConfigureAwait(false);
         }
 
@@ -130,8 +120,7 @@ namespace QuikSharp
             string payload = $"{tag}|{id}";
 
             await _transport.SendAsync<Message, string>(
-                new Message(payload, "delLabel"),
-                "delLabel"
+                new Message(payload, "delLabel")
             ).ConfigureAwait(false);
 
             return true;
@@ -140,8 +129,7 @@ namespace QuikSharp
         public async Task<bool> DelAllLabels(string tag)
         {
             await _transport.SendAsync<Message, string>(
-                new Message(tag, "delAllLabels"),
-                "delAllLabels"
+                new Message(tag, "delAllLabels")
             ).ConfigureAwait(false);
 
             return true;

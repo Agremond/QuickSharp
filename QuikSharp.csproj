@@ -1,26 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks></TargetFrameworks>
-        <AssemblyName>QUIKSharp</AssemblyName>
-        <RootNamespace>QUIKSharp</RootNamespace>
-        <AssemblyOriginatorKeyFile>QUIKSharpKey.snk</AssemblyOriginatorKeyFile>
-        <SignAssembly>true</SignAssembly>
+        <AssemblyName>QuikSharp</AssemblyName>
+        <RootNamespace>QuikSharp</RootNamespace>
+        <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+        <SignAssembly>False</SignAssembly>
         <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
         <VersionPrefix>2.0.0</VersionPrefix>
         <VersionSuffix></VersionSuffix>
         <VersionSuffix Condition="'$(VersionSuffix)' != '' And '$(BuildNumber)' != ''">$(VersionSuffix)-$(BuildNumber)</VersionSuffix>
-        <PackageTags>QUIKSharp</PackageTags>
+        <PackageTags>QuikSharp</PackageTags>
         <Product>QUIKSharp</Product>
-        <PackageId>QUIKSharp</PackageId>
-        <PackageProjectUrl>https://github.com/finsight/QUIKSharp</PackageProjectUrl>
+        <PackageId>QuikSharp</PackageId>
+        <PackageProjectUrl></PackageProjectUrl>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/finsight/QUIKSharp.git</RepositoryUrl>
-        <Authors>Victor Baybekov and QUIK# contributers</Authors>
+        <Authors></Authors>
         <Company />
         <Product />
-        <Copyright>Victor Baybekov and QUIK# contributers</Copyright>
-        <Description>QUIK# (QUIK Sharp) is the QUIK Lua interface ported to .NET. QUIK# exposes all functions and events available in QLUA as C# async functions and events.</Description>
+        <Copyright></Copyright>
+        <Description></Description>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn),1591</NoWarn>
         <IncludeSource>true</IncludeSource>
@@ -28,8 +28,9 @@
         <DebugSymbols>true</DebugSymbols>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PlatformTarget>AnyCPU</PlatformTarget>
-        <LangVersion>9.0</LangVersion>
+        <LangVersion>10.0</LangVersion>
         <TargetFramework>net10.0-windows10.0.17763.0</TargetFramework>
+        <AssemblyTitle>QuikSharp</AssemblyTitle>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
       <WarningLevel>8</WarningLevel>
@@ -39,6 +40,12 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10|AnyCPU'">
       <Optimize>False</Optimize>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <IsPublishable>False</IsPublishable>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <IsPublishable>False</IsPublishable>
     </PropertyGroup>
 
     <ItemGroup>

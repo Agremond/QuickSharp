@@ -97,7 +97,14 @@ function paramsFromConfig(scriptName)
         return nil
     end
 end
+-- closes log
+function closeLog()
+    if logfile then
+        pcall(logfile:close(logfile))
+    end
+end
 
+logfile = openLog()
 --- Write to log file and to Quik messages
 function log(msg, level)
     if not msg then msg = "" end

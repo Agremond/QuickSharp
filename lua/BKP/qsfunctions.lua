@@ -8,7 +8,7 @@ function qsfunctions.dispatch_and_process(msg)
     if qsfunctions[msg.cmd] then
         -- dispatch a command simply by a table lookup
         -- in qsfunctions method names must match commands
-        local status, result = pcall(qsfunctions[msg.cmd], msg)
+        local status, result = pcall(qsfunctions[msg.cmd], msg.data)
         if status then
             return result
         else

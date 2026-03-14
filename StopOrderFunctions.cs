@@ -36,8 +36,7 @@ namespace QuikSharp
         {
             return await _transport
                 .SendAsync<Message, List<StopOrder>>(
-                    new Message("", "get_stop_orders"),
-                    "get_stop_orders")
+                    new Message("", "get_stop_orders"))
                 .ConfigureAwait(false) ?? new List<StopOrder>();
         }
 
@@ -49,8 +48,7 @@ namespace QuikSharp
             var payload = $"{classCode}|{secCode}";
             return await _transport
                 .SendAsync<Message, List<StopOrder>>(
-                    new Message(payload, "get_stop_orders"),
-                    "get_stop_orders")
+                    new Message(payload, "get_stop_orders"))
                 .ConfigureAwait(false) ?? new List<StopOrder>();
         }
 

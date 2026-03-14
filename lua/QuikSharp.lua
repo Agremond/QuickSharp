@@ -59,7 +59,7 @@ end
 --- √лавна€ функци€ (QUIK вызывает автоматически)
 function main()
     message("QuikSharp: запуск...", 1)
-
+    log("QuikSharp: запуск...", 1)
     local connected = util.connect()
     if not connected then
         message("QuikSharp: не удалось инициализировать shared memory", 3)
@@ -70,7 +70,8 @@ function main()
 
     while IsScriptRunning() do
         local cmd, req_id, err = util.receiveRequest(0.050)   -- 50 мс Ч комфортный баланс
-
+   --     sleep(1000)
+    --    log("ќбычное дело Ч просто ждЄм дальше", 0)
         if cmd then
 		
             -- --------------------------------

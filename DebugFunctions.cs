@@ -26,7 +26,7 @@ namespace QuikSharp
         public async Task<string> Ping()
         {
             var request = new Message("Ping", "ping");
-            var response = await _transport.SendAsync<Message, string>(request, "ping").ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, string>(request ).ConfigureAwait(false);
 
             Trace.Assert(response == "Pong");
             return response;
@@ -38,7 +38,7 @@ namespace QuikSharp
         public async Task<T> Echo<T>(T msg)
         {
             var request = new Message(msg, "echo");
-            var response = await _transport.SendAsync<Message, T>(request, "echo").ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, T>(request).ConfigureAwait(false);
             return response;
         }
 
@@ -48,7 +48,7 @@ namespace QuikSharp
         public async Task<string> DivideStringByZero()
         {
             var request = new Message("", "divide_string_by_zero");
-            var response = await _transport.SendAsync<Message, string>(request, "divide_string_by_zero").ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, string>(request).ConfigureAwait(false);
             return response;
         }
 
@@ -58,7 +58,7 @@ namespace QuikSharp
         public async Task<bool> IsQuik()
         {
             var request = new Message("", "is_quik");
-            var response = await _transport.SendAsync<Message, string>(request, "is_quik").ConfigureAwait(false);
+            var response = await _transport.SendAsync<Message, string>(request).ConfigureAwait(false);
             return response == "1";
         }
     }

@@ -28,27 +28,27 @@ namespace QuikSharp
         {
             var payload = $"{clientCode}|{firmId}|{secCode}|{account}";
             return await _transport.SendAsync<Message, DepoLimit>(
-                new Message(payload, "getDepo"), "getDepo").ConfigureAwait(false) ?? new DepoLimit();
+                new Message(payload, "getDepo")).ConfigureAwait(false) ?? new DepoLimit();
         }
 
         public async Task<DepoLimitEx> GetDepoEx(string firmId, string clientCode, string secCode, string accID, int limitKind)
         {
             var payload = $"{firmId}|{clientCode}|{secCode}|{accID}|{limitKind}";
             return await _transport.SendAsync<Message, DepoLimitEx>(
-                new Message(payload, "getDepoEx"), "getDepoEx").ConfigureAwait(false) ?? new DepoLimitEx();
+                new Message(payload, "getDepoEx")).ConfigureAwait(false) ?? new DepoLimitEx();
         }
 
         public async Task<List<DepoLimitEx>> GetDepoLimits()
         {
             return await _transport.SendAsync<Message, List<DepoLimitEx>>(
-                new Message("", "get_depo_limits"), "get_depo_limits").ConfigureAwait(false)
+                new Message("", "get_depo_limits")).ConfigureAwait(false)
                 ?? new List<DepoLimitEx>();
         }
 
         public async Task<List<DepoLimitEx>> GetDepoLimits(string secCode)
         {
             return await _transport.SendAsync<Message, List<DepoLimitEx>>(
-                new Message(secCode, "get_depo_limits"), "get_depo_limits").ConfigureAwait(false)
+                new Message(secCode, "get_depo_limits")).ConfigureAwait(false)
                 ?? new List<DepoLimitEx>();
         }
 
@@ -60,20 +60,20 @@ namespace QuikSharp
         {
             var payload = $"{clientCode}|{firmId}|{tag}|{currCode}";
             return await _transport.SendAsync<Message, MoneyLimit>(
-                new Message(payload, "getMoney"), "getMoney").ConfigureAwait(false) ?? new MoneyLimit();
+                new Message(payload, "getMoney")).ConfigureAwait(false) ?? new MoneyLimit();
         }
 
         public async Task<MoneyLimitEx> GetMoneyEx(string firmId, string clientCode, string tag, string currCode, int limitKind)
         {
             var payload = $"{firmId}|{clientCode}|{tag}|{currCode}|{limitKind}";
             return await _transport.SendAsync<Message, MoneyLimitEx>(
-                new Message(payload, "getMoneyEx"), "getMoneyEx").ConfigureAwait(false) ?? new MoneyLimitEx();
+                new Message(payload, "getMoneyEx")).ConfigureAwait(false) ?? new MoneyLimitEx();
         }
 
         public async Task<List<MoneyLimitEx>> GetMoneyLimits()
         {
             return await _transport.SendAsync<Message, List<MoneyLimitEx>>(
-                new Message("", "getMoneyLimits"), "getMoneyLimits").ConfigureAwait(false)
+                new Message("", "getMoneyLimits")).ConfigureAwait(false)
                 ?? new List<MoneyLimitEx>();
         }
 
@@ -85,13 +85,13 @@ namespace QuikSharp
         {
             var payload = $"{firmId}|{accId}|{limitType}|{currCode}";
             return await _transport.SendAsync<Message, FuturesLimits>(
-                new Message(payload, "getFuturesLimit"), "getFuturesLimit").ConfigureAwait(false) ?? new FuturesLimits();
+                new Message(payload, "getFuturesLimit")).ConfigureAwait(false) ?? new FuturesLimits();
         }
 
         public async Task<List<FuturesLimits>> GetFuturesClientLimits()
         {
             return await _transport.SendAsync<Message, List<FuturesLimits>>(
-                new Message("", "getFuturesClientLimits"), "getFuturesClientLimits").ConfigureAwait(false)
+                new Message("", "getFuturesClientLimits")).ConfigureAwait(false)
                 ?? new List<FuturesLimits>();
         }
 
@@ -99,13 +99,13 @@ namespace QuikSharp
         {
             var payload = $"{firmId}|{accId}|{secCode}|{posType}";
             return await _transport.SendAsync<Message, FuturesClientHolding>(
-                new Message(payload, "getFuturesHolding"), "getFuturesHolding").ConfigureAwait(false) ?? new FuturesClientHolding();
+                new Message(payload, "getFuturesHolding")).ConfigureAwait(false) ?? new FuturesClientHolding();
         }
 
         public async Task<List<FuturesClientHolding>> GetFuturesClientHoldings()
         {
             return await _transport.SendAsync<Message, List<FuturesClientHolding>>(
-                new Message("", "getFuturesClientHoldings"), "getFuturesClientHoldings").ConfigureAwait(false)
+                new Message("", "getFuturesClientHoldings")).ConfigureAwait(false)
                 ?? new List<FuturesClientHolding>();
         }
 
@@ -117,7 +117,7 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{secCode}|{paramName}";
             return await _transport.SendAsync<Message, bool>(
-                new Message(payload, "paramRequest"), "paramRequest").ConfigureAwait(false);
+                new Message(payload, "paramRequest")).ConfigureAwait(false);
         }
 
         public Task<bool> ParamRequest(string classCode, string secCode, ParamNames paramName)
@@ -127,7 +127,7 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{secCode}|{paramName}";
             return await _transport.SendAsync<Message, bool>(
-                new Message(payload, "cancelParamRequest"), "cancelParamRequest").ConfigureAwait(false);
+                new Message(payload, "cancelParamRequest")).ConfigureAwait(false);
         }
 
         public Task<bool> CancelParamRequest(string classCode, string secCode, ParamNames paramName)
@@ -137,7 +137,7 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{secCode}|{paramName}";
             return await _transport.SendAsync<Message, ParamTable>(
-                new Message(payload, "getParamEx"), "getParamEx").ConfigureAwait(false) ?? new ParamTable();
+                new Message(payload, "getParamEx")).ConfigureAwait(false) ?? new ParamTable();
         }
 
         public Task<ParamTable> GetParamEx(string classCode, string secCode, ParamNames paramName, int timeout = Timeout.Infinite)
@@ -147,7 +147,7 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{secCode}|{paramName}";
             return await _transport.SendAsync<Message, ParamTable>(
-                new Message(payload, "getParamEx2"), "getParamEx2").ConfigureAwait(false) ?? new ParamTable();
+                new Message(payload, "getParamEx2")).ConfigureAwait(false) ?? new ParamTable();
         }
 
         public Task<ParamTable> GetParamEx2(string classCode, string secCode, ParamNames paramName)
@@ -158,24 +158,24 @@ namespace QuikSharp
         // ------------------------------------------------------------------------
 
         public async Task<List<Trade>> GetTrades()
-            => await _transport.SendAsync<Message, List<Trade>>(new Message("", "get_trades"), "get_trades").ConfigureAwait(false) ?? new List<Trade>();
+            => await _transport.SendAsync<Message, List<Trade>>(new Message("", "get_trades")).ConfigureAwait(false) ?? new List<Trade>();
 
         public async Task<List<Trade>> GetTrades(string classCode, string secCode)
         {
             var payload = $"{classCode}|{secCode}";
-            return await _transport.SendAsync<Message, List<Trade>>(new Message(payload, "get_trades"), "get_trades").ConfigureAwait(false) ?? new List<Trade>();
+            return await _transport.SendAsync<Message, List<Trade>>(new Message(payload, "get_trades")).ConfigureAwait(false) ?? new List<Trade>();
         }
 
         public async Task<List<Trade>> GetTradesByOrderNumber(long orderNum)
-            => await _transport.SendAsync<Message, List<Trade>>(new Message(orderNum.ToString(), "get_Trades_by_OrderNumber"), "get_Trades_by_OrderNumber").ConfigureAwait(false) ?? new List<Trade>();
+            => await _transport.SendAsync<Message, List<Trade>>(new Message(orderNum.ToString(), "get_Trades_by_OrderNumber")).ConfigureAwait(false) ?? new List<Trade>();
 
         public async Task<List<AllTrade>> GetAllTrades()
-            => await _transport.SendAsync<Message, List<AllTrade>>(new Message("", "get_all_trades"), "get_all_trades").ConfigureAwait(false) ?? new List<AllTrade>();
+            => await _transport.SendAsync<Message, List<AllTrade>>(new Message("", "get_all_trades")).ConfigureAwait(false) ?? new List<AllTrade>();
 
         public async Task<List<AllTrade>> GetAllTrades(string classCode, string secCode)
         {
             var payload = $"{classCode}|{secCode}";
-            return await _transport.SendAsync<Message, List<AllTrade>>(new Message(payload, "get_all_trades"), "get_all_trades").ConfigureAwait(false) ?? new List<AllTrade>();
+            return await _transport.SendAsync<Message, List<AllTrade>>(new Message(payload, "get_all_trades")).ConfigureAwait(false) ?? new List<AllTrade>();
         }
 
         // ------------------------------------------------------------------------
@@ -193,7 +193,7 @@ namespace QuikSharp
             try
             {
                 var success = await _transport.SendAsync<Message, bool>(
-                    new Message(transaction, "sendTransaction"), "sendTransaction").ConfigureAwait(false);
+                    new Message(transaction, "sendTransaction")).ConfigureAwait(false);
 
                 return success ? transaction.TRANS_ID.Value : -transaction.TRANS_ID.Value;
             }
@@ -226,63 +226,63 @@ namespace QuikSharp
         {
             var payload = $"{classCode}|{secCode}|{clientCode}|{trdAccId}|{price.ToString(System.Globalization.CultureInfo.InvariantCulture)}|{isBuy}|{isMarket}";
             return await _transport.SendAsync<Message, CalcBuySellResult>(
-                new Message(payload, "calc_buy_sell"), "calc_buy_sell").ConfigureAwait(false) ?? new CalcBuySellResult();
+                new Message(payload, "calc_buy_sell")).ConfigureAwait(false) ?? new CalcBuySellResult();
         }
 
         public async Task<PortfolioInfo> GetPortfolioInfo(string firmId, string clientCode)
         {
             var payload = $"{firmId}|{clientCode}";
             return await _transport.SendAsync<Message, PortfolioInfo>(
-                new Message(payload, "getPortfolioInfo"), "getPortfolioInfo").ConfigureAwait(false) ?? new PortfolioInfo();
+                new Message(payload, "getPortfolioInfo")).ConfigureAwait(false) ?? new PortfolioInfo();
         }
 
         public async Task<PortfolioInfoEx> GetPortfolioInfoEx(string firmId, string clientCode, int limitKind)
         {
             var payload = $"{firmId}|{clientCode}|{limitKind}";
             return await _transport.SendAsync<Message, PortfolioInfoEx>(
-                new Message(payload, "getPortfolioInfoEx"), "getPortfolioInfoEx").ConfigureAwait(false) ?? new PortfolioInfoEx();
+                new Message(payload, "getPortfolioInfoEx")).ConfigureAwait(false) ?? new PortfolioInfoEx();
         }
 
         public async Task<BuySellInfo> GetBuySellInfo(string firmId, string clientCode, string classCode, string secCode, double price)
         {
             var payload = $"{firmId}|{clientCode}|{classCode}|{secCode}|{price.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
             return await _transport.SendAsync<Message, BuySellInfo>(
-                new Message(payload, "getBuySellInfo"), "getBuySellInfo").ConfigureAwait(false) ?? new BuySellInfo();
+                new Message(payload, "getBuySellInfo")).ConfigureAwait(false) ?? new BuySellInfo();
         }
 
         public async Task<BuySellInfo> GetBuySellInfoEx(string firmId, string clientCode, string classCode, string secCode, double price)
         {
             var payload = $"{firmId}|{clientCode}|{classCode}|{secCode}|{price.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
             return await _transport.SendAsync<Message, BuySellInfo>(
-                new Message(payload, "getBuySellInfoEx"), "getBuySellInfoEx").ConfigureAwait(false) ?? new BuySellInfo();
+                new Message(payload, "getBuySellInfoEx")).ConfigureAwait(false) ?? new BuySellInfo();
         }
 
         public async Task<string> GetTrdAccByClientCode(string firmId, string clientCode)
         {
             var payload = $"{firmId}|{clientCode}";
             return await _transport.SendAsync<Message, string>(
-                new Message(payload, "GetTrdAccByClientCode"), "GetTrdAccByClientCode").ConfigureAwait(false) ?? string.Empty;
+                new Message(payload, "GetTrdAccByClientCode")).ConfigureAwait(false) ?? string.Empty;
         }
 
         public async Task<string> GetClientCodeByTrdAcc(string firmId, string trdAccId)
         {
             var payload = $"{firmId}|{trdAccId}";
             return await _transport.SendAsync<Message, string>(
-                new Message(payload, "GetClientCodeByTrdAcc"), "GetClientCodeByTrdAcc").ConfigureAwait(false) ?? string.Empty;
+                new Message(payload, "GetClientCodeByTrdAcc")).ConfigureAwait(false) ?? string.Empty;
         }
 
         public async Task<bool> IsUcpClient(string firmId, string client)
         {
             var payload = $"{firmId}|{client}";
             return await _transport.SendAsync<Message, bool>(
-                new Message(payload, "IsUcpClient"), "IsUcpClient").ConfigureAwait(false);
+                new Message(payload, "IsUcpClient")).ConfigureAwait(false);
         }
 
         public async Task<List<OptionBoard>> GetOptionBoard(string classCode, string secCode)
         {
             var payload = $"{classCode}|{secCode}";
             return await _transport.SendAsync<Message, List<OptionBoard>>(
-                new Message(payload, "getOptionBoard"), "getOptionBoard").ConfigureAwait(false) ?? new List<OptionBoard>();
+                new Message(payload, "getOptionBoard")).ConfigureAwait(false) ?? new List<OptionBoard>();
         }
     }
 }

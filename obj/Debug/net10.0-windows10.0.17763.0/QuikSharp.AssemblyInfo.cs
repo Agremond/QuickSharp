@@ -11,15 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Victor Baybekov and QUIK# contributers")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("QuikSharp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyCopyrightAttribute("Victor Baybekov and QUIK# contributers")]
-[assembly: System.Reflection.AssemblyDescriptionAttribute("QUIK# (QUIK Sharp) is the QUIK Lua interface ported to .NET. QUIK# exposes all fu" +
-    "nctions and events available in QLUA as C# async functions and events.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("2.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0+fb758574b9bc5e913059f013c79b678349642e52")]
-[assembly: System.Reflection.AssemblyProductAttribute("QUIKSharp")]
-[assembly: System.Reflection.AssemblyTitleAttribute("QUIKSharp")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0+714440b36313aa66f7baedfc9e1ca7da94d10fb5")]
+[assembly: System.Reflection.AssemblyProductAttribute("QuikSharp")]
+[assembly: System.Reflection.AssemblyTitleAttribute("QuikSharp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("2.0.0.0")]
 [assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://github.com/finsight/QUIKSharp.git")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows10.0.17763.0")]
