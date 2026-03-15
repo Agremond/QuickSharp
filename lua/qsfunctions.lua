@@ -64,7 +64,8 @@ end
 
 function qsfunctions.isConnected(msg)
     msg.t = timemsec()
-    msg.data = isConnected()
+    -- Принудительно превращаем 1/0 в строку "1"/"0"
+    msg.data = tostring(isConnected()) 
     return msg
 end
 
@@ -82,7 +83,7 @@ end
 
 function qsfunctions.getInfoParam(msg)
     msg.t = timemsec()
-    msg.data = getInfoParam(msg.data)
+    msg.data = getInfoParam(msg.data.data)
     return msg
 end
 

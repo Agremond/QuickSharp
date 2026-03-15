@@ -3,10 +3,22 @@
   "WorkspaceRootPath": "C:\\Programming\\QuikSharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\candlefunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\servicefunctions\\servicefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:servicefunctions\\servicefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\servicefuncitonstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\candlefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -16,12 +28,7 @@
       "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\classfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\candlefunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\transports\\iquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +57,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,7 +73,33 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ServiceFunctions.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\ServiceFunctions\\ServiceFunctions.cs",
+              "RelativeDocumentMoniker": "ServiceFunctions\\ServiceFunctions.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\ServiceFunctions\\ServiceFunctions.cs",
+              "RelativeToolTip": "ServiceFunctions\\ServiceFunctions.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAiwDAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T18:34:16.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "ServiceFuncitonsTest.cs",
+              "DocumentMoniker": "C:\\Programming\\QS.Tests\\ServiceFuncitonsTest.cs",
+              "RelativeDocumentMoniker": "..\\QS.Tests\\ServiceFuncitonsTest.cs",
+              "ToolTip": "C:\\Programming\\QS.Tests\\ServiceFuncitonsTest.cs",
+              "RelativeToolTip": "..\\QS.Tests\\ServiceFuncitonsTest.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAnwCoAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T18:29:11.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "CandleFunctions.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\CandleFunctions.cs",
               "RelativeDocumentMoniker": "CandleFunctions.cs",
@@ -79,26 +112,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "ClassFunctionsTest.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\ClassFunctionsTest.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\ClassFunctionsTest.cs",
               "ToolTip": "C:\\Programming\\QS.Tests\\ClassFunctionsTest.cs",
               "RelativeToolTip": "..\\QS.Tests\\ClassFunctionsTest.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAawBUAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:32:31.238Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "CandleFunctionsTest.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\CandleFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs*",
-              "RelativeToolTip": "..\\QS.Tests\\CandleFunctionsTest.cs*",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAlwF8AAAANAAAAAAAAAA==",
+              "ToolTip": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs",
+              "RelativeToolTip": "..\\QS.Tests\\CandleFunctionsTest.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAlwGEAAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:30:59.232Z",
               "EditorCaption": ""
@@ -111,39 +144,40 @@
               "RelativeDocumentMoniker": "..\\QS.Tests\\Program.cs",
               "ToolTip": "C:\\Programming\\QS.Tests\\Program.cs",
               "RelativeToolTip": "..\\QS.Tests\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAwwDUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:23:21.868Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "Message.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\Message.cs",
               "RelativeDocumentMoniker": "Message.cs",
               "ToolTip": "C:\\Programming\\QuikSharp\\Message.cs",
               "RelativeToolTip": "Message.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAMwBcAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAwwEwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:20:56.094Z"
+              "WhenOpened": "2026-03-14T19:20:56.094Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "ShmQuikTransport.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
               "RelativeDocumentMoniker": "Transports\\ShmQuikTransport.cs",
               "ToolTip": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
               "RelativeToolTip": "Transports\\ShmQuikTransport.cs",
-              "ViewState": "AgIAAJ0AAAAAAAAAAAAwwMkAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAKYAAAAAAAAAAAAwwNkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:20:36.024Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
@@ -155,7 +189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharpTest\\Program.cs",
               "RelativeDocumentMoniker": "..\\QuikSharpTest\\Program.cs",
@@ -167,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "IQuikTransport.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\Transports\\IQuikTransport.cs",
               "RelativeDocumentMoniker": "Transports\\IQuikTransport.cs",
@@ -179,7 +213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "QuikSharp.AssemblyInfo.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\obj\\Debug\\net10.0-windows10.0.17763.0\\QuikSharp.AssemblyInfo.cs",
               "RelativeDocumentMoniker": "obj\\Debug\\net10.0-windows10.0.17763.0\\QuikSharp.AssemblyInfo.cs",
@@ -191,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": ".NETCoreApp,Version=v10.0.AssemblyAttributes.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\obj\\Debug\\net10.0-windows10.0.17763.0\\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs",
               "RelativeDocumentMoniker": "obj\\Debug\\net10.0-windows10.0.17763.0\\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs",
