@@ -1,0 +1,8 @@
+{
+    "Lua.diagnostics.globals": [
+        "create_data_source",
+        "fetch_candle",
+        "get_candles_param",
+        "data_source_callback"
+    ]
+}

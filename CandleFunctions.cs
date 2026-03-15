@@ -54,8 +54,13 @@ namespace QuikSharp
         }
 
         /// <summary>
-        /// Получение свечей по графическому тегу с указанной линией и диапазоном
+        /// Функция предназначена для получения информации о свечках по идентификатору (заказ данных для построения графика плагин не осуществляет, поэтому для успешного доступа нужный график должен быть открыт).
         /// </summary>
+        /// <param name="graphicTag">Строковый идентификатор графика или индикатора</param>
+        /// <param name="line">Номер линии графика или индикатора. Первая линия имеет номер 0</param>
+        /// <param name="first">Индекс первой свечки. Первая (самая левая) свечка имеет индекс 0</param>
+        /// <param name="count">Количество запрашиваемых свечек</param>
+        /// <returns></returns>
         public async Task<List<Candle>> GetCandles(string graphicTag, int line, int first, int count)
         {
             var payload = $"{graphicTag}|{line}|{first}|{count}";
@@ -64,26 +69,24 @@ namespace QuikSharp
         }
 
         /// <summary>
-        /// Получение всех свечей инструмента по таймфрейму
+        /// Функция возвращает список свечек указанного инструмента заданного интервала и параметра запрошенных данных.
         /// </summary>
+        /// <param name="classCode">Класс инструмента.</param>
+        /// <param name="securityCode">Код инструмента.</param>
+        /// <param name="interval">Интервал свечей.</param>
+        /// <param name="param">Параметр запрашиваемых свечей.</param>
+        /// <returns>Список свечей.</returns>
         public async Task<List<Candle>> GetAllCandles(string classCode, string securityCode, CandleInterval interval, string param = "-")
         {
             return await GetLastCandles(classCode, securityCode, interval, 0, param).ConfigureAwait(false);
         }
-
         /// <summary>
-        /// Получение последних N свечей инструмента по таймфрейму
+        /// Осуществляет подписку на получение исторических данных (свечи)
         /// </summary>
-        public async Task<List<Candle>> GetLastCandles(string classCode, string securityCode, CandleInterval interval, int count, string param = "-")
-        {
-            var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}|{count}";
-            var message = new Message(payload, "get_candles_from_data_source");
-            return await _transport.SendAsync<Message, List<Candle>>(message, "get_candles_from_data_source").ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Подписка на свечи инструмента
-        /// </summary>
+        /// <param name="classCode">Класс инструмента.</param>
+        /// <param name="securityCode">Код инструмента.</param>
+        /// <param name="interval">интервал свечей (тайм-фрейм).</param>
+        /// <param name="param">Параметр запрашиваемых свечей.</param>
         public async Task Subscribe(string classCode, string securityCode, CandleInterval interval, string param = "-")
         {
             var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}";
@@ -91,9 +94,32 @@ namespace QuikSharp
             await _transport.SendAsync<Message, string>(message, "subscribe_to_candles").ConfigureAwait(false);
         }
 
+
         /// <summary>
-        /// Отписка от свечей инструмента
+        /// Возвращает заданное количество свечек указанного инструмента и интервала с конца.
         /// </summary>
+        /// <param name="classCode">Класс инструмента.</param>
+        /// <param name="securityCode">Код инструмента.</param>
+        /// <param name="interval">Интервал свечей.</param>
+        /// <param name="param">Параметр запрашиваемых свечей.</param>
+        /// <param name="count">Количество возвращаемых свечей с конца.</param>
+        /// <returns>Список свечей.</returns>
+        public async Task<List<Candle>> GetLastCandles(string classCode, string securityCode, CandleInterval interval, int count, string param = "-")
+        {
+            var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}|{count}";
+            var message = new Message(payload, "get_candles_from_data_source");
+            return await _transport.SendAsync<Message, List<Candle>>(message, "get_candles_from_data_source").ConfigureAwait(false);
+        }
+
+  
+
+        /// <summary>
+        /// Отписывается от получения исторических данных (свечей)
+        /// </summary>
+        /// <param name="classCode">Класс инструмента.</param>
+        /// <param name="securityCode">Код инструмента.</param>
+        /// <param name="interval">интервал свечей (тайм-фрейм).</param>
+        /// <param name="param">Параметр запрашиваемых свечей.</param>
         public async Task Unsubscribe(string classCode, string securityCode, CandleInterval interval, string param = "-")
         {
             var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}";
@@ -102,8 +128,12 @@ namespace QuikSharp
         }
 
         /// <summary>
-        /// Проверка состояния подписки на свечи инструмента
+        /// Проверка состояния подписки на исторические данные (свечи)
         /// </summary>
+        /// <param name="classCode">Класс инструмента.</param>
+        /// <param name="securityCode">Код инструмента.</param>
+        /// <param name="interval">интервал свечей (тайм-фрейм).</param>
+        /// <param name="param">Параметр запрашиваемых свечей.</param>
         public async Task<bool> IsSubscribed(string classCode, string securityCode, CandleInterval interval, string param = "-")
         {
             var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}";

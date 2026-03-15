@@ -19,7 +19,7 @@ namespace QuikSharp
         /// <summary>
         /// Команда или функция, к которой относится сообщение
         /// </summary>
-        string Command { get; set; }
+        string cmd { get; set; }
 
         /// <summary>
         /// Время создания в миллисекундах (как в Lua socket.gettime()*1000)
@@ -41,7 +41,7 @@ namespace QuikSharp
 
         protected BaseMessage(string command = "", DateTime? validUntil = null)
         {
-            Command = command;
+            cmd = command;
             CreatedTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             ValidUntil = validUntil;
         }
@@ -50,7 +50,7 @@ namespace QuikSharp
         public long? Id { get; set; }
 
         [JsonProperty(PropertyName = "cmd")]
-        public string Command { get; set; }
+        public string cmd { get; set; }
 
         [JsonProperty(PropertyName = "t")]
         public long CreatedTime { get; set; }
@@ -70,7 +70,7 @@ namespace QuikSharp
 
         public Message(object data, string command, DateTime? validUntil = null)
         {
-            Command = command;
+            cmd = command;
             CreatedTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             ValidUntil = validUntil;
             Data = data;

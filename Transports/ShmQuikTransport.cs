@@ -149,7 +149,7 @@
                 var msg = new Message
                 {
                     Id = reqId,
-                    Command = command,
+                    cmd = command,
                     Data = request,
                     CreatedTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
                 };
@@ -205,7 +205,7 @@
                         throw new Exception($"Lua error: {response.LuaError}");
 
                     if (response.Data is JsonElement je)
-                        return je.Deserialize<TResponse>(_jsonOpts)!;
+                         return je .Deserialize<TResponse>(_jsonOpts)!;
 
                     return JsonSerializer.Deserialize<TResponse>(
                         JsonSerializer.Serialize(response.Data, _jsonOpts), _jsonOpts)!;
@@ -305,7 +305,7 @@
             {
                 try
                 {
-                    switch (msg.Command?.ToLowerInvariant())
+                    switch (msg.cmd?.ToLowerInvariant())
                     {
                         case "newcandle": OnNewCandle?.Invoke(msg.GetData<Candle>()); break;
                         case "onorder": OnOrder?.Invoke(msg.GetData<Order>()); break;
@@ -327,7 +327,7 @@
                         case "onmoneylimitdelete": OnMoneyLimitDelete?.Invoke(msg.GetData<MoneyLimitDelete>()); break;
 
                         default:
-                            OnUnknownCallback?.Invoke(msg.Command ?? "unknown");
+                            OnUnknownCallback?.Invoke(msg.cmd ?? "unknown");
                             break;
                     }
                 }

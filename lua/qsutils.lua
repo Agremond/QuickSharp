@@ -1,7 +1,7 @@
 -- qsutils.lua
 local json = require "dkjson"
-local ipcshm = require "ipc.shm"  -- ipc.shm для shared memory
-local ipcsem = require "ipc.sem"  -- ipc.sem для семафоров
+local ipcshm = require "ipc.shm"  -- ipc.shm пїЅпїЅпїЅ shared memory
+local ipcsem = require "ipc.sem"  -- ipc.sem пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 local qsutils = {}
 
@@ -24,7 +24,7 @@ function timemsec()
         time_offset = 0
         last_os_time = now
     end
-    time_offset = time_offset + 50 -- грубая эмуляция
+    time_offset = time_offset + 50 -- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     return (now * 1000) + time_offset % 1000
 end
 
@@ -98,6 +98,15 @@ function paramsFromConfig(scriptName)
     end
 end
 
+-- closes log
+function closeLog()
+    if logfile then
+        pcall(logfile:close(logfile))
+    end
+end
+
+logfile = openLog()
+
 --- Write to log file and to Quik messages
 function log(msg, level)
     if not msg then msg = "" end
@@ -162,32 +171,32 @@ function to_json(msg)
 end
 
 -- =============================================================================
--- ТРАНСПОРТ: shared memory + семафоры + mutex (Вариант 2: отдельные буферы)
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: shared memory + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + mutex (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 -- =============================================================================
 
--- Имена объектов (глобальные в системе)
-local REQ_SHM_NAME = "QuikSharp_Request_Shmem"  -- Для запросов C# -> Lua
-local RESP_SHM_NAME = "QuikSharp_Response_Shmem"  -- Для синхронных ответов Lua -> C#
-local CB_SHM_NAME = "QuikSharp_Callback_Shmem"  -- Для асинхронных callbacks Lua -> C#
+-- пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+local REQ_SHM_NAME = "QuikSharp_Request_Shmem"  -- пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ C# -> Lua
+local RESP_SHM_NAME = "QuikSharp_Response_Shmem"  -- пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Lua -> C#
+local CB_SHM_NAME = "QuikSharp_Callback_Shmem"  -- пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ callbacks Lua -> C#
 
-local REQ_SEM_NAME = "QuikSharp_Request_Sem"  -- Сигнал о новом запросе (C# post)
-local RESP_SEM_NAME = "QuikSharp_Response_Sem"  -- Сигнал о новом ответе (Lua post)
-local CB_SEM_NAME = "QuikSharp_Callback_Sem"  -- Сигнал о новом callback (Lua post)
+local REQ_SEM_NAME = "QuikSharp_Request_Sem"  -- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (C# post)
+local RESP_SEM_NAME = "QuikSharp_Response_Sem"  -- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (Lua post)
+local CB_SEM_NAME = "QuikSharp_Callback_Sem"  -- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ callback (Lua post)
 
-local REQ_MTX_NAME = "QuikSharp_Request_MutexSem"  -- Защита Request shmem
-local RESP_MTX_NAME = "QuikSharp_Response_MutexSem"  -- Защита Response shmem
-local CB_MTX_NAME = "QuikSharp_Callback_MutexSem"  -- Защита Callback shmem
+local REQ_MTX_NAME = "QuikSharp_Request_MutexSem"  -- пїЅпїЅпїЅпїЅпїЅпїЅ Request shmem
+local RESP_MTX_NAME = "QuikSharp_Response_MutexSem"  -- пїЅпїЅпїЅпїЅпїЅпїЅ Response shmem
+local CB_MTX_NAME = "QuikSharp_Callback_MutexSem"  -- пїЅпїЅпїЅпїЅпїЅпїЅ Callback shmem
 
--- Размеры буферов (4MB общий в оригинале — разделим: 1MB request, 1MB response, 2MB callback для объёмных данных)
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (4MB пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: 1MB request, 1MB response, 2MB callback пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 local SHM_SIZE_REQ = 1024 * 1024  -- 1MB
 local SHM_SIZE_RESP = 1024 * 1024  -- 1MB
 local SHM_SIZE_CB = 2 * 1024 * 1024  -- 2MB
 
-local HEADER_SIZE = 24  -- Как в оригинале: 6x uint32 (magic, ver, req_id, msg_type, body_len, reserved)
+local HEADER_SIZE = 24  -- пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: 6x uint32 (magic, ver, req_id, msg_type, body_len, reserved)
 local MAGIC = 0x5155494B  -- "QUIK"
 local VERSION = 2
 
--- Хэндлы ресурсов
+-- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 local req_shm, resp_shm, cb_shm
 local req_sem, resp_sem, cb_sem
 local req_mtx, resp_mtx, cb_mtx
@@ -195,9 +204,9 @@ local req_mtx, resp_mtx, cb_mtx
 local is_connected = false
 
 local function init_shm()
-    if req_shm then return true end  -- Уже инициализировано
+    if req_shm then return true end  -- пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-    -- Создаём/открываем shared memory (create — если не существует, создаст; иначе откроет)
+    -- пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ shared memory (create пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ; пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
     local ok, err = ipcshm.create(REQ_SHM_NAME, SHM_SIZE_REQ)
     if not ok then
         log("ipcshm.create failed for REQ: " .. tostring(err), 3)
@@ -219,7 +228,7 @@ local function init_shm()
     end
     cb_shm = ok
 
-    -- Семафоры (open with initial 0 — ждём сигнала)
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (open with initial 0 пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
     ok, err = ipcsem.open(REQ_SEM_NAME, 1)
     if not ok then
         log("ipcsem.open failed for REQ: " .. tostring(err), 3)
@@ -244,7 +253,7 @@ local function init_shm()
     cb_sem = ok
     cb_sem:dec()
 
-    -- Мьютексы (open with initial 1 — unlocked)
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (open with initial 1 пїЅ unlocked)
     ok, err = ipcsem.open(REQ_MTX_NAME, 1)
     if not ok then
         log("ipcmtx.open failed for REQ: " .. tostring(err), 3)
@@ -266,7 +275,7 @@ local function init_shm()
     end
     cb_mtx = ok
 
-    -- Инициализируем заголовки (опционально, но для чистоты)
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
     req_shm:seek("set")
     req_shm:write(string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0))
     resp_shm:seek("set")
@@ -279,7 +288,7 @@ local function init_shm()
 end
 
 function qsutils.connect(...)
-    -- Игнорируем старые параметры сокетов (TCP)
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (TCP)
     if is_connected then return true end
     local ok, err = init_shm()
     if not ok then
@@ -291,20 +300,20 @@ function qsutils.connect(...)
     return true
 end
 
--- Получение запроса от C#
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ C#
 function qsutils.receiveRequest(timeout_sec)
     if not is_connected then
         return nil, "not connected"
     end
     timeout_sec = timeout_sec or 5.0
 
-    -- Ждём сигнала о новом запросе (C# > Lua)
-    local success = req_sem:dec(timeout_sec)  -- dec/wait с таймаутом
+    -- пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (C# > Lua)
+    local success = req_sem:dec(timeout_sec)  -- dec/wait пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     if not success then
         return nil, "timeout"
     end
 
-    -- Захватываем мьютекс для чтения
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     req_mtx:dec()
 
     req_shm:seek("set")
@@ -319,13 +328,13 @@ function qsutils.receiveRequest(timeout_sec)
         return nil, "bad magic number"
     end
 
-    -- Случай пустого тела — heartbeat или ping без данных
+    -- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ heartbeat пїЅпїЅпїЅ ping пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     if body_len == 0 then
         req_mtx:inc()
         return nil, "empty body", req_id
     end
 
-    if body_len > SHM_SIZE_REQ - HEADER_SIZE then  -- Защита от overflow
+    if body_len > SHM_SIZE_REQ - HEADER_SIZE then  -- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ overflow
         req_mtx:inc()
         return nil, "body too large: " .. body_len
     end
@@ -344,12 +353,12 @@ function qsutils.receiveRequest(timeout_sec)
         return nil, "json decode failed: " .. tostring(err)
     end
 
-    -- Успех — освобождаем мьютекс и возвращаем
+    -- пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     req_mtx:inc()
     return tbl, req_id
 end
 
--- Отправка ответа или колбэка в C#
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ C#
 local function send_message(msg_table, is_callback)
     local shm_to_use = is_callback and cb_shm or resp_shm
     local mtx_to_use = is_callback and cb_mtx or resp_mtx
@@ -364,28 +373,28 @@ local function send_message(msg_table, is_callback)
         return nil, "message too large: " .. len
     end
 
-    -- Захватываем мьютекс для записи
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     mtx_to_use:dec()
 
-    -- Пишем тело
+    -- пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     shm_to_use:seek("set", HEADER_SIZE)
     shm_to_use:write(str)
 
-    -- Пишем заголовок
+    -- пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     shm_to_use:seek("set")
     shm_to_use:write(string.pack("<I4I4I4I4I4I4",
-        MAGIC, VERSION, msg_table.req_id or 0, 2, len, 0))  -- msg_type=2 для ответов/callbacks
+        MAGIC, VERSION, msg_table.req_id or 0, 2, len, 0))  -- msg_type=2 пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/callbacks
 
-    -- Освобождаем мьютекс
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     mtx_to_use:inc()
 
-    -- Сигнализируем о готовности
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     local ok = sem_to_use:inc()
     if not ok then
         return nil, "sem inc failed"
     end
 
- --   log("Отправляемый JSON (длина " .. #str .. ", callback=" .. tostring(is_callback) .. "): " .. str, 1)
+ --   log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ JSON (пїЅпїЅпїЅпїЅпїЅ " .. #str .. ", callback=" .. tostring(is_callback) .. "): " .. str, 1)
     return true
 end
 
@@ -398,7 +407,7 @@ function qsutils.sendCallback(msg_table)
 end
 
 function qsutils.Close()
-    -- Закрываем все ресурсы
+    -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     if req_shm then req_shm:close() end
     if resp_shm then resp_shm:close() end
     if cb_shm then cb_shm:close() end
