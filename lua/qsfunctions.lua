@@ -1,70 +1,79 @@
 -- qsfunctions.lua
--- Copyright (c) 2014-2020 QuikSharp Authors
--- Licensed under the Apache License, Version 2.0
+-- Обработчики команд QUIK# (Lua → C# / внешний процесс)
+-- Вызываются через dispatch_and_process при получении JSON-сообщения с полем "cmd"
 
-local json = require("dkjson")
+local json = require "dkjson"
+
 local qsfunctions = {}
 
+--------------------------------------------------------------------------------
+-- Основной диспетчер команд
+--------------------------------------------------------------------------------
+
+--- Выполняет команду по msg.cmd или возвращает ошибку
 function qsfunctions.dispatch_and_process(msg)
-    if qsfunctions[msg.cmd] then
-        local status, result = pcall(qsfunctions[msg.cmd], msg)
+    if type(msg) ~= "table" or not msg.cmd then
+        return { cmd = "lua_error", lua_error = "Некорректный формат сообщения" }
+    end
+
+    local handler = qsfunctions[msg.cmd]
+    if handler then
+        local status, result = pcall(handler, msg)
         if status then
-            return result
+            return result or msg
         else
             msg.cmd = "lua_error"
             msg.lua_error = "Lua error: " .. tostring(result)
             return msg
         end
     else
-        log(to_json(msg), 3)
-        msg.lua_error = "Command not implemented: " .. msg.cmd
-        msg.cmd = "lua_error"
+        log("Неизвестная команда: " .. tostring(msg.cmd), 3)
+        msg.cmd       = "lua_error"
+        msg.lua_error = "Command not implemented: " .. tostring(msg.cmd)
         return msg
     end
 end
 
--- ------------------------------------------------------------------------------
--- Debug functions
--- ------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Отладочные и тестовые команды
+--------------------------------------------------------------------------------
 
 function qsfunctions.ping(msg)
-    msg.t = 0
-    local innerData = msg.data
-    if type(innerData) == "table" and innerData.data == "Ping" then
+    msg.t = timemsec()
+    local inner = msg.data
+    if type(inner) == "table" and inner.data == "Ping" then
         msg.data = "Pong"
-    elseif innerData == "Ping" then
+    elseif inner == "Ping" then
         msg.data = "Pong"
     else
-        msg.data = tostring(innerData) .. " is not Ping"
+        msg.data = tostring(inner) .. " ≠ Ping"
     end
     return msg
 end
 
 function qsfunctions.echo(msg)
-    return msg
-end
-
-function qsfunctions.divide_string_by_zero(msg)
-    msg.data = "asd" / 0
+    msg.t = timemsec()
     return msg
 end
 
 function qsfunctions.is_quik(msg)
-    if getScriptPath then 
-        msg.data = 1 
-    else 
-        msg.data = 0 
-    end
+    msg.t = timemsec()
+    msg.data = getScriptPath and 1 or 0
     return msg
 end
 
--- ------------------------------------------------------------------------------
--- Service functions
--- ------------------------------------------------------------------------------
+function qsfunctions.divide_string_by_zero(msg)
+    msg.data = "asd" / 0     -- для теста обработки ошибок
+    return msg
+end
+
+--------------------------------------------------------------------------------
+-- Сервисные функции QUIK
+--------------------------------------------------------------------------------
 
 function qsfunctions.isConnected(msg)
     msg.t = timemsec()
-    msg.data = isConnected()
+    msg.data = tostring(isConnected())
     return msg
 end
 
@@ -82,64 +91,64 @@ end
 
 function qsfunctions.getInfoParam(msg)
     msg.t = timemsec()
-    msg.data = getInfoParam(msg.data)
+    msg.data = getInfoParam(msg.data.data)
     return msg
 end
 
 function qsfunctions.message(msg)
-    log(msg.data, 1)
+    log(msg.data or "", 1)
     msg.data = ""
     return msg
 end
 
 function qsfunctions.warning_message(msg)
-    log(msg.data, 2)
+    log(msg.data or "", 2)
     msg.data = ""
     return msg
 end
 
 function qsfunctions.error_message(msg)
-    log(msg.data, 3)
+    log(msg.data or "", 3)
     msg.data = ""
     return msg
 end
 
 function qsfunctions.sleep(msg)
-    delay(msg.data)
+    delay(tonumber(msg.data) or 0)
     msg.data = ""
     return msg
 end
 
 function qsfunctions.PrintDbgStr(msg)
-    log(msg.data, 0)
+    log(msg.data or "", 0)
     msg.data = ""
     return msg
 end
 
--- ------------------------------------------------------------------------------
--- ����������� ����� (Labels)
--- ------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Метки (Labels) на графике
+--------------------------------------------------------------------------------
 
 function qsfunctions.addLabel(msg)
     local spl = split(msg.data, "|")
-    local price, curdate, curtime, qty, path, id, algmnt, bgnd = 
+    local price, curdate, curtime, qty, path, id, algmnt, bgnd =
         spl[1], spl[2], spl[3], spl[4], spl[5], spl[6], spl[7], spl[8]
 
     local label = {
-        TEXT                  = "",
-        IMAGE_PATH            = path,
-        ALIGNMENT             = algmnt,
-        YVALUE                = tostring(price),
-        DATE                  = tostring(curdate),
-        TIME                  = tostring(curtime),
-        R                     = 255,
-        G                     = 255,
-        B                     = 255,
-        TRANSPARENCY          = 0,
+        TEXT                   = "",
+        IMAGE_PATH             = path,
+        ALIGNMENT              = algmnt,
+        YVALUE                 = tostring(price),
+        DATE                   = tostring(curdate),
+        TIME                   = tostring(curtime),
+        R                      = 255,
+        G                      = 255,
+        B                      = 255,
+        TRANSPARENCY           = 0,
         TRANSPARENT_BACKGROUND = bgnd,
-        FONT_FACE_NAME        = "Arial",
-        FONT_HEIGHT           = "15",
-        HINT                  = " " .. tostring(price) .. " " .. tostring(qty)
+        FONT_FACE_NAME         = "Arial",
+        FONT_HEIGHT            = "15",
+        HINT                   = " " .. tostring(price) .. " " .. tostring(qty)
     }
     msg.data = AddLabel(id, label)
     return msg
@@ -147,9 +156,8 @@ end
 
 function qsfunctions.addLabel2(msg)
     local spl = split2(msg.data, "|")
-    local chartTag, yValue, strDate, strTime, text, imagePath, alignment, hint, r, g, b, 
-          transparency, tranBackgrnd, fontName, fontHeight = 
-        unpack(spl)
+    local chartTag, yValue, strDate, strTime, text, imagePath, alignment, hint, r, g, b,
+          transparency, tranBackgrnd, fontName, fontHeight = unpack(spl)
 
     text           = (text ~= "")           and text           or nil
     imagePath      = (imagePath ~= "")      and imagePath      or nil
@@ -185,7 +193,7 @@ end
 
 function qsfunctions.setLabelParams(msg)
     local spl = split2(msg.data, "|")
-    local chartTag, labelId, yValue, strDate, strTime, text, imagePath, alignment, hint, r, g, b, 
+    local chartTag, labelId, yValue, strDate, strTime, text, imagePath, alignment, hint, r, g, b,
           transparency, tranBackgrnd, fontName, fontHeight = unpack(spl)
 
     text           = (text ~= "")           and text           or nil
@@ -243,16 +251,16 @@ function qsfunctions.delAllLabels(msg)
     return msg
 end
 
--- ------------------------------------------------------------------------------
--- ������ � �����������
--- ------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Классы и инструменты
+--------------------------------------------------------------------------------
 
 function qsfunctions.getClassesList(msg)
-    log("������� " .. msg.cmd .. ", req_id=" .. tostring(msg.req_id or "?"), 0)
+    log("Вызов " .. msg.cmd .. ", req_id=" .. tostring(msg.req_id or "?"), 0)
     local classes = getClassesList()
     if not classes or classes == "" then
         msg.data = ""
-        msg.warning = "������ ������� ��� �� ��������"
+        msg.warning = "Список классов пуст или не получен"
     else
         msg.data = classes
     end
@@ -260,24 +268,24 @@ function qsfunctions.getClassesList(msg)
 end
 
 function qsfunctions.getClassInfo(msg)
-    msg.data = getClassInfo(msg.data)
+    msg.data = getClassInfo(msg.data.data)
     return msg
 end
 
 function qsfunctions.getClassSecurities(msg)
-    msg.data = getClassSecurities(msg.data)
+    msg.data = getClassSecurities(msg.data.data)
     return msg
 end
 
 function qsfunctions.getSecurityInfo(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     msg.data = getSecurityInfo(spl[1], spl[2])
     return msg
 end
 
 function qsfunctions.getSecurityInfoBulk(msg)
     local result = {}
-    for _, item in ipairs(msg.data) do
+    for _, item in ipairs(msg.data.data) do
         local spl = split(item, "|")
         local status, sec = pcall(getSecurityInfo, spl[1], spl[2])
         table.insert(result, status and sec or json.null)
@@ -287,7 +295,7 @@ function qsfunctions.getSecurityInfoBulk(msg)
 end
 
 function qsfunctions.getSecurityClass(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local classes_list, sec_code = spl[1], spl[2]
     for class_code in string.gmatch(classes_list, "([^,]+)") do
         if getSecurityInfo(class_code, sec_code) then
@@ -299,9 +307,9 @@ function qsfunctions.getSecurityClass(msg)
     return msg
 end
 
--- ------------------------------------------------------------------------------
--- ���������� ���� � �����
--- ------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Клиентские коды и торговые счета
+--------------------------------------------------------------------------------
 
 function qsfunctions.getClientCode(msg)
     for i = 0, getNumberOf("MONEY_LIMITS") - 1 do
@@ -351,30 +359,65 @@ function qsfunctions.getTradeAccounts(msg)
     return msg
 end
 
--- ------------------------------------------------------------------------------
--- ������ ��������� (Level II)
--- ------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Level II котировки (стакан)
+--------------------------------------------------------------------------------
 
 function qsfunctions.Subscribe_Level_II_Quotes(msg)
-    local spl = split(msg.data, "|")
-    msg.data = Subscribe_Level_II_Quotes(spl[1], spl[2])
+    local data_str = msg.data and msg.data.data or "<nil>"
+
+    log("Subscribe_Level_II_Quotes called | raw data: " .. tostring(data_str), 1)
+
+    if not msg.data or not msg.data.data or msg.data.data == "" then
+        log("Subscribe_Level_II_Quotes → пустой или некорректный msg.data.data", 3)
+        msg.lua_error = "Пустой параметр для подписки"
+        msg.data = false
+        return msg
+    end
+
+    local spl = split(msg.data.data, "|")
+    if #spl < 2 then
+        log("Subscribe_Level_II_Quotes → недостаточно параметров, получено: " .. #spl .. " частей", 3)
+        log("Исходная строка: " .. msg.data.data, 3)
+        msg.lua_error = "Неверный формат: ожидается class_code|sec_code"
+        msg.data = false
+        return msg
+    end
+
+    local class_code = spl[1]
+    local sec_code   = spl[2]
+
+    log(string.format("Подписка Level II: class=%s, sec=%s", class_code, sec_code), 1)
+
+    local result = Subscribe_Level_II_Quotes(class_code, sec_code)
+
+    -- для надёжности приводим к boolean / string
+    if result == nil then
+        log("Subscribe_Level_II_Quotes вернул nil", 2)
+        msg.data = false
+    elseif type(result) == "boolean" then
+        msg.data = result
+    else
+        msg.data = tostring(result)
+    end
+
     return msg
 end
 
 function qsfunctions.Unsubscribe_Level_II_Quotes(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     msg.data = Unsubscribe_Level_II_Quotes(spl[1], spl[2])
     return msg
 end
 
 function qsfunctions.IsSubscribed_Level_II_Quotes(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     msg.data = IsSubscribed_Level_II_Quotes(spl[1], spl[2])
     return msg
 end
 
 function qsfunctions.GetQuoteLevel2(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local cc, sc = spl[1], spl[2]
     local st = getInfoParam("SERVERTIME")
     local ok, data = pcall(getQuoteLevel2, cc, sc)
@@ -389,28 +432,32 @@ function qsfunctions.GetQuoteLevel2(msg)
     return msg
 end
 
--- ------------------------------------------------------------------------------
--- �������� �������
--- ------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Расчёт объёма и комиссии
+--------------------------------------------------------------------------------
 
 function qsfunctions.calc_buy_sell(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local cc, sc, cl, acc, price, buy, market = spl[1], spl[2], spl[3], spl[4], spl[5], spl[6], spl[7]
 
-    local is_buy   = (buy   == "True")
+    local is_buy    = (buy   == "True")
     local is_market = (market == "True")
 
     local qty, comm = CalcBuySell(cc, sc, cl, acc, tonumber(price), is_buy, is_market)
     if qty then
         msg.data = { qty = qty, commission = comm }
     else
-        message("������ CalcBuySell", 1)
+        message("Ошибка CalcBuySell", 1)
     end
     return msg
 end
 
+--------------------------------------------------------------------------------
+-- Отправка транзакций
+--------------------------------------------------------------------------------
+
 function qsfunctions.sendTransaction(msg)
-    local res = sendTransaction(msg.data)
+    local res = sendTransaction(msg.data.data)
     if res and res ~= "" then
         msg.cmd       = "lua_transaction_error"
         msg.lua_error = res
@@ -420,104 +467,94 @@ function qsfunctions.sendTransaction(msg)
     return msg
 end
 
--- ------------------------------------------------------------------------------
--- ��������� ������� (paramRequest, getParamEx, getDepo � �.�.) 
--- �������� ��� ���������, �����������, ��� ��� � ���� ��� ��������� �����������
--- ------------------------------------------------------------------------------
-
--- ... ����� ��� ��������� ������� �� ������ ��������� ����� ...
-
--- ------------------------------------------------------------------------------
--- �������� �� �����
--- ------------------------------------------------------------------------------
-
-data_sources  = data_sources  or {}
-last_indexes  = last_indexes  or {}
+--------------------------------------------------------------------------------
+-- Параметры, депо, деньги, лимиты
+--------------------------------------------------------------------------------
 
 function qsfunctions.paramRequest(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
     msg.data = ParamRequest(class_code, sec_code, param_name)
     return msg
 end
 
 function qsfunctions.paramRequestBulk(msg)
-	local result = {}
-	for i=1,#msg.data do
-		local spl = split(msg.data[i], "|")
-		local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
-		table.insert(result, ParamRequest(class_code, sec_code, param_name))
-	end
-	msg.data = result
-	return msg
+    local result = {}
+    for i = 1, #msg.data.data do
+        local spl = split(msg.data.data[i], "|")
+        local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
+        table.insert(result, ParamRequest(class_code, sec_code, param_name))
+    end
+    msg.data = result
+    return msg
 end
 
 function qsfunctions.cancelParamRequest(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
     msg.data = CancelParamRequest(class_code, sec_code, param_name)
     return msg
 end
 
 function qsfunctions.cancelParamRequestBulk(msg)
-	local result = {}
-	for i=1,#msg.data do
-		local spl = split(msg.data[i], "|")
-		local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
-		table.insert(result, CancelParamRequest(class_code, sec_code, param_name))
-	end
-	msg.data = result
-	return msg
+    local result = {}
+    for i = 1, #msg.data.data do
+        local spl = split(msg.data.data[i], "|")
+        local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
+        table.insert(result, CancelParamRequest(class_code, sec_code, param_name))
+    end
+    msg.data = result
+    return msg
 end
 
 function qsfunctions.getParamEx(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
     msg.data = getParamEx(class_code, sec_code, param_name)
     return msg
 end
 
 function qsfunctions.getParamEx2(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
     msg.data = getParamEx2(class_code, sec_code, param_name)
     return msg
 end
 
 function qsfunctions.getParamEx2Bulk(msg)
-	local result = {}
-	for i=1,#msg.data do
-		local spl = split(msg.data[i], "|")
-		local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
-		table.insert(result, getParamEx2(class_code, sec_code, param_name))
-	end
-	msg.data = result
+    local result = {}
+    for i = 1, #msg.data.data do
+        local spl = split(msg.data.data[i], "|")
+        local class_code, sec_code, param_name = spl[1], spl[2], spl[3]
+        table.insert(result, getParamEx2(class_code, sec_code, param_name))
+    end
+    msg.data = result
     return msg
 end
 
 function qsfunctions.getDepo(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local clientCode, firmId, secCode, account = spl[1], spl[2], spl[3], spl[4]
     msg.data = getDepo(clientCode, firmId, secCode, account)
     return msg
 end
 
 function qsfunctions.getDepoEx(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local firmId, clientCode, secCode, account, limit_kind = spl[1], spl[2], spl[3], spl[4], spl[5]
     msg.data = getDepoEx(firmId, clientCode, secCode, account, tonumber(limit_kind))
     return msg
 end
 
 function qsfunctions.getMoney(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local client_code, firm_id, tag, curr_code = spl[1], spl[2], spl[3], spl[4]
     msg.data = getMoney(client_code, firm_id, tag, curr_code)
     return msg
 end
 
 function qsfunctions.getMoneyEx(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local firm_id, client_code, tag, curr_code, limit_kind = spl[1], spl[2], spl[3], spl[4], spl[5]
     msg.data = getMoneyEx(firm_id, client_code, tag, curr_code, tonumber(limit_kind))
     return msg
@@ -525,448 +562,514 @@ end
 
 function qsfunctions.getMoneyLimits(msg)
     local limits = {}
-    for i=0,getNumberOf("money_limits")-1 do
-        local limit = getItem("money_limits",i)
-	    table.insert(limits, limit)
+    for i = 0, getNumberOf("money_limits") - 1 do
+        table.insert(limits, getItem("money_limits", i))
     end
-     msg.data = limits
+    msg.data = limits
     return msg
 end
 
 function qsfunctions.getFuturesLimit(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local firmId, accId, limitType, currCode = spl[1], spl[2], spl[3], spl[4]
-	local result, err = getFuturesLimit(firmId, accId, limitType*1, currCode)
-	if result then
-		msg.data = result
-	else
-		log("Futures limit returns nil", 3)
-		msg.data = nil
-	end
+    local result = getFuturesLimit(firmId, accId, limitType * 1, currCode)
+    msg.data = result or nil
     return msg
 end
 
 function qsfunctions.getFuturesClientLimits(msg)
     local limits = {}
-    for i=0,getNumberOf("futures_client_limits")-1 do
-        local limit = getItem("futures_client_limits",i)
-	    table.insert(limits, limit)
+    for i = 0, getNumberOf("futures_client_limits") - 1 do
+        table.insert(limits, getItem("futures_client_limits", i))
     end
-     msg.data = limits
+    msg.data = limits
     return msg
 end
 
 function qsfunctions.getFuturesHolding(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local firmId, accId, secCode, posType = spl[1], spl[2], spl[3], spl[4]
-	local result, err = getFuturesHolding(firmId, accId, secCode, posType*1)
-	if result then
-		msg.data = result
-	else
-		--log("Futures holding returns nil", 3)
-		msg.data = nil
-	end
+    msg.data = getFuturesHolding(firmId, accId, secCode, posType * 1) or nil
     return msg
 end
 
 function qsfunctions.getFuturesClientHoldings(msg)
     local holdings = {}
-    for i=0,getNumberOf("futures_client_holding")-1 do
-        local holding = getItem("futures_client_holding",i)
-	    table.insert(holdings, holding)
+    for i = 0, getNumberOf("futures_client_holding") - 1 do
+        table.insert(holdings, getItem("futures_client_holding", i))
     end
-     msg.data = holdings
+    msg.data = holdings
     return msg
 end
 
-function qsfunctions.get_orders(msg)
-	if msg.data ~= "" then
-		local spl = split(msg.data, "|")
-		class_code, sec_code = spl[1], spl[2]
-	end
+--------------------------------------------------------------------------------
+-- Заявки (orders)
+--------------------------------------------------------------------------------
 
-	local orders = {}
-	for i = 0, getNumberOf("orders") - 1 do
-		local order = getItem("orders", i)
-		if msg.data == "" or (order.class_code == class_code and order.sec_code == sec_code) then
-			table.insert(orders, order)
-		end
-	end
-	msg.data = orders
-	return msg
+function qsfunctions.get_orders(msg)
+    local class_code, sec_code
+    if msg.data.data and msg.data.data ~= "" then
+        local spl = split(msg.data.data, "|")
+        class_code, sec_code = spl[1], spl[2]
+    end
+
+    local orders = {}
+    for i = 0, getNumberOf("orders") - 1 do
+        local order = getItem("orders", i)
+        if not class_code or (order.class_code == class_code and order.sec_code == sec_code) then
+            table.insert(orders, order)
+        end
+    end
+    msg.data = orders
+    return msg
 end
 
 function qsfunctions.getOrder_by_ID(msg)
-	if msg.data ~= "" then
-		local spl = split(msg.data, "|")
-		class_code, sec_code, trans_id = spl[1], spl[2], spl[3]
-	end
+    local class_code, sec_code, trans_id
+    if msg.data.data and msg.data.data ~= "" then
+        local spl = split(msg.data.data, "|")
+        class_code, sec_code, trans_id = spl[1], spl[2], spl[3]
+    end
 
-	local order_num = 0
-	local res
-	for i = 0, getNumberOf("orders") - 1 do
-		local order = getItem("orders", i)
-		if order.class_code == class_code and order.sec_code == sec_code and order.trans_id == tonumber(trans_id) and order.order_num > order_num then
-			order_num = order.order_num
-			res = order
-		end
-	end
-	msg.data = res
-	return msg
+    local order_num = 0
+    local res
+    for i = 0, getNumberOf("orders") - 1 do
+        local order = getItem("orders", i)
+        if order.class_code == class_code and order.sec_code == sec_code
+           and order.trans_id == tonumber(trans_id) and order.order_num > order_num then
+            order_num = order.order_num
+            res = order
+        end
+    end
+    msg.data = res
+    return msg
 end
 
 function qsfunctions.getOrder_by_Number(msg)
-	for i=0,getNumberOf("orders")-1 do
-		local order = getItem("orders",i)
-		if order.order_num == tonumber(msg.data) then
-			msg.data = order
-			return msg
-		end
-	end
-	return msg
+    local order_num = tonumber(msg.data.data)
+    for i = 0, getNumberOf("orders") - 1 do
+        local order = getItem("orders", i)
+        if order.order_num == order_num then
+            msg.data = order
+            return msg
+        end
+    end
+    msg.data = nil
+    return msg
 end
 
 function qsfunctions.get_order_by_number(msg)
-	local spl = split(msg.data, "|")
-	local class_code = spl[1]
-	local order_id = tonumber(spl[2])
-	msg.data = getOrderByNumber(class_code, order_id)
-	return msg
+    local spl = split(msg.data.data or "", "|")
+    local class_code = tostring(spl[1] or "")
+    local order_id   = math.tointeger(spl[2])
+
+    if not order_id or order_id == 0 or class_code == "" then
+        msg.lua_error = "Ошибка парсинга: требуется Class|OrderNum"
+        msg.data = {}
+        return msg
+    end
+
+    local order = getOrderByNumber(class_code, order_id)
+    if order and order.order_num and order.order_num ~= 0 then
+        local flags = math.tointeger(order.flags or 0)
+        local state = 2
+        if (flags & 0x1) ~= 0 then state = 1
+        elseif (flags & 0x2) ~= 0 then state = 3 end
+
+        msg.data = {
+            order_num  = math.tointeger(order.order_num),
+            sec_code   = tostring(order.sec_code),
+            class_code = tostring(order.class_code),
+            price      = tonumber(order.price),
+            qty        = math.tointeger(order.qty),
+            balance    = math.tointeger(order.balance),
+            state      = state,
+            datetime   = {
+                year  = math.tointeger(order.datetime.year),
+                month = math.tointeger(order.datetime.month),
+                day   = math.tointeger(order.datetime.day),
+                hour  = math.tointeger(order.datetime.hour),
+                min   = math.tointeger(order.datetime.min),
+                sec   = math.tointeger(order.datetime.sec)
+            }
+        }
+    else
+        log("get_order_by_number: заявка " .. tostring(order_id) .. " не найдена", 3)
+        msg.data = "0"
+        msg.lua_error = "Заявка не найдена"
+    end
+    return msg
 end
+
+--------------------------------------------------------------------------------
+-- Депозитные лимиты
+--------------------------------------------------------------------------------
 
 function qsfunctions.get_depo_limits(msg)
-	local sec_code = msg.data
-	local count = getNumberOf("depo_limits")
-	local depo_limits = {}
-	for i = 0, count - 1 do
-		local depo_limit = getItem("depo_limits", i)
-		if msg.data == "" or depo_limit.sec_code == sec_code then
-			table.insert(depo_limits, depo_limit)
-		end
-	end
-	msg.data = depo_limits
-	return msg
+    local filter_sec_code = tostring(msg.data.data or ""):gsub("%s+", ""):upper()
+
+    local count = getNumberOf("depo_limits")
+    local depo_limits = {}
+
+    for i = 0, count - 1 do
+        local d = getItem("depo_limits", i)
+        if d then
+            local current_sec = tostring(d.sec_code):upper()
+            if filter_sec_code == "" or current_sec == filter_sec_code then
+                table.insert(depo_limits, {
+                    sec_code           = tostring(d.sec_code),
+                    trdaccid           = tostring(d.trdaccid),
+                    firmid             = tostring(d.firmid),
+                    client_code        = tostring(d.client_code),
+                    openbal            = tonumber(d.openbal) or 0,
+                    openlimit          = tonumber(d.openlimit) or 0,
+                    currentbal         = tonumber(d.currentbal) or 0,
+                    currentlimit       = tonumber(d.currentlimit) or 0,
+                    locked_sell        = tonumber(d.locked_sell) or 0,
+                    locked_buy         = tonumber(d.locked_buy) or 0,
+                    locked_buy_value   = tonumber(d.locked_buy_value) or 0,
+                    locked_sell_value  = tonumber(d.locked_sell_value) or 0,
+                    awg_position_price = tonumber(d.awg_position_price) or 0,
+                    limit_kind         = tonumber(d.limit_kind) or 0
+                })
+            end
+        end
+    end
+
+    msg.data = depo_limits
+    return msg
 end
 
-function qsfunctions.get_trades(msg)
-	if msg.data ~= "" then
-		local spl = split(msg.data, "|")
-		class_code, sec_code = spl[1], spl[2]
-	end
+--------------------------------------------------------------------------------
+-- Сделки
+--------------------------------------------------------------------------------
 
-	local trades = {}
-	for i = 0, getNumberOf("trades") - 1 do
-		local trade = getItem("trades", i)
-		if msg.data == "" or (trade.class_code == class_code and trade.sec_code == sec_code) then
-			table.insert(trades, trade)
-		end
-	end
-	msg.data = trades
-	return msg
+function qsfunctions.get_trades(msg)
+    local class_code, sec_code
+    if msg.data.data and msg.data.data ~= "" then
+        local spl = split(msg.data.data, "|")
+        class_code, sec_code = spl[1], spl[2]
+    end
+
+    local trades = {}
+    for i = 0, getNumberOf("trades") - 1 do
+        local trade = getItem("trades", i)
+        if not class_code or (trade.class_code == class_code and trade.sec_code == sec_code) then
+            table.insert(trades, trade)
+        end
+    end
+    msg.data = trades
+    return msg
 end
 
 function qsfunctions.get_Trades_by_OrderNumber(msg)
-	local order_num = tonumber(msg.data)
-
-	local trades = {}
-	for i = 0, getNumberOf("trades") - 1 do
-		local trade = getItem("trades", i)
-		if trade.order_num == order_num then
-			table.insert(trades, trade)
-		end
-	end
-	msg.data = trades
-	return msg
+    local order_num = tonumber(msg.data.data)
+    local trades = {}
+    for i = 0, getNumberOf("trades") - 1 do
+        local trade = getItem("trades", i)
+        if trade.order_num == order_num then
+            table.insert(trades, trade)
+        end
+    end
+    msg.data = trades
+    return msg
 end
 
+function qsfunctions.get_all_trades(msg)
+    local class_code, sec_code
+    if msg.data.data and msg.data.data ~= "" then
+        local spl = split(msg.data.data, "|")
+        class_code, sec_code = spl[1], spl[2]
+    end
+
+    local trades = {}
+    for i = 0, getNumberOf("all_trades") - 1 do
+        local trade = getItem("all_trades", i)
+        if not class_code or (trade.class_code == class_code and trade.sec_code == sec_code) then
+            table.insert(trades, trade)
+        end
+    end
+    msg.data = trades
+    return msg
+end
+
+--------------------------------------------------------------------------------
+-- Портфель
+--------------------------------------------------------------------------------
+
 function qsfunctions.getPortfolioInfo(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local firmId, clientCode = spl[1], spl[2]
     msg.data = getPortfolioInfo(firmId, clientCode)
     return msg
 end
 
 function qsfunctions.getPortfolioInfoEx(msg)
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local firmId, clientCode, limit_kind = spl[1], spl[2], spl[3]
     msg.data = getPortfolioInfoEx(firmId, clientCode, tonumber(limit_kind))
     return msg
 end
 
-function qsfunctions.get_all_trades(msg)
-	if msg.data ~= "" then
-		local spl = split(msg.data, "|")
-		class_code, sec_code = spl[1], spl[2]
-	end
+--------------------------------------------------------------------------------
+-- Опционы (пример реализации)
+--------------------------------------------------------------------------------
 
-	local trades = {}
-	for i = 0, getNumberOf("all_trades") - 1 do
-		local trade = getItem("all_trades", i)
-		if msg.data == "" or (trade.class_code == class_code and trade.sec_code == sec_code) then
-			table.insert(trades, trade)
-		end
-	end
-	msg.data = trades
-	return msg
-end
-
-
---------------------------
--- OptionBoard functions --
---------------------------
 function qsfunctions.getOptionBoard(msg)
-
-    local spl = split(msg.data, "|")
+    local spl = split(msg.data.data, "|")
     local classCode, secCode, series = spl[1], spl[2], spl[3]
-	local result, err = getOptions(classCode, secCode, series )
-
-    if result then
-		msg.data = result
-	else
-		log("Option board returns nil", 3)
-		msg.data = nil
-	end
+    local result = getOptions(classCode, secCode, series)
     msg.data = result or {}
     return msg
 end
 
-function getOptions(classCode,secCode,series)
-local SecList = getClassSecurities(classCode)
-local t={}
-local p={}
-local week = false
-local month = false
-local quartal = false
-local all = false
-local len = 0;
-local days_to_mat
+function getOptions(classCode, secCode, series)
+    local SecList = getClassSecurities(classCode)
+    local t = {}
+    local week, month, quartal, all = false, false, false, false
 
-local last_char
-for sec in string.gmatch(SecList, "([^,]+)") do
-			week = false
-			month = false
-			quartal = false
-			all = false
-			
+    for sec in string.gmatch(SecList, "([^,]+)") do
+        week = false
+        month = false
 
-            local Optionbase=getParamEx(classCode,sec,"optionbase").param_image
-            if (string.find(secCode,Optionbase)~=nil ) then
+        local Optionbase = getParamEx(classCode, sec, "optionbase").param_image
+        if string.find(secCode, Optionbase) then
+            local days_to_mat = getParamEx(classCode, sec, "DAYS_TO_MAT_DATE").param_value + 0
+            local len = string.len(sec)
+            local last_char = string.sub(sec, len)
 
-				days_to_mat = getParamEx(classCode,sec,"DAYS_TO_MAT_DATE").param_value+0
-				len = string.len(sec)
-				last_char = string.sub(sec, len)
-
-				if(tonumber(last_char) ~= nil) then
-
-					month = true
-				end
-				
-				if( tonumber(days_to_mat) <= 8 ) then
-					week = true
-				else
-				end
-
-				if(( tonumber(series) == 0 and week) or (tonumber(series) == 1 and month) ) or tonumber(series) == 4 then
-					p={
-						["code"]=getParamEx(classCode,sec,"code").param_image,
-						["Name"]=getSecurityInfo(classCode,sec).name,
-						["DAYS_TO_MAT_DATE"]=days_to_mat,
-						["BID"]=getParamEx(classCode,sec,"BID").param_value+0,
-						["OFFER"]=getParamEx(classCode,sec,"OFFER").param_value+0,
-						["OPTIONBASE"]=Optionbase,
-						["OPTIONTYPE"]=getParamEx(classCode,sec,"optiontype").param_image,
-						["Longname"]=getParamEx(classCode,sec,"longname").param_image,
-						["shortname"]=getParamEx(classCode,sec,"shortname").param_image,
-						["Volatility"]=getParamEx(classCode,sec,"volatility").param_value+0,
-						["Lot"]=getParamEx(classCode,sec,"LOTSIZE").param_value+0,
-						["Strike"]=getParamEx(classCode,sec,"strike").param_value+0,
-						["Lastprice"]=getParamEx(classCode,sec,"last").param_value+0,
-						["THEORPRICE"]=getParamEx(classCode,sec,"THEORPRICE").param_value+0,
-						["MAT_DATE"]=getParamEx(classCode,sec,"MAT_DATE").param_image,
-						["STEPPRICET"]=getParamEx(classCode,sec,"STEPPRICET").param_value+0,
-						["SEC_PRICE_STEP"]=getParamEx(classCode,sec,"SEC_PRICE_STEP").param_value+0
-						}
-
-
-
-							table.insert( t, p )
-				end
+            if tonumber(last_char) then
+                month = true
             end
 
-end
-return t
+            if tonumber(days_to_mat) <= 8 then
+                week = true
+            end
+
+            if (tonumber(series) == 0 and week) or
+               (tonumber(series) == 1 and month) or
+               tonumber(series) == 4 then
+
+                local p = {
+                    code             = getParamEx(classCode, sec, "code").param_image,
+                    Name             = getSecurityInfo(classCode, sec).name,
+                    DAYS_TO_MAT_DATE = days_to_mat,
+                    BID              = getParamEx(classCode, sec, "BID").param_value + 0,
+                    OFFER            = getParamEx(classCode, sec, "OFFER").param_value + 0,
+                    OPTIONBASE       = Optionbase,
+                    OPTIONTYPE       = getParamEx(classCode, sec, "optiontype").param_image,
+                    Longname         = getParamEx(classCode, sec, "longname").param_image,
+                    shortname        = getParamEx(classCode, sec, "shortname").param_image,
+                    Volatility       = getParamEx(classCode, sec, "volatility").param_value + 0,
+                    Lot              = getParamEx(classCode, sec, "LOTSIZE").param_value + 0,
+                    Strike           = getParamEx(classCode, sec, "strike").param_value + 0,
+                    Lastprice        = getParamEx(classCode, sec, "last").param_value + 0,
+                    THEORPRICE       = getParamEx(classCode, sec, "THEORPRICE").param_value + 0,
+                    MAT_DATE         = getParamEx(classCode, sec, "MAT_DATE").param_image,
+                    STEPPRICET       = getParamEx(classCode, sec, "STEPPRICET").param_value + 0,
+                    SEC_PRICE_STEP   = getParamEx(classCode, sec, "SEC_PRICE_STEP").param_value + 0
+                }
+                table.insert(t, p)
+            end
+        end
+    end
+    return t
 end
 
---------------------------
--- Stop order functions --
---------------------------
+--------------------------------------------------------------------------------
+-- Стоп-заявки
+--------------------------------------------------------------------------------
 
 function qsfunctions.get_stop_orders(msg)
-	if msg.data ~= "" then
-		local spl = split(msg.data, "|")
-		class_code, sec_code = spl[1], spl[2]
-	end
+    local class_code, sec_code
+    if msg.data.data and msg.data.data ~= "" then
+        local spl = split(msg.data.data, "|")
+        class_code, sec_code = spl[1], spl[2]
+    end
 
-	local count = getNumberOf("stop_orders")
-	local stop_orders = {}
-	for i = 0, count - 1 do
-		local stop_order = getItem("stop_orders", i)
-		if msg.data == "" or (stop_order.class_code == class_code and stop_order.sec_code == sec_code) then
-			table.insert(stop_orders, stop_order)
-		end
-	end
-	msg.data = stop_orders
-	return msg
+    local count = getNumberOf("stop_orders")
+    local stop_orders = {}
+    for i = 0, count - 1 do
+        local so = getItem("stop_orders", i)
+        if not class_code or (so.class_code == class_code and so.sec_code == sec_code) then
+            table.insert(stop_orders, so)
+        end
+    end
+    msg.data = stop_orders
+    return msg
 end
 
--------------------------
---- Candles functions ---
--------------------------
+--------------------------------------------------------------------------------
+-- Свечи
+--------------------------------------------------------------------------------
 
 function qsfunctions.get_num_candles(msg)
-	log("Called get_num_candles" .. msg.data, 2)
-	local spl = split(msg.data, "|")
-	local tag = spl[1]
-
-	msg.data = getNumCandles(tag) * 1
-	return msg
+    local spl = split(msg.data.data, "|")
+    local tag = spl[1]
+    msg.data = getNumCandles(tag) * 1
+    return msg
 end
-
 
 function qsfunctions.get_candles(msg)
-	log("Called get_candles" .. msg.data, 2)
-	local spl = split(msg.data, "|")
-	local tag = spl[1]
-	local line = tonumber(spl[2])
-	local first_candle = tonumber(spl[3])
-	local count = tonumber(spl[4])
-	if count == 0 then
-		count = getNumCandles(tag) * 1
-	end
-	log("Count: " .. count, 2)
-	local t,n,l = getCandlesByIndex(tag, line, first_candle, count)
-	log("Candles table size: " .. n, 2)
-	log("Label: " .. l, 2)
-	local candles = {}
-	for i = 0, count - 1 do
-		table.insert(candles, t[i])
-	end
-	msg.data = candles
-	return msg
-end
+    local spl = split(msg.data.data, "|")
+    local tag          = spl[1]
+    local line         = tonumber(spl[2]) or 0
+    local first_candle = tonumber(spl[3]) or 0
+    local count        = tonumber(spl[4]) or 0
 
-function qsfunctions.get_candles_from_data_source(msg)
-	local ds, is_error = create_data_source(msg)
-	if not is_error then
-		repeat sleep(1) until ds:Size() > 0
-
-		local count = tonumber(split(msg.data, "|")[4]) 
-		local class, sec, interval = get_candles_param(msg)
-		local candles = {}
-		local start_i = count == 0 and 1 or math.max(1, ds:Size() - count + 1)
-		for i = start_i, ds:Size() do
-			local candle = fetch_candle(ds, i)
-			candle.sec = sec
-			candle.class = class
-			candle.interval = interval
-			table.insert(candles, candle)
-		end
-		ds:Close()
-		msg.data = candles
-	end
-	return msg
-end
-
-function create_data_source(msg)
-	local class, sec, interval = get_candles_param(msg)
-	local ds, error_descr = CreateDataSource(class, sec, interval)
-	local is_error = false
-	if(error_descr ~= nil) then
-		msg.cmd = "lua_create_data_source_error"
-		msg.lua_error = error_descr
-		is_error = true
-	elseif ds == nil then
-		msg.cmd = "lua_create_data_source_error"
-		msg.lua_error = "Can't create data source for " .. class .. ", " .. sec .. ", " .. tostring(interval)
-		is_error = true
-	end
-	return ds, is_error
-end
-
-function fetch_candle(data_source, index)
-	local candle = {}
-	candle.low   = data_source:L(index)
-	candle.close = data_source:C(index)
-	candle.high = data_source:H(index)
-	candle.open = data_source:O(index)
-	candle.volume = data_source:V(index)
-	candle.datetime = data_source:T(index)
-	return candle
-end
-
-data_sources = {}
-last_indexes = {}
-function qsfunctions.subscribe_to_candles(msg)
-    local ds, err = create_data_source(msg)
-    if not err then
-        local class, sec, interval = get_candles_param(msg)
-        local key = get_key(class, sec, interval)
-        data_sources[key]  = ds
-        last_indexes[key]  = ds:Size()
-        ds:SetUpdateCallback(function(idx)
-            data_source_callback(idx, class, sec, interval)
-        end)
+    if count == 0 then
+        count = getNumCandles(tag) * 1
     end
+
+    local t, n = getCandlesByIndex(tag, line, first_candle, count)
+
+    local candles = {}
+    if t and n > 0 then
+        for i = 1, n do
+            local c = t[i-1]
+            if c then
+                table.insert(candles, {
+                    open   = tonumber(c.open),
+                    close  = tonumber(c.close),
+                    high   = tonumber(c.high),
+                    low    = tonumber(c.low),
+                    volume = tonumber(c.volume),
+                    datetime = {
+                        year  = tonumber(c.datetime.year),
+                        month = tonumber(c.datetime.month),
+                        day   = tonumber(c.datetime.day),
+                        hour  = tonumber(c.datetime.hour),
+                        min   = tonumber(c.datetime.min),
+                        sec   = tonumber(c.datetime.sec)
+                    }
+                })
+            end
+        end
+    end
+
+    msg.data = candles
+    return msg
+end
+
+--------------------------------------------------------------------------------
+-- DataSource (подписка на свечи)
+--------------------------------------------------------------------------------
+
+data_sources = data_sources or {}
+last_indexes = last_indexes or {}
+
+local function get_key(class, sec, interval)
+    return class .. "|" .. sec .. "|" .. tostring(interval)
+end
+
+local function fetch_candle(ds, index)
+    return {
+        open   = ds:O(index),
+        high   = ds:H(index),
+        low    = ds:L(index),
+        close  = ds:C(index),
+        volume = ds:V(index),
+        datetime = ds:T(index)
+    }
+end
+
+local function data_source_callback(index, class, sec, interval)
+    local key = get_key(class, sec, interval)
+    if data_sources[key] and index ~= last_indexes[key] then
+        last_indexes[key] = index
+        local candle = fetch_candle(data_sources[key], index - 1)
+        if candle then
+            local clean_candle = {
+                open     = tonumber(candle.open),
+                close    = tonumber(candle.close),
+                high     = tonumber(candle.high),
+                low      = tonumber(candle.low),
+                volume   = tonumber(candle.volume),
+                sec      = tostring(sec),
+                class    = tostring(class),
+                interval = tonumber(interval),
+                datetime = {
+                    year  = tonumber(candle.datetime.year),
+                    month = tonumber(candle.datetime.month),
+                    day   = tonumber(candle.datetime.day),
+                    hour  = tonumber(candle.datetime.hour),
+                    min   = tonumber(candle.datetime.min),
+                    sec   = tonumber(candle.datetime.sec)
+                }
+            }
+
+            local msg = {
+                t    = timemsec(),
+                cmd  = "NewCandle",
+                data = clean_candle
+            }
+            sendCallback(msg)
+        end
+    end
+end
+
+function qsfunctions.subscribe_to_candles(msg)
+    local spl = split(msg.data.data, "|")
+    local class, sec, interval = spl[1], spl[2], tonumber(spl[3])
+
+    local ds, err = CreateDataSource(class, sec, interval)
+    if err then
+        msg.cmd = "lua_create_data_source_error"
+        msg.lua_error = err
+        return msg
+    end
+
+    local attempts = 0
+    repeat
+        sleep(100)
+        attempts = attempts + 1
+    until ds:Size() > 0 or attempts >= 30
+
+    if ds:Size() == 0 then
+        ds:Close()
+        msg.data = "error"
+        msg.lua_error = "DataSource пустой после ожидания"
+        return msg
+    end
+
+    local key = get_key(class, sec, interval)
+    data_sources[key] = ds
+    last_indexes[key] = ds:Size()
+
+    ds:SetUpdateCallback(function(idx)
+        data_source_callback(idx, class, sec, interval)
+    end)
+
+    msg.data = "success"
     return msg
 end
 
 function qsfunctions.unsubscribe_from_candles(msg)
-    local class, sec, interval = get_candles_param(msg)
+    local spl = split(msg.data.data, "|")
+    local class, sec, interval = spl[1], spl[2], tonumber(spl[3])
     local key = get_key(class, sec, interval)
+
     if data_sources[key] then
         data_sources[key]:Close()
         data_sources[key]  = nil
         last_indexes[key]  = nil
+        msg.data = "success"
+    else
+        msg.data = "not subscribed"
     end
     return msg
 end
 
 function qsfunctions.is_subscribed(msg)
-    local class, sec, interval = get_candles_param(msg)
+    local spl = split(msg.data.data, "|")
+    local class, sec, interval = spl[1], spl[2], tonumber(spl[3])
     local key = get_key(class, sec, interval)
-    msg.data = (data_sources[key] ~= nil)
+    msg.data = data_sources[key] ~= nil
     return msg
 end
 
-function get_candles_param(msg)
-    local spl = split(msg.data, "|")
-    return spl[1], spl[2], tonumber(spl[3])
-end
-
-function get_key(class, sec, interval)
-    return class .. "|" .. sec .. "|" .. tostring(interval)
-end
-
-function data_source_callback(index, class, sec, interval)
-    local key = get_key(class, sec, interval)
-    if index ~= last_indexes[key] then
-        last_indexes[key] = index
-        local candle = fetch_candle(data_sources[key], index - 1)
-        candle.sec      = sec
-        candle.class    = class
-        candle.interval = interval
-
-        local msg = {
-            t    = timemsec(),
-            cmd  = "NewCandle",
-            data = candle
-        }
-        sendCallback(msg)
-    end
-end
-
--- ------------------------------------------------------------------------------
--- ���������� ������
--- ------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return qsfunctions
+
+-- vim: ts=4 sts=4 sw=4 et

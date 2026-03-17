@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ljUfgJxcFJg=",
+  "dgSpecHash": "0N6c8FGlgAo=",
   "success": true,
-  "projectFilePath": "C:\\Programming\\QuikSharp-BKP\\QuikSharp.csproj",
+  "projectFilePath": "C:\\Programming\\QuikSharp\\QuikSharp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\benchmarkdotnet\\0.15.8\\benchmarkdotnet.0.15.8.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\benchmarkdotnet.annotations\\0.15.8\\benchmarkdotnet.annotations.0.15.8.nupkg.sha512",
