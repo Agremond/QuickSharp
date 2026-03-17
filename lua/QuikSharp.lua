@@ -1,15 +1,15 @@
 -- QuikSharp.lua
 -- Главный скрипт QUIK# с использованием shared memory (ipc.shm + ipc.sem)
--- Адаптировано под qsutils.lua (версия с connect / receiveRequest / sendResponse)
+-- Использует qsutils.lua (работа с connect / receiveRequest / sendResponse)
 
 local util = require "qsutils"
-local json = require "dkjson"           -- если нужно вручную
+local json = require "dkjson"           -- Если нужно парсить
 
--- Подключаем колбэки и функции QUIK (если файлы существуют)
-local qf = require "qsfunctions"        -- обработка команд
-local callbacks = require "qscallbacks" -- обработка событий
+-- Регистрация функций в системе QUIK (если нужно разделение)
+local qf = require "qsfunctions"        -- Обработка команд
+local callbacks = require "qscallbacks" -- Обработка событий
 
--- Определяем, запущены ли мы в QUIK
+-- Проверка, запущен ли скрипт в QUIK
 function is_quik()
     return getScriptPath ~= nil
 end
@@ -51,45 +51,45 @@ end
 
 log("Detected Quik version: " .. (quikVersion or "unknown") .. ", script path: " .. script_path, 0)
 
--- Глобальный флаг работы скрипта
+-- Проверка статуса выполнения скрипта
 function IsScriptRunning()
     return getScriptPath() ~= nil
 end
 
 --- Главная функция (QUIK вызывает автоматически)
 function main()
-    message("QuikSharp: запуск...", 1)
+    message("QuikSharp: Запуск...", 1)
 
     local connected = util.connect()
     if not connected then
-        message("QuikSharp: не удалось инициализировать shared memory", 3)
+        message("QuikSharp: Не удалось инициализировать shared memory", 3)
         return
     end
 
     message("QuikSharp: IPC (shared memory) успешно инициализирован", 1)
 
     while IsScriptRunning() do
-        local cmd, req_id, err = util.receiveRequest(0.050)   -- 50 мс — комфортный баланс
+        local cmd, req_id, err = util.receiveRequest(0.050)   -- 50 мс в ожидании данных
 
         if cmd then
 		
             -- --------------------------------
-            -- Нормальный запрос с телом
+            -- Обработка команд от C#
             -- --------------------------------
             log("Запрос от C# (req_id="..tostring(req_id).."): " .. to_json(cmd), 0)
 	    if cmd.cmd == "ping" then
-            -- Специальная обработка ping — минимальный эхо-ответ
+            -- Специальная обработка ping с ответом как-нибудь
             response = {
                 cmd    = "ping",
-                req_id = req_id,          -- ОБЯЗАТЕЛЬНО возвращаем тот же id
-                data   = "Pong",          -- или "Ping", "OK", "" — не принципиально
+                req_id = req_id,          -- Обязательно возвращаем тот же id
+                data   = "Pong",          -- Или "Ping", "OK", "" в зависимости
                 t      = timemsec(),
                 success = true
             }
             else	
 	            local result = qf.dispatch_and_process(cmd)
 			if cmd.nonce then
-			    result.nonce = cmd.nonce   -- копируем обратно в ответ
+			    result.nonce = cmd.nonce   -- Добавляем обратно в ответ
 			end
 			result.req_id = req_id
 			log("После dispatch: cmd=" .. cmd.cmd .. ", data тип=" .. type(result.data) .. ", data=" .. to_json(result.data or {}), 1)
@@ -100,12 +100,12 @@ function main()
 	   end
 
         elseif err == "timeout" then
-            -- Обычное дело — просто ждём дальше
+            -- Тишина, идем в начало или просто ждем
             sleep(5)
 
         elseif err == "empty body" then
             -- --------------------------------
-            -- Пустое сообщение — можно ответить pong / heartbeat
+            -- Пример структуры в стиле заголовок pong / heartbeat
             -- --------------------------------
             local response = {
                 cmd     = "heartbeat",
@@ -120,22 +120,22 @@ function main()
 
         else
             -- --------------------------------
-            -- Ошибка чтения / парсинга / магии
+            -- Прочие ошибки / события / вылет
             -- --------------------------------
             if err then
-                log("Ошибка приёма запроса: " .. tostring(err), 2)
+                log("Ошибка цикла событий: " .. tostring(err), 2)
             end
-            sleep(10)   -- небольшая пауза перед следующей попыткой
+            sleep(10)   -- Небольшая пауза перед повторной попыткой
         end
     end
 
     util.Close()
-    message("QuikSharp: скрипт остановлен", 1)
+    message("QuikSharp: Работа завершена", 1)
 end
 
--- Стандартные QUIK-колбэки
+-- Обязательные QUIK-функции
 function OnInit()
-    -- можно добавить дополнительную инициализацию, если нужно
+    -- Здесь возможна дополнительная инициализация, если нужно
 end
 
 function OnStop()
@@ -143,7 +143,7 @@ function OnStop()
     message("QuikSharp: OnStop > IPC закрыт", 1)
 end
 
--- Примеры колбэков QUIK > C#
+-- Функции обратного вызова QUIK > C#
 function OnOrder(order)
     if callbacks and callbacks.OnOrder then
         local data = callbacks.OnOrder(order)
@@ -158,7 +158,7 @@ function OnTrade(trade)
     end
 end
 
--- Добавь другие события по необходимости:
+-- Другие нужные события по аналогии:
 -- OnParam, OnStopOrder, OnMoneyLimits, OnDepoLimits, OnFuturesClientHolding и т.д.
 
-message("QuikSharp загружен и готов к работе (SHM-версия)", 1)
+message("QuikSharp готов к связи в памяти (SHM-режим)", 1)

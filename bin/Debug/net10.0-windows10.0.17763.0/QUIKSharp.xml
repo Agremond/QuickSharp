@@ -50,6 +50,15 @@
             <param name="param">Параметр запрашиваемых свечей.</param>
             <returns>Список свечей.</returns>
         </member>
+        <member name="M:QuikSharp.CandleFunctions.Subscribe(System.String,System.String,QuikSharp.DataStructures.CandleInterval,System.String)">
+            <summary>
+            Осуществляет подписку на получение исторических данных (свечи)
+            </summary>
+            <param name="classCode">Класс инструмента.</param>
+            <param name="securityCode">Код инструмента.</param>
+            <param name="interval">интервал свечей (тайм-фрейм).</param>
+            <param name="param">Параметр запрашиваемых свечей.</param>
+        </member>
         <member name="M:QuikSharp.CandleFunctions.GetLastCandles(System.String,System.String,QuikSharp.DataStructures.CandleInterval,System.Int32,System.String)">
             <summary>
             Возвращает заданное количество свечек указанного инструмента и интервала с конца.
@@ -60,15 +69,6 @@
             <param name="param">Параметр запрашиваемых свечей.</param>
             <param name="count">Количество возвращаемых свечей с конца.</param>
             <returns>Список свечей.</returns>
-        </member>
-        <member name="M:QuikSharp.CandleFunctions.Subscribe(System.String,System.String,QuikSharp.DataStructures.CandleInterval,System.String)">
-            <summary>
-            Осуществляет подписку на получение исторических данных (свечи)
-            </summary>
-            <param name="classCode">Класс инструмента.</param>
-            <param name="securityCode">Код инструмента.</param>
-            <param name="interval">интервал свечей (тайм-фрейм).</param>
-            <param name="param">Параметр запрашиваемых свечей.</param>
         </member>
         <member name="M:QuikSharp.CandleFunctions.Unsubscribe(System.String,System.String,QuikSharp.DataStructures.CandleInterval,System.String)">
             <summary>

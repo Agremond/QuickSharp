@@ -1,212 +1,201 @@
--- qscallbacks.lua (без изменений, но убедимся, что sendCallback используется правильно)
-package.path = package.path..";"..".\\?.lua;"..".\\?.luac"
-local qsutils = require("qsutils")
+-- qscallbacks.lua
+-- Обработчики событий (callbacks) QUIK ? внешний процесс (C#/Python/...)
+-- Все функции, начинающиеся с On..., автоматически вызываются QUIK-ом
+
+package.path = package.path .. ";.\\?.lua;.\\?.luac"
+
+local qsutils = require "qsutils"
+
 local qscallbacks = {}
+
+--------------------------------------------------------------------------------
+-- Вспомогательные функции
+--------------------------------------------------------------------------------
+
+local function sendError(message)
+    if not qsutils.is_connected() then return end
+
+    local msg = {
+        t    = timemsec(),
+        cmd  = "lua_error",
+        data = "Lua error: " .. tostring(message)
+    }
+    qsutils.sendCallback(msg)
+end
+
+local function sendEvent(cmd, data)
+    if not qsutils.is_connected() then return end
+
+    local msg = {
+        t   = timemsec(),
+        cmd = cmd,
+        data = data or ""
+    }
+    qsutils.sendCallback(msg)
+end
+
 local function CleanUp()
-    closeLog()
+    -- Закрытие лога и других ресурсов при завершении
+    if closeLog then
+        pcall(closeLog)
+    end
 end
-function OnQuikSharpDisconnected()
-    -- TODO any recovery or risk management logic here
-end
-function OnError(message)
-if is_connected then
-local msg = {}
-msg.t = timemsec()
-msg.cmd = "lua_error"
-msg.data = "Lua error: " .. message
-sendCallback(msg)
-end
-end
-function OnDisconnected()
-    local msg = {}
-    msg.cmd = "OnDisconnected"
-    msg.t = timemsec()
-    msg.data = ""
-    sendCallback(msg)
-end
+
+--------------------------------------------------------------------------------
+-- Основные события подключения / отключения
+--------------------------------------------------------------------------------
+
 function OnConnected()
-    local msg = {}
-    msg.cmd = "OnConnected"
-    msg.t = timemsec()
-    msg.data = ""
-    sendCallback(msg)
+    sendEvent("OnConnected")
 end
-function OnAllTrade(alltrade)
-    if is_connected then
-        local msg = {}
-        msg.t = timemsec()
-        msg.cmd = "OnAllTrade"
-        msg.data = alltrade
-        sendCallback(msg)
-    end
+
+function OnDisconnected()
+    sendEvent("OnDisconnected")
 end
+
+function OnQuikSharpDisconnected()
+    -- Здесь можно добавить логику восстановления / управления рисками
+    -- (например, закрыть позиции, отменить заявки и т.д.)
+    log("QuikSharp IPC disconnected", 2)
+end
+
+--------------------------------------------------------------------------------
+-- Ошибки и отладка
+--------------------------------------------------------------------------------
+
+function OnError(message)
+    sendError(message)
+end
+
+--------------------------------------------------------------------------------
+-- Инициализация и завершение скрипта
+--------------------------------------------------------------------------------
+
+function OnInit(script_path)
+    sendEvent("OnInit", script_path)
+    log("QUIK# initialized from: " .. tostring(script_path), 1)
+end
+
 function OnClose()
-    if is_connected then
-        local msg = {}
-        msg.cmd = "OnClose"
-        msg.t = timemsec()
-        msg.data = ""
-        sendCallback(msg)
-    end
+    sendEvent("OnClose")
     CleanUp()
 end
-function OnInit(script_path)
-    if is_connected then
-        local msg = {}
-        msg.cmd = "OnInit"
-        msg.t = timemsec()
-        msg.data = script_path
-        sendCallback(msg)
-    end
-    log("QUIK# is initialized from "..script_path, 0)
-end
-function OnOrder(order)
-    local msg = {}
-    msg.t = timemsec()
-    msg.id = nil
-    msg.data = order
-    msg.cmd = "OnOrder"
-    sendCallback(msg)
-end
-function OnQuote(class_code, sec_code)
-    if is_connected then
-        local msg = {}
-        msg.cmd = "OnQuote"
-        msg.t = timemsec()
-        local server_time = getInfoParam("SERVERTIME")
-       -- log("OnQuote callback"..server_time.."Sec:"..sec_code, 0)
-        local status, ql2 = pcall(getQuoteLevel2, class_code, sec_code)
-       
-        if status then
-         -- log("OnQuote status: true", 0)
-            msg.data = ql2
-            msg.data.class_code = class_code
-            msg.data.sec_code = sec_code
-            msg.data.server_time = server_time
-            sendCallback(msg)
-        else
-         -- log("OnQuote status: false", 0)
-            OnError(ql2)
-        end
-    end
-end
+
 function OnStop(s)
     is_started = false
-    if is_connected then
-        local msg = {}
-        msg.cmd = "OnStop"
-        msg.t = timemsec()
-        msg.data = s
-        sendCallback(msg)
-    end
-    log("QUIK# stopped. You could keep script running when closing QUIK and the script will start automatically the next time you start QUIK", 1)
+
+    sendEvent("OnStop", s)
+
+    log("QUIK# stopped. Script will auto-start on next QUIK launch if left running.", 1)
     CleanUp()
-    -- send disconnect
+
+    -- Рекомендуемое QUIK-ом значение задержки перед полным выходом
     return 1000
 end
+
+--------------------------------------------------------------------------------
+-- Сделки и заявки
+--------------------------------------------------------------------------------
+
+function OnAllTrade(alltrade)
+    sendEvent("OnAllTrade", alltrade)
+end
+
 function OnTrade(trade)
-    local msg = {}
-    msg.t = timemsec()
-    msg.id = nil
-    msg.data = trade
-    msg.cmd = "OnTrade"
-    sendCallback(msg)
+    sendEvent("OnTrade", trade)
 end
-function OnTransReply(trans_reply)
-    local msg = {}
-    msg.t = timemsec()
-    msg.id = nil
-    msg.data = trans_reply
-    msg.cmd = "OnTransReply"
-    sendCallback(msg)
+
+function OnOrder(order)
+    sendEvent("OnOrder", order)
 end
+
 function OnStopOrder(stop_order)
-local msg = {}
-    msg.t = timemsec()
-    msg.data = stop_order
-    msg.cmd = "OnStopOrder"
-    sendCallback(msg)
+    sendEvent("OnStopOrder", stop_order)
 end
+
+function OnTransReply(trans_reply)
+    sendEvent("OnTransReply", trans_reply)
+end
+
+--------------------------------------------------------------------------------
+-- Стакан (Level II), параметры инструмента
+--------------------------------------------------------------------------------
+
+function OnQuote(class_code, sec_code)
+    if not qsutils.is_connected() then return end
+
+    local server_time = getInfoParam("SERVERTIME") or ""
+
+    local status, ql2 = pcall(getQuoteLevel2, class_code, sec_code)
+
+    if status then
+        ql2.class_code   = class_code
+        ql2.sec_code     = sec_code
+        ql2.server_time  = server_time
+
+        sendEvent("OnQuote", ql2)
+    else
+        sendError(ql2 or "getQuoteLevel2 failed")
+    end
+end
+
 function OnParam(class_code, sec_code)
-    local msg = {}
-    msg.cmd = "OnParam"
-    msg.t = timemsec()
-local dat = {}
-dat.class_code = class_code
-dat.sec_code = sec_code
-    msg.data = dat
-    sendCallback(msg)
+    sendEvent("OnParam", {
+        class_code = class_code,
+        sec_code   = sec_code
+    })
 end
+
+--------------------------------------------------------------------------------
+-- Лимиты, позиции, счета
+--------------------------------------------------------------------------------
+
 function OnAccountBalance(acc_bal)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = acc_bal
-    msg.cmd = "OnAccountBalance"
-    sendCallback(msg)
+    sendEvent("OnAccountBalance", acc_bal)
 end
+
 function OnAccountPosition(acc_pos)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = acc_pos
-    msg.cmd = "OnAccountPosition"
-    sendCallback(msg)
+    sendEvent("OnAccountPosition", acc_pos)
 end
+
 function OnDepoLimit(dlimit)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = dlimit
-    msg.cmd = "OnDepoLimit"
-    sendCallback(msg)
+    sendEvent("OnDepoLimit", dlimit)
 end
+
 function OnDepoLimitDelete(dlimit_del)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = dlimit_del
-    msg.cmd = "OnDepoLimitDelete"
-    sendCallback(msg)
+    sendEvent("OnDepoLimitDelete", dlimit_del)
 end
-function OnFirm(firm)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = firm
-    msg.cmd = "OnFirm"
-    sendCallback(msg)
-end
-function OnFuturesClientHolding(fut_pos)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = fut_pos
-    msg.cmd = "OnFuturesClientHolding"
-    sendCallback(msg)
-end
-function OnFuturesLimitChange(fut_limit)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = fut_limit
-    msg.cmd = "OnFuturesLimitChange"
-    sendCallback(msg)
-end
-function OnFuturesLimitDelete(lim_del)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = lim_del
-    msg.cmd = "OnFuturesLimitDelete"
-    sendCallback(msg)
-end
+
 function OnMoneyLimit(mlimit)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = mlimit
-    msg.cmd = "OnMoneyLimit"
-    sendCallback(msg)
+    sendEvent("OnMoneyLimit", mlimit)
 end
+
 function OnMoneyLimitDelete(mlimit_del)
-    local msg = {}
-    msg.t = timemsec()
-    msg.data = mlimit_del
-    msg.cmd = "OnMoneyLimitDelete"
-    sendCallback(msg)
+    sendEvent("OnMoneyLimitDelete", mlimit_del)
 end
+
+function OnFuturesLimitChange(fut_limit)
+    sendEvent("OnFuturesLimitChange", fut_limit)
+end
+
+function OnFuturesLimitDelete(lim_del)
+    sendEvent("OnFuturesLimitDelete", lim_del)
+end
+
+function OnFuturesClientHolding(fut_pos)
+    sendEvent("OnFuturesClientHolding", fut_pos)
+end
+
+--------------------------------------------------------------------------------
+-- Прочие события (фирмы, редко используемые)
+--------------------------------------------------------------------------------
+
+function OnFirm(firm)
+    sendEvent("OnFirm", firm)
+end
+
+--------------------------------------------------------------------------------
+
 return qscallbacks
---~ Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
---~ Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
+
+-- vim: ts=4 sts=4 sw=4 et

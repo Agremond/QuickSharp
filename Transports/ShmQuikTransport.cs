@@ -187,7 +187,7 @@
 
                     // Ожидание ответа
                     var responseTask = tcs.Task;
-
+                    
                     using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
                     cts.CancelAfter(TimeSpan.FromSeconds(45)); // настраиваемый таймаут
 

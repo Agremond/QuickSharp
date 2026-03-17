@@ -1,20 +1,26 @@
 -- qsutils.lua
-local json = require "dkjson"
-local ipcshm = require "ipc.shm"  -- ipc.shm ��� shared memory
-local ipcsem = require "ipc.sem"  -- ipc.sem ��� ���������
+-- Утилиты для QUIK# (взаимодействие Lua ↔ C# через разделяемую память)
+
+local json   = require "dkjson"
+local ipcshm = require "ipc.shm"   -- работа с shared memory
+local ipcsem = require "ipc.sem"   -- работа с семафорами
 
 local qsutils = {}
 
---- Sleep that always works
+--------------------------------------------------------------------------------
+-- Вспомогательные функции времени и задержки
+--------------------------------------------------------------------------------
+
+--- Кроссплатформенная задержка в миллисекундах
 function delay(msec)
     if sleep then
         pcall(sleep, msec)
     else
-        -- pcall(socket.select, nil, nil, msec / 1000)
+        -- socket.sleep(msec / 1000)   -- закомментировано, т.к. socket может отсутствовать
     end
 end
 
-script_path = getScriptPath()
+--- Миллисекундное время с монотонным приращением (защита от скачков os.time)
 local time_offset = 0
 local last_os_time = os.time()
 
@@ -24,296 +30,242 @@ function timemsec()
         time_offset = 0
         last_os_time = now
     end
-    time_offset = time_offset + 50 -- ������ ��������
-    return (now * 1000) + time_offset % 1000
+    time_offset = time_offset + 50          -- грубое приращение ~50 мс
+    return (now * 1000) + (time_offset % 1000)
 end
 
--- Returns the name of the file that calls this function (without extension)
+--------------------------------------------------------------------------------
+-- Работа с путями и именем скрипта
+--------------------------------------------------------------------------------
+
+local script_path = getScriptPath and getScriptPath() or "."
+
+--- Имя текущего скрипта без пути и расширения
 function scriptFilename()
-    -- Check that Lua runtime was built with debug information enabled
     if not debug or not debug.getinfo then
         return nil
     end
     local full_path = debug.getinfo(2, "S").source:sub(2)
-    return string.gsub(full_path, "^.*\\(.*)[.]lua[c]?$", "%1")
+    return full_path:match("[^\\]+%.lua[c]?$") or nil
 end
 
-is_debug = false
+--------------------------------------------------------------------------------
+-- Логирование
+--------------------------------------------------------------------------------
 
--- log files
-function openLog()
-    os.execute("mkdir \""..script_path.."\\logs\"")
-    local lf = io.open (script_path.. "\\logs\\QUIK#_"..os.date("%Y%m%d")..".log", "a")
-    if not lf then
-        lf = io.open (script_path.. "\\QUIK#_"..os.date("%Y%m%d")..".log", "a")
+local logfile
+local is_debug = false
+
+--- Создаёт папку logs и открывает лог-файл на текущий день
+local function openLog()
+    os.execute('mkdir "' .. script_path .. '\\logs" 2>nul')
+    local filename = script_path .. "\\logs\\QUIK#_" .. os.date("%Y%m%d") .. ".log"
+    local f = io.open(filename, "a")
+    if not f then
+        -- повторная попытка (иногда помогает)
+        f = io.open(filename, "a")
     end
-    return lf
+    return f
 end
 
--- Returns contents of config.json file or nil if no such file exists
-function readConfigAsJson()
-    local conf = io.open (script_path.. "\\config.json", "r")
-    if not conf then
-        return nil
+--- Закрывает лог-файл, если он открыт
+local function closeLog()
+    if logfile then
+        pcall(logfile.close, logfile)
+        logfile = nil
     end
-    local content = conf:read "*a"
-    conf:close()
-    return from_json(content)
 end
 
-function paramsFromConfig(scriptName)
-    local params = {}
-    -- just default values
-    table.insert(params, "127.0.0.1") -- responseHostname
-    table.insert(params, 34130) -- responsePort
-    table.insert(params, "127.0.0.1") -- callbackHostname
-    table.insert(params, 34131) -- callbackPort
-    local config = readConfigAsJson()
-    if not config or not config.servers then
-        return nil
-    end
-    local found = false
-    for i=1,#config.servers do
-        local server = config.servers[i]
-        if server.scriptName == scriptName then
-            found = true
-            if server.responseHostname then
-                params[1] = server.responseHostname
-            end
-            if server.responsePort then
-                params[2] = server.responsePort
-            end
-            if server.callbackHostname then
-                params[3] = server.callbackHostname
-            end
-            if server.callbackPort then
-                params[4] = server.callbackPort
-            end
+--- Основная функция логирования (в файл + в окно сообщений QUIK)
+function log(msg, level)
+    msg = msg or ""
+    level = level or 0
+
+    local logLine = "LOG " .. level .. ": " .. msg
+
+    -- Вывод в консоль
+    print(logLine)
+
+    -- Вывод в окно сообщений QUIK (только важные уровни или при дебаге)
+    if (level >= 1 and level <= 3) or is_debug then
+        if message then
+            pcall(message, msg, level)
         end
     end
-    if found then
-        return params
-    else
-        return nil
-    end
-end
 
--- closes log
-function closeLog()
+    -- Запись в файл
     if logfile then
-        pcall(logfile:close(logfile))
+        local ms = math.floor(timemsec() % 1000)
+        local timestamp = os.date("%Y-%m-%d %H:%M:%S") .. string.format(".%03d", ms)
+        pcall(logfile.write, logfile, timestamp .. " " .. logLine .. "\n")
+        pcall(logfile.flush, logfile)
     end
 end
 
 logfile = openLog()
 
---- Write to log file and to Quik messages
-function log(msg, level)
-    if not msg then msg = "" end
-    if level == 1 or level == 2 or level == 3 or is_debug then
-        -- only warnings and recoverable errors to Quik
-        if message then
-            pcall(message, msg, level)
-        end
-    end
-    if not level then level = 0 end
-    local logLine = "LOG "..level..": "..msg
-    print(logLine)
-    local msecs = math.floor(math.fmod(timemsec(), 1000));
-    if logfile then
-        pcall(logfile.write, logfile, os.date("%Y-%m-%d %H:%M:%S").."."..msecs.." "..logLine.."\n")
-        pcall(logfile.flush, logfile)
-    end
+--------------------------------------------------------------------------------
+-- Работа с конфигурацией
+--------------------------------------------------------------------------------
+
+--- Читает config.json и возвращает таблицу или nil
+local function readConfigAsJson()
+    local path = script_path .. "\\config.json"
+    local f = io.open(path, "r")
+    if not f then return nil end
+
+    local content = f:read("*a")
+    f:close()
+    return from_json(content)
 end
 
--- Doesn't work if string contains empty values, eg. 'foo,,bar'. You get {'foo','bar'} instead of {'foo', '', 'bar'}
-function split(inputstr, sep)
-    if sep == nil then
-        sep = "%s"
-    end
-    local t={}
-    local i=1
-    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-        t[i] = str
-        i = i + 1
-    end
-    return t
-end
+--- Возвращает параметры подключения для указанного скрипта из config.json
+function paramsFromConfig(scriptName)
+    local defaults = {
+        "127.0.0.1",   -- responseHostname
+        34130,         -- responsePort
+        "127.0.0.1",   -- callbackHostname
+        34131          -- callbackPort
+    }
 
--- https://stackoverflow.com/questions/1426954/split-string-in-lua#comment73602874_7615129
-function split2(inputstr, sep)
-    sep = sep or '%s'
-    local t = {}
-    for field, s in string.gmatch(inputstr, "([^"..sep.."]*)("..sep.."?)") do
-        table.insert(t, field)
-        if s == "" then
-            return t
+    local config = readConfigAsJson()
+    if not config or not config.servers then
+        return defaults
+    end
+
+    for _, server in ipairs(config.servers) do
+        if server.scriptName == scriptName then
+            if server.responseHostname then defaults[1] = server.responseHostname end
+            if server.responsePort     then defaults[2] = server.responsePort     end
+            if server.callbackHostname then defaults[3] = server.callbackHostname end
+            if server.callbackPort     then defaults[4] = server.callbackPort     end
+            return defaults
         end
     end
+
+    return defaults   -- если ничего не нашли — возвращаем значения по умолчанию
 end
+
+--------------------------------------------------------------------------------
+-- JSON утилиты
+--------------------------------------------------------------------------------
 
 function from_json(str)
-    local status, msg= pcall(json.decode, str, 1, json.null) -- dkjson
-    if status then
-        return msg
+    local ok, result = pcall(json.decode, str, 1, json.null)
+    if ok then
+        return result
     else
-        return nil, msg
+        log("JSON decode error: " .. tostring(result), 3)
+        return nil
     end
 end
 
-function to_json(msg)
-    local status, str= pcall(json.encode, msg, { indent = false }) -- dkjson
-    if status then
-        return str
+function to_json(tbl)
+    local ok, result = pcall(json.encode, tbl, { indent = false })
+    if ok then
+        return result
     else
-        error(str)
+        error("JSON encode failed: " .. tostring(result))
     end
 end
 
--- =============================================================================
--- ���������: shared memory + �������� + mutex (������� 2: ��������� ������)
--- =============================================================================
+--------------------------------------------------------------------------------
+-- IPC через разделяемую память (вариант 2 — отдельные буферы)
+--------------------------------------------------------------------------------
 
--- ����� �������� (���������� � �������)
-local REQ_SHM_NAME = "QuikSharp_Request_Shmem"  -- ��� �������� C# -> Lua
-local RESP_SHM_NAME = "QuikSharp_Response_Shmem"  -- ��� ���������� ������� Lua -> C#
-local CB_SHM_NAME = "QuikSharp_Callback_Shmem"  -- ��� ����������� callbacks Lua -> C#
+-- Имена объектов IPC
+local REQ_SHM_NAME  = "QuikSharp_Request_Shmem"
+local RESP_SHM_NAME = "QuikSharp_Response_Shmem"
+local CB_SHM_NAME   = "QuikSharp_Callback_Shmem"
 
-local REQ_SEM_NAME = "QuikSharp_Request_Sem"  -- ������ � ����� ������� (C# post)
-local RESP_SEM_NAME = "QuikSharp_Response_Sem"  -- ������ � ����� ������ (Lua post)
-local CB_SEM_NAME = "QuikSharp_Callback_Sem"  -- ������ � ����� callback (Lua post)
+local REQ_SEM_NAME  = "QuikSharp_Request_Sem"
+local RESP_SEM_NAME = "QuikSharp_Response_Sem"
+local CB_SEM_NAME   = "QuikSharp_Callback_Sem"
 
-local REQ_MTX_NAME = "QuikSharp_Request_MutexSem"  -- ������ Request shmem
-local RESP_MTX_NAME = "QuikSharp_Response_MutexSem"  -- ������ Response shmem
-local CB_MTX_NAME = "QuikSharp_Callback_MutexSem"  -- ������ Callback shmem
+local REQ_MTX_NAME  = "QuikSharp_Request_MutexSem"
+local RESP_MTX_NAME = "QuikSharp_Response_MutexSem"
+local CB_MTX_NAME   = "QuikSharp_Callback_MutexSem"
 
--- ������� ������� (4MB ����� � ��������� � ��������: 1MB request, 1MB response, 2MB callback ��� �������� ������)
-local SHM_SIZE_REQ = 1024 * 1024  -- 1MB
-local SHM_SIZE_RESP = 1024 * 1024  -- 1MB
-local SHM_SIZE_CB = 2 * 1024 * 1024  -- 2MB
+-- Размеры памяти
+local SHM_SIZE_REQ = 1024 * 1024      -- 1 MB
+local SHM_SIZE_RESP = 1024 * 1024     -- 1 MB
+local SHM_SIZE_CB  = 2 * 1024 * 1024  -- 2 MB
 
-local HEADER_SIZE = 24  -- ��� � ���������: 6x uint32 (magic, ver, req_id, msg_type, body_len, reserved)
-local MAGIC = 0x5155494B  -- "QUIK"
-local VERSION = 2
+local HEADER_SIZE = 24
+local MAGIC       = 0x5155494B        -- "QUIK"
+local VERSION     = 2
 
--- ������ ��������
 local req_shm, resp_shm, cb_shm
 local req_sem, resp_sem, cb_sem
 local req_mtx, resp_mtx, cb_mtx
 
 local is_connected = false
 
+--- Инициализация всех объектов разделяемой памяти и синхронизации
 local function init_shm()
-    if req_shm then return true end  -- ��� ����������������
+    if req_shm then return true end
 
-    -- ������/��������� shared memory (create � ���� �� ����������, �������; ����� �������)
-    local ok, err = ipcshm.create(REQ_SHM_NAME, SHM_SIZE_REQ)
-    if not ok then
-        log("ipcshm.create failed for REQ: " .. tostring(err), 3)
-        return false, err
-    end
+    -- Создание shared memory
+    local ok, err
+
+    ok, err = ipcshm.create(REQ_SHM_NAME, SHM_SIZE_REQ)
+    if not ok then log("ipcshm.create REQ failed: " .. tostring(err), 3); return false end
     req_shm = ok
 
     ok, err = ipcshm.create(RESP_SHM_NAME, SHM_SIZE_RESP)
-    if not ok then
-        log("ipcshm.create failed for RESP: " .. tostring(err), 3)
-        return false, err
-    end
+    if not ok then log("ipcshm.create RESP failed: " .. tostring(err), 3); return false end
     resp_shm = ok
 
     ok, err = ipcshm.create(CB_SHM_NAME, SHM_SIZE_CB)
-    if not ok then
-        log("ipcshm.create failed for CB: " .. tostring(err), 3)
-        return false, err
-    end
+    if not ok then log("ipcshm.create CB failed: " .. tostring(err), 3); return false end
     cb_shm = ok
 
-    -- �������� (open with initial 0 � ��� �������)
-    ok, err = ipcsem.open(REQ_SEM_NAME, 1)
-    if not ok then
-        log("ipcsem.open failed for REQ: " .. tostring(err), 3)
-        return false, err
-    end
-    req_sem = ok
-   req_sem:dec()
+    -- Семафоры событий (счётчики)
+    ok, err = ipcsem.open(REQ_SEM_NAME, 1);  if not ok then return false end; req_sem  = ok; req_sem:dec()
+    ok, err = ipcsem.open(RESP_SEM_NAME, 1); if not ok then return false end; resp_sem = ok; resp_sem:dec()
+    ok, err = ipcsem.open(CB_SEM_NAME, 1);   if not ok then return false end; cb_sem   = ok; cb_sem:dec()
 
-    ok, err = ipcsem.open(RESP_SEM_NAME, 1)
-    if not ok then
-        log("ipcsem.open failed for RESP: " .. tostring(err), 3)
-        return false, err
-    end
-    resp_sem = ok
-    resp_sem:dec()
+    -- Мьютексы (взаимное исключение)
+    ok, err = ipcsem.open(REQ_MTX_NAME, 1);  if not ok then return false end; req_mtx  = ok
+    ok, err = ipcsem.open(RESP_MTX_NAME, 1); if not ok then return false end; resp_mtx = ok
+    ok, err = ipcsem.open(CB_MTX_NAME, 1);   if not ok then return false end; cb_mtx   = ok
 
-    ok, err = ipcsem.open(CB_SEM_NAME, 1)
-    if not ok then
-        log("ipcsem.open failed for CB: " .. tostring(err), 3)
-        return false, err
-    end
-    cb_sem = ok
-    cb_sem:dec()
+    -- Инициализация заголовков в памяти
+    local header = string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0)
+    req_shm:seek("set");  req_shm:write(header)
+    resp_shm:seek("set"); resp_shm:write(header)
+    cb_shm:seek("set");   cb_shm:write(header)
 
-    -- �������� (open with initial 1 � unlocked)
-    ok, err = ipcsem.open(REQ_MTX_NAME, 1)
-    if not ok then
-        log("ipcmtx.open failed for REQ: " .. tostring(err), 3)
-        return false, err
-    end
-    req_mtx = ok
-
-    ok, err = ipcsem.open(RESP_MTX_NAME, 1)
-    if not ok then
-        log("ipcmtx.open failed for RESP: " .. tostring(err), 3)
-        return false, err
-    end
-    resp_mtx = ok
-
-    ok, err = ipcsem.open(CB_MTX_NAME, 1)
-    if not ok then
-        log("ipcmtx.open failed for CB: " .. tostring(err), 3)
-        return false, err
-    end
-    cb_mtx = ok
-
-    -- �������������� ��������� (�����������, �� ��� �������)
-    req_shm:seek("set")
-    req_shm:write(string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0))
-    resp_shm:seek("set")
-    resp_shm:write(string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0))
-    cb_shm:seek("set")
-    cb_shm:write(string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0))
-
-    log("Shared memory IPC (Variant 2: separate buffers) initialized", 1)
+    log("Shared memory IPC (variant 2) initialized", 1)
     return true
 end
 
-function qsutils.connect(...)
-    -- ���������� ������ ��������� ������� (TCP)
+--------------------------------------------------------------------------------
+-- Основные публичные функции
+--------------------------------------------------------------------------------
+
+function qsutils.connect()
     if is_connected then return true end
+
     local ok, err = init_shm()
     if not ok then
         log("IPC initialization failed: " .. tostring(err), 3)
         return false
     end
+
     is_connected = true
-    log("QUIK# connected via shared memory (Variant 2)", 1)
+    log("QUIK# connected via shared memory (variant 2)", 1)
     return true
 end
 
--- ��������� ������� �� C#
+--- Чтение запроса от C# (блокирующее с таймаутом)
 function qsutils.receiveRequest(timeout_sec)
-    if not is_connected then
-        return nil, "not connected"
-    end
+    if not is_connected then return nil, "not connected" end
     timeout_sec = timeout_sec or 5.0
 
-    -- ��� ������� � ����� ������� (C# > Lua)
-    local success = req_sem:dec(timeout_sec)  -- dec/wait � ���������
-    if not success then
-        return nil, "timeout"
-    end
+    local ok = req_sem:dec(timeout_sec)
+    if not ok then return nil, "timeout" end
 
-    -- ����������� ������� ��� ������
     req_mtx:dec()
 
     req_shm:seek("set")
@@ -322,112 +274,106 @@ function qsutils.receiveRequest(timeout_sec)
         req_mtx:inc()
         return nil, "header read error"
     end
-    local magic, ver, req_id, msg_type, body_len, _ = string.unpack("<I4I4I4I4I4I4", header)
+
+    local magic, ver, req_id, msg_type, body_len = string.unpack("<I4I4I4I4I4", header)
     if magic ~= MAGIC then
         req_mtx:inc()
         return nil, "bad magic number"
     end
 
-    -- ������ ������� ���� � heartbeat ��� ping ��� ������
     if body_len == 0 then
         req_mtx:inc()
         return nil, "empty body", req_id
     end
 
-    if body_len > SHM_SIZE_REQ - HEADER_SIZE then  -- ������ �� overflow
+    if body_len > SHM_SIZE_REQ - HEADER_SIZE then
         req_mtx:inc()
-        return nil, "body too large: " .. body_len
+        return nil, "body too large"
     end
 
     req_shm:seek("set", HEADER_SIZE)
     local body = req_shm:read(body_len)
+    req_mtx:inc()
+
     if not body or #body ~= body_len then
-        req_mtx:inc()
         return nil, "body read error"
     end
 
-    local tbl, pos, err = json.decode(body, 1, json.null)
+    local tbl = from_json(body)
     if not tbl then
-        req_mtx:inc()
-        log("JSON decode failed: " .. tostring(err), 3)
-        return nil, "json decode failed: " .. tostring(err)
+        return nil, "json decode failed"
     end
 
-    -- ����� � ����������� ������� � ����������
-    req_mtx:inc()
     return tbl, req_id
 end
 
--- �������� ������ ��� ������� � C#
+--- Отправка ответа или callback'а в C#
 local function send_message(msg_table, is_callback)
-    local shm_to_use = is_callback and cb_shm or resp_shm
-    local mtx_to_use = is_callback and cb_mtx or resp_mtx
-    local sem_to_use = is_callback and cb_sem or resp_sem
-    local shm_size = is_callback and SHM_SIZE_CB or SHM_SIZE_RESP
-
     if not is_connected then return nil, "not connected" end
 
-    local str = to_json(msg_table)
-    local len = #str
-    if len > shm_size - HEADER_SIZE then
-        return nil, "message too large: " .. len
+    local shm = is_callback and cb_shm or resp_shm
+    local mtx = is_callback and cb_mtx or resp_mtx
+    local sem = is_callback and cb_sem or resp_sem
+    local max_size = is_callback and SHM_SIZE_CB or SHM_SIZE_RESP
+
+    local json_str = to_json(msg_table)
+    local len = #json_str
+
+    if len > max_size - HEADER_SIZE then
+        return nil, "message too large (" .. len .. " bytes)"
     end
 
-    -- ����������� ������� ��� ������
-    mtx_to_use:dec()
+    mtx:dec()
 
-    -- ����� ����
-    shm_to_use:seek("set", HEADER_SIZE)
-    shm_to_use:write(str)
+    shm:seek("set", HEADER_SIZE)
+    shm:write(json_str)
 
-    -- ����� ���������
-    shm_to_use:seek("set")
-    shm_to_use:write(string.pack("<I4I4I4I4I4I4",
-        MAGIC, VERSION, msg_table.req_id or 0, 2, len, 0))  -- msg_type=2 ��� �������/callbacks
+    shm:seek("set")
+    shm:write(string.pack("<I4I4I4I4I4I4",
+        MAGIC, VERSION, msg_table.req_id or 0, 2, len, 0))
 
-    -- ����������� �������
-    mtx_to_use:inc()
+    mtx:inc()
 
-    -- ������������� � ����������
-    local ok = sem_to_use:inc()
+    local ok = sem:inc()
     if not ok then
-        return nil, "sem inc failed"
+        return nil, "semaphore increment failed"
     end
 
- --   log("������������ JSON (����� " .. #str .. ", callback=" .. tostring(is_callback) .. "): " .. str, 1)
     return true
 end
 
 function qsutils.sendResponse(msg_table)
-    return send_message(msg_table, false)  -- sync response
+    return send_message(msg_table, false)
 end
 
 function qsutils.sendCallback(msg_table)
-    return send_message(msg_table, true)  -- async callback
+    return send_message(msg_table, true)
 end
 
 function qsutils.Close()
-    -- ��������� ��� �������
-    if req_shm then req_shm:close() end
+    if req_shm  then req_shm:close()  end
     if resp_shm then resp_shm:close() end
-    if cb_shm then cb_shm:close() end
+    if cb_shm   then cb_shm:close()   end
 
-    if req_sem then req_sem:close() end
+    if req_sem  then req_sem:close()  end
     if resp_sem then resp_sem:close() end
-    if cb_sem then cb_sem:close() end
+    if cb_sem   then cb_sem:close()   end
 
-    if req_mtx then req_mtx:close() end
+    if req_mtx  then req_mtx:close()  end
     if resp_mtx then resp_mtx:close() end
-    if cb_mtx then cb_mtx:close() end
+    if cb_mtx   then cb_mtx:close()   end
 
+    closeLog()
     is_connected = false
-    log("IPC closed (all resources released)", 1)
+    log("IPC closed, all resources released", 1)
 end
 
 qsutils.is_connected = function() return is_connected end
+
+-- Для совместимости со старым кодом
 sendResponse = qsutils.sendResponse
 sendCallback = qsutils.sendCallback
 
 return qsutils
---~ Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
---~ Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
+
+-- vim: ts=4 sts=4 sw=4 et
