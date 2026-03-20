@@ -6,31 +6,60 @@ local json = require "dkjson"
 
 local qsfunctions = {}
 
+
+local function send_error(msg, error_text)
+    msg.cmd       = "lua_error"
+    msg.lua_error = tostring(error_text)
+    msg.data      = nil
+    return msg
+end
 --------------------------------------------------------------------------------
 -- Основной диспетчер команд
 --------------------------------------------------------------------------------
 
 --- Выполняет команду по msg.cmd или возвращает ошибку
+-- Вспомогательная функция для получения traceback
+local function get_traceback(err)
+    return debug.traceback("Lua error: " .. tostring(err), 2)  -- уровень 2, чтобы пропустить сам xpcall
+end
 function qsfunctions.dispatch_and_process(msg)
-    if type(msg) ~= "table" or not msg.cmd then
-        return { cmd = "lua_error", lua_error = "Некорректный формат сообщения" }
+    if type(msg) ~= "table" then
+        log("dispatch_and_process: msg is not a table", 1)
+        return { cmd = "lua_error", lua_error = "Некорректный формат сообщения (не таблица)" }
+    end
+
+    if not msg.cmd or type(msg.cmd) ~= "string" then
+        log("dispatch_and_process: msg.cmd missing or not string", 1)
+        return { cmd = "lua_error", lua_error = "Некорректный формат сообщения (нет cmd)" }
     end
 
     local handler = qsfunctions[msg.cmd]
-    if handler then
-        local status, result = pcall(handler, msg)
-        if status then
-            return result or msg
-        else
-            msg.cmd = "lua_error"
-            msg.lua_error = "Lua error: " .. tostring(result)
-            return msg
-        end
-    else
+    if not handler then
         log("Неизвестная команда: " .. tostring(msg.cmd), 3)
-        msg.cmd       = "lua_error"
-        msg.lua_error = "Command not implemented: " .. tostring(msg.cmd)
-        return msg
+        return send_error(msg, "Command not implemented: " .. tostring(msg.cmd))
+    end
+
+    -- Выполняем обработчик с полным traceback
+    local status, result = xpcall(
+        function() return handler(msg) end,
+        get_traceback
+    )
+    if status then
+        local res = result or msg
+
+        if type(res.lua_error) == "string" and res.lua_error ~= "" then
+            res.cmd = "lua_error"           -- ← опционально, если хочешь отдельный cmd
+            res.data = nil
+        else
+            res.cmd = res.cmd or msg.cmd
+            res.lua_error = nil
+            if res.data == nil then
+                res.data = json.null        -- или {} — но null лучше для различия "нет данных" и "ошибка"
+            end
+        end
+
+        res.req_id = msg.req_id             -- на всякий случай
+        return res
     end
 end
 
@@ -431,6 +460,24 @@ function qsfunctions.GetQuoteLevel2(msg)
     end
     return msg
 end
+--------------------------------------------------------------------------------
+-- Ошибки и отладка
+--------------------------------------------------------------------------------
+
+function OnError(message)
+    sendError(message)
+end
+
+local function sendError(message)
+    if not qsutils.is_connected() then return end
+
+    local msg = {
+        t    = timemsec(),
+        cmd  = "lua_error",
+        data = "Lua error: " .. tostring(message)
+    }
+    qsutils.sendCallback(msg)
+end
 
 --------------------------------------------------------------------------------
 -- Расчёт объёма и комиссии
@@ -645,20 +692,66 @@ function qsfunctions.getOrder_by_ID(msg)
     return msg
 end
 
-function qsfunctions.getOrder_by_Number(msg)
-    local order_num = tonumber(msg.data.data)
-    for i = 0, getNumberOf("orders") - 1 do
-        local order = getItem("orders", i)
-        if order.order_num == order_num then
-            msg.data = order
-            return msg
-        end
-    end
-    msg.data = nil
-    return msg
-end
+-- function qsfunctions.getOrder_by_Number(msg)
+--     local order_num = tonumber(msg.data.data)
+--     for i = 0, getNumberOf("orders") - 1 do
+--         local order = getItem("orders", i)
+--         if order.order_num == order_num then
+--             msg.data = order
+--             return msg
+--         end
+--     end
+--     msg.data = nil
+--     return msg
+-- end
+
+-- function qsfunctions.get_order_by_number(msg)
+--     -- Поддержка обоих форматов, которые может присылать твой C#
+--     local order_str = (type(msg.data) == "table" and (msg.data.data or msg.data)) or msg.data
+
+--     if type(order_str) ~= "string" or order_str == "" then
+--         --msg.data.cmd       = "lua_error"
+--         msg.data = "get_order_by_number: data должно быть строкой CLASS|ORDER_ID"
+--         --msg.data      = nil
+--         return msg
+--     end
+
+--     local spl = split(order_str, "|")
+--     if #spl < 2 then
+--         --msg.data.cmd      = "lua_error"
+--         msg.data  = "get_order_by_number: неверный формат (ожидается CLASS|ORDER_ID)"
+--         --msg.data.data       = nil
+--         return msg
+--     end
+
+--     local class_code = tostring(spl[1])
+--     local order_num  = tonumber(spl[2])
+
+--     if not order_num or order_num <= 0 then
+--         --msg.data.cmd       = "lua_error"
+--         msg.data = "get_order_by_number: ORDER_ID должен быть положительным числом"
+--         --msg.data.data       = nil
+--         return msg
+--     end
+
+--     local order = getOrderByNumber(class_code, order_num)
+
+--     if type(order) == "table" and order.order_num and order.order_num > 0 then
+--         msg.cmd       = "get_order_by_number"
+--         msg.data      = order
+--         msg.lua_error = nil
+--     else
+--         log(string.format("get_order_by_number: order %s|%s not found", class_code, order_num), 3)  
+--         --msg.data.cmd       = "lua_error"
+--         msg.data = "Order not found: " .. class_code .. "|" .. tostring(order_num)
+--         --msg.data      = nil
+--     end
+
+--     return msg
+-- end
 
 function qsfunctions.get_order_by_number(msg)
+    
     local spl = split(msg.data.data or "", "|")
     local class_code = tostring(spl[1] or "")
     local order_id   = math.tointeger(spl[2])

@@ -146,6 +146,32 @@ function paramsFromConfig(scriptName)
     return defaults   -- если ничего не нашли — возвращаем значения по умолчанию
 end
 
+function split(inputstr, sep)
+    if sep == nil then
+        sep = "%s"
+    end
+    local t={}
+    local i=1
+    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+        t[i] = str
+        i = i + 1
+    end
+    return t
+end
+
+-- https://stackoverflow.com/questions/1426954/split-string-in-lua#comment73602874_7615129
+function split2(inputstr, sep)
+    sep = sep or '%s'
+    local t = {}
+    for field, s in string.gmatch(inputstr, "([^"..sep.."]*)("..sep.."?)") do
+        table.insert(t, field)
+        if s == "" then
+            return t
+        end
+    end
+end
+
+
 --------------------------------------------------------------------------------
 -- JSON утилиты
 --------------------------------------------------------------------------------

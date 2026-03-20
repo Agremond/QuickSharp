@@ -76,7 +76,7 @@ function main()
             -- --------------------------------
             -- Обработка команд от C#
             -- --------------------------------
-            log("Запрос от C# (req_id="..tostring(req_id).."): " .. to_json(cmd), 0)
+            log("Запрос от C# 1 (req_id=" .. tostring(req_id).."): " .. to_json(cmd), 0)
 	    if cmd.cmd == "ping" then
             -- Специальная обработка ping с ответом как-нибудь
             response = {
@@ -86,17 +86,17 @@ function main()
                 t      = timemsec(),
                 success = true
             }
-            else	
-	            local result = qf.dispatch_and_process(cmd)
-			if cmd.nonce then
-			    result.nonce = cmd.nonce   -- Добавляем обратно в ответ
-			end
-			result.req_id = req_id
-			log("После dispatch: cmd=" .. cmd.cmd .. ", data тип=" .. type(result.data) .. ", data=" .. to_json(result.data or {}), 1)
-	            local ok, send_err = util.sendResponse(result)
-	            if not ok then
-	                log("Ошибка отправки ответа: " .. tostring(send_err), 2)
-	            end
+        else	
+	        local result = qf.dispatch_and_process(cmd)
+		if cmd.nonce then
+		    result.nonce = cmd.nonce   -- Добавляем обратно в ответ
+        end
+		result.req_id = req_id
+		log("После dispatch: cmd=" .. tostring(result.cmd) .. ", data тип=" .. type(result.data), 1)
+	        local ok, send_err = util.sendResponse(result)
+	        if not ok then
+	            log("Ошибка отправки ответа: " .. tostring(send_err), 2)
+	        end
 	   end
 
         elseif err == "timeout" then

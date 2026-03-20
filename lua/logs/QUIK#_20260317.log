@@ -1,0 +1,193 @@
+2026-03-17 21:34:03.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:34:03.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:34:03.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:36:17.100 LOG 0: Запрос от C# (req_id=1): {"id":1,"data":{"data":"TQBR|123456789","createdTime":1773772577926,"cmd":"get_order_by_number"},"createdTime":1773772577929,"cmd":"get_order_by_number"}
+2026-03-17 21:36:17.150 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"data":"TQBR|123456789","createdTime":1773772577926,"cmd":"get_order_by_number"}
+2026-03-17 21:41:32.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:41:32.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:41:32.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:41:39.050 LOG 0: Запрос от C# (req_id=1): {"data":{"cmd":"get_order_by_number","createdTime":1773772899390,"data":"TQBR|123456789"},"createdTime":1773772899393,"id":1,"cmd":"get_order_by_number"}
+2026-03-17 21:41:39.100 LOG 1: РћС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ РєРѕРјР°РЅРґС‹ 'get_order_by_number':
+Lua error: .\qsfunctions.lua:704: attempt to call a nil value (global 'split')
+stack traceback:
+	.\qsfunctions.lua:704: in function 'qsfunctions.get_order_by_number'
+	(...tail calls...)
+	[C]: in function 'xpcall'
+	.\qsfunctions.lua:33: in function 'qsfunctions.dispatch_and_process'
+	C:\Programming\QuikSharp\lua\QuikSharp.lua:90: in function 'main'
+2026-03-17 21:41:39.150 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"cmd":"get_order_by_number","createdTime":1773772899390,"data":"TQBR|123456789"}
+2026-03-17 21:45:24.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:45:24.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:45:24.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:45:29.700 LOG 0: Запрос от C# (req_id=1): {"createdTime":1773773129941,"cmd":"get_order_by_number","data":{"createdTime":1773773129936,"data":"TQBR|123456789","cmd":"get_order_by_number"},"id":1}
+2026-03-17 21:45:29.750 LOG 1: РћС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ РєРѕРјР°РЅРґС‹ 'get_order_by_number':
+Lua error: .\qsfunctions.lua:704: attempt to call a nil value (global 'split')
+stack traceback:
+	.\qsfunctions.lua:704: in function 'qsfunctions.get_order_by_number'
+	(...tail calls...)
+	[C]: in function 'xpcall'
+	.\qsfunctions.lua:33: in function 'qsfunctions.dispatch_and_process'
+	C:\Programming\QuikSharp\lua\QuikSharp.lua:90: in function 'main'
+2026-03-17 21:45:29.800 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"createdTime":1773773129936,"data":"TQBR|123456789","cmd":"get_order_by_number"}
+2026-03-17 21:46:59.050 LOG 0: Запрос от C# (req_id=1): {"createdTime":1773773219132,"cmd":"getClassesList","data":{"createdTime":1773773219125,"data":"","cmd":"getClassesList"},"id":1}
+2026-03-17 21:46:59.100 LOG 0: Р’С‹Р·РѕРІ getClassesList, req_id=?
+2026-03-17 21:46:59.150 LOG 1: После dispatch: cmd=getClassesList, data тип=string, data="TQTE,TQCB,TQOE,TQRD,TQUD,TQED,FQBR,SPBFUT,SPBOPT,USDRUB,OPTSPOT,OPTCURNCY,OPTCOMDTY,OPTIDX,RTSIDX,EQRP_INFO,FUTCLT,SPBXM,SPBDE,SPBEQRU,SPBRU,SPBRUBND,SPBRU_USD,PSSPBRUBNDDO,REPORT,REPORTFORTS,VTB_OTC,CROSSRATE,QT_BN,INDX,TQIF_HOL,TQTF_HOL,TQTF_W_HOL,UP,CETS,CETS_MTL,TQFD,TQFE,OCTR,TQTY,MTQR,SMAL,TQBR,TQOB,TQIF,TQTF,TQTF_W,TQBD,TQTD,TQOD,TQOY,TQTF_F_HOL,EES_OTC,TQTF_F,SMS,ALGO_ICEBERG,ALGO_VOLATIL,ALGO_TWAP,ALGO_VWAP,ALGO_GTD,MPAU,PSAU_FREE,PSAU,PSSU,PSSU_YAD,PACY,QT_EQ,"
+2026-03-17 21:47:01.050 LOG 0: Запрос от C# (req_id=1): {"createdTime":1773773221237,"cmd":"get_order_by_number","data":{"createdTime":1773773221237,"data":"TQBR|123456789","cmd":"get_order_by_number"},"id":1}
+2026-03-17 21:47:01.100 LOG 1: РћС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ РєРѕРјР°РЅРґС‹ 'get_order_by_number':
+Lua error: .\qsfunctions.lua:704: attempt to call a nil value (global 'split')
+stack traceback:
+	.\qsfunctions.lua:704: in function 'qsfunctions.get_order_by_number'
+	(...tail calls...)
+	[C]: in function 'xpcall'
+	.\qsfunctions.lua:33: in function 'qsfunctions.dispatch_and_process'
+	C:\Programming\QuikSharp\lua\QuikSharp.lua:90: in function 'main'
+2026-03-17 21:47:01.150 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"createdTime":1773773221237,"data":"TQBR|123456789","cmd":"get_order_by_number"}
+2026-03-17 21:48:33.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:48:33.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:48:33.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:48:39.050 LOG 0: Запрос от C# (req_id=1): {"data":{"data":"TQBR|123456789","cmd":"get_order_by_number","createdTime":1773773318970},"cmd":"get_order_by_number","createdTime":1773773318974,"id":1}
+2026-03-17 21:48:39.100 LOG 1: РћС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ РєРѕРјР°РЅРґС‹ 'get_order_by_number':
+Lua error: .\qsfunctions.lua:704: attempt to concatenate a table value (field 'data')
+stack traceback:
+	.\qsfunctions.lua:704: in function 'qsfunctions.get_order_by_number'
+	(...tail calls...)
+	[C]: in function 'xpcall'
+	.\qsfunctions.lua:33: in function 'qsfunctions.dispatch_and_process'
+	C:\Programming\QuikSharp\lua\QuikSharp.lua:90: in function 'main'
+2026-03-17 21:48:39.150 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"data":"TQBR|123456789","cmd":"get_order_by_number","createdTime":1773773318970}
+2026-03-17 21:49:01.150 LOG 0: Запрос от C# (req_id=1): {"data":{"data":"TQBR|123456789","cmd":"get_order_by_number","createdTime":1773773341937},"cmd":"get_order_by_number","createdTime":1773773341939,"id":1}
+2026-03-17 21:49:01.200 LOG 1: РћС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ РєРѕРјР°РЅРґС‹ 'get_order_by_number':
+Lua error: .\qsfunctions.lua:704: attempt to concatenate a table value (field 'data')
+stack traceback:
+	.\qsfunctions.lua:704: in function 'qsfunctions.get_order_by_number'
+	(...tail calls...)
+	[C]: in function 'xpcall'
+	.\qsfunctions.lua:33: in function 'qsfunctions.dispatch_and_process'
+	C:\Programming\QuikSharp\lua\QuikSharp.lua:90: in function 'main'
+2026-03-17 21:49:01.250 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"data":"TQBR|123456789","cmd":"get_order_by_number","createdTime":1773773341937}
+2026-03-17 21:49:18.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:49:18.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:49:18.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:49:26.050 LOG 0: Запрос от C# (req_id=1): {"createdTime":1773773366703,"cmd":"get_order_by_number","data":{"createdTime":1773773366701,"cmd":"get_order_by_number","data":"TQBR|123456789"},"id":1}
+2026-03-17 21:49:26.100 LOG 2: get_order_by_number data  TQBR|123456789
+2026-03-17 21:49:26.150 LOG 1: РћС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ РєРѕРјР°РЅРґС‹ 'get_order_by_number':
+Lua error: .\qsfunctions.lua:705: attempt to call a nil value (global 'split')
+stack traceback:
+	.\qsfunctions.lua:705: in function 'qsfunctions.get_order_by_number'
+	(...tail calls...)
+	[C]: in function 'xpcall'
+	.\qsfunctions.lua:33: in function 'qsfunctions.dispatch_and_process'
+	C:\Programming\QuikSharp\lua\QuikSharp.lua:90: in function 'main'
+2026-03-17 21:49:26.200 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"createdTime":1773773366701,"cmd":"get_order_by_number","data":"TQBR|123456789"}
+2026-03-17 21:54:49.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:54:49.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:54:49.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:54:58.050 LOG 0: Запрос от C# (req_id=1): {"cmd":"get_order_by_number","createdTime":1773773698448,"id":1,"data":{"cmd":"get_order_by_number","createdTime":1773773698439,"data":"TQBR|123456789"}}
+2026-03-17 21:54:58.100 LOG 2: get_order_by_number data  TQBR|123456789
+2026-03-17 21:54:58.150 LOG 1: РћС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ РєРѕРјР°РЅРґС‹ 'get_order_by_number':
+Lua error: .\qsfunctions.lua:706: attempt to concatenate a table value (local 'spl')
+stack traceback:
+	.\qsfunctions.lua:706: in function 'qsfunctions.get_order_by_number'
+	(...tail calls...)
+	[C]: in function 'xpcall'
+	.\qsfunctions.lua:33: in function 'qsfunctions.dispatch_and_process'
+	C:\Programming\QuikSharp\lua\QuikSharp.lua:90: in function 'main'
+2026-03-17 21:54:58.200 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"cmd":"get_order_by_number","createdTime":1773773698439,"data":"TQBR|123456789"}
+2026-03-17 21:55:36.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:55:36.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:55:36.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:55:41.150 LOG 0: Запрос от C# (req_id=1): {"data":{"data":"TQBR|123456789","createdTime":1773773741514,"cmd":"get_order_by_number"},"createdTime":1773773741516,"cmd":"get_order_by_number","id":1}
+2026-03-17 21:55:41.200 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° 123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 21:55:41.250 LOG 1: После dispatch: cmd=get_order_by_number, data тип=string, data="0"
+2026-03-17 21:57:38.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:57:38.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:57:38.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:57:44.100 LOG 0: Запрос от C# (req_id=1): {"id":1,"data":{"data":"TQBR|123456789","cmd":"get_order_by_number","createdTime":1773773864509},"cmd":"get_order_by_number","createdTime":1773773864517}
+2026-03-17 21:57:44.150 LOG 1: После dispatch: cmd=lua_error, data тип=table, data={"data":"TQBR|123456789","cmd":"get_order_by_number","createdTime":1773773864509}
+2026-03-17 21:58:57.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 21:58:57.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 21:58:57.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 21:59:04.100 LOG 0: Запрос от C# (req_id=1): {"id":1,"createdTime":1773773944310,"data":{"cmd":"get_order_by_number","data":"TQBR|123456789","createdTime":1773773944305},"cmd":"get_order_by_number"}
+2026-03-17 21:59:04.150 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 21:59:04.200 LOG 1: После dispatch: cmd=get_order_by_number, data тип=nil, data=[]
+2026-03-17 22:00:51.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 22:00:51.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 22:00:51.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 22:00:58.100 LOG 0: Запрос от C# (req_id=1): {"data":{"data":"TQBR|123456789","cmd":"get_order_by_number","createdTime":1773774058582},"cmd":"get_order_by_number","id":1,"createdTime":1773774058586}
+2026-03-17 22:00:58.150 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:00:58.200 LOG 1: После dispatch: cmd=get_order_by_number, data тип=table, data=[]
+2026-03-17 22:01:54.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 22:01:54.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 22:01:54.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 22:02:01.050 LOG 0: Запрос от C# (req_id=1): {"createdTime":1773774121306,"cmd":"get_order_by_number","data":{"cmd":"get_order_by_number","data":"TQBR|123456789","createdTime":1773774121299},"id":1}
+2026-03-17 22:02:01.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:02:01.150 LOG 1: После dispatch: cmd=get_order_by_number, data тип=table, data=[]
+2026-03-17 22:08:21.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 22:08:21.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 22:08:21.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 22:08:30.050 LOG 0: Запрос от C# (req_id=1): {"cmd":"get_order_by_number","id":1,"data":{"data":"TQBR|123456789","cmd":"get_order_by_number","createdTime":1773774510201},"createdTime":1773774510204}
+2026-03-17 22:08:30.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:08:30.150 LOG 1: После dispatch: cmd=lua_error, data тип=table, data=[]
+2026-03-17 22:19:27.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 22:19:27.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 22:19:27.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 22:19:33.050 LOG 0: Запрос от C# (req_id=1): {"id":1,"cmd":"get_order_by_number","createdTime":1773775172997,"data":{"cmd":"get_order_by_number","createdTime":1773775172995,"data":"TQBR|123456789"}}
+2026-03-17 22:19:33.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:19:33.150 LOG 1: После dispatch: cmd=get_order_by_number, data тип=nil, data=[]
+2026-03-17 22:20:16.250 LOG 0: Запрос от C# (req_id=1): {"id":1,"cmd":"get_order_by_number","createdTime":1773775216392,"data":{"cmd":"get_order_by_number","createdTime":1773775216387,"data":"TQBR|123456789"}}
+2026-03-17 22:20:16.300 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:20:16.350 LOG 1: После dispatch: cmd=get_order_by_number, data тип=nil, data=[]
+2026-03-17 22:20:55.050 LOG 0: Запрос от C# (req_id=1): {"id":1,"cmd":"get_order_by_number","createdTime":1773775242130,"data":{"cmd":"get_order_by_number","createdTime":1773775236697,"data":"TQBR|123456789"}}
+2026-03-17 22:20:55.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:20:55.150 LOG 1: После dispatch: cmd=get_order_by_number, data тип=nil, data=[]
+2026-03-17 22:24:25.050 LOG 0: Запрос от C# (req_id=1): {"id":1,"cmd":"get_candles_from_data_source","createdTime":1773775465038,"data":{"cmd":"get_candles_from_data_source","createdTime":1773775465036,"data":"TQBR|YDEX|23200|-|0"}}
+2026-03-17 22:24:25.100 LOG 3: РќРµРёР·РІРµСЃС‚РЅР°СЏ РєРѕРјР°РЅРґР°: get_candles_from_data_source
+2026-03-17 22:24:25.150 LOG 1: После dispatch: cmd=lua_error, data тип=nil, data=[]
+2026-03-17 22:24:40.050 LOG 0: Запрос от C# (req_id=1): {"id":1,"cmd":"getClassesList","createdTime":1773775480815,"data":{"cmd":"getClassesList","createdTime":1773775480813,"data":""}}
+2026-03-17 22:24:40.100 LOG 0: Р’С‹Р·РѕРІ getClassesList, req_id=?
+2026-03-17 22:24:40.150 LOG 1: После dispatch: cmd=getClassesList, data тип=string, data="TQTE,TQCB,TQOE,TQRD,TQUD,TQED,FQBR,SPBFUT,SPBOPT,USDRUB,OPTSPOT,OPTCURNCY,OPTCOMDTY,OPTIDX,RTSIDX,EQRP_INFO,FUTCLT,SPBXM,SPBDE,SPBEQRU,SPBRU,SPBRUBND,SPBRU_USD,PSSPBRUBNDDO,REPORT,REPORTFORTS,VTB_OTC,CROSSRATE,QT_BN,INDX,TQIF_HOL,TQTF_HOL,TQTF_W_HOL,UP,CETS,CETS_MTL,TQFD,TQFE,OCTR,TQTY,MTQR,SMAL,TQBR,TQOB,TQIF,TQTF,TQTF_W,TQBD,TQTD,TQOD,TQOY,TQTF_F_HOL,EES_OTC,TQTF_F,SMS,ALGO_ICEBERG,ALGO_VOLATIL,ALGO_TWAP,ALGO_VWAP,ALGO_GTD,MPAU,PSAU_FREE,PSAU,PSSU,PSSU_YAD,PACY,QT_EQ,"
+2026-03-17 22:25:30.050 LOG 0: Запрос от C# (req_id=1): {"id":1,"cmd":"getClassesList","createdTime":1773775530004,"data":{"cmd":"getClassesList","createdTime":1773775530002,"data":""}}
+2026-03-17 22:25:30.100 LOG 0: Р’С‹Р·РѕРІ getClassesList, req_id=?
+2026-03-17 22:25:30.150 LOG 1: После dispatch: cmd=getClassesList, data тип=string, data="TQTE,TQCB,TQOE,TQRD,TQUD,TQED,FQBR,SPBFUT,SPBOPT,USDRUB,OPTSPOT,OPTCURNCY,OPTCOMDTY,OPTIDX,RTSIDX,EQRP_INFO,FUTCLT,SPBXM,SPBDE,SPBEQRU,SPBRU,SPBRUBND,SPBRU_USD,PSSPBRUBNDDO,REPORT,REPORTFORTS,VTB_OTC,CROSSRATE,QT_BN,INDX,TQIF_HOL,TQTF_HOL,TQTF_W_HOL,UP,CETS,CETS_MTL,TQFD,TQFE,OCTR,TQTY,MTQR,SMAL,TQBR,TQOB,TQIF,TQTF,TQTF_W,TQBD,TQTD,TQOD,TQOY,TQTF_F_HOL,EES_OTC,TQTF_F,SMS,ALGO_ICEBERG,ALGO_VOLATIL,ALGO_TWAP,ALGO_VWAP,ALGO_GTD,MPAU,PSAU_FREE,PSAU,PSSU,PSSU_YAD,PACY,QT_EQ,"
+2026-03-17 22:29:10.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 22:29:10.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 22:29:10.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 22:29:22.150 LOG 0: Запрос от C# (req_id=1): {"id":1,"createdTime":1773775762648,"cmd":"get_order_by_number","data":{"createdTime":1773775762640,"cmd":"get_order_by_number","data":"TQBR|123456789"}}
+2026-03-17 22:29:22.200 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:29:22.250 LOG 1: После dispatch: cmd=lua_error, data тип=nil, data=[]
+2026-03-17 22:35:05.050 LOG 0: Запрос от C# (req_id=1): {"id":1,"createdTime":1773776101775,"cmd":"get_order_by_number","data":{"createdTime":1773776100125,"cmd":"get_order_by_number","data":"TQBR|123456789"}}
+2026-03-17 22:35:05.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:35:05.150 LOG 1: После dispatch: cmd=lua_error, data тип=nil, data=[]
+2026-03-17 22:35:30.100 LOG 0: Запрос от C# (req_id=1): {"id":1,"createdTime":1773776130329,"cmd":"get_order_by_number","data":{"createdTime":1773776130326,"cmd":"get_order_by_number","data":"TQBR|123456789"}}
+2026-03-17 22:35:30.150 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:35:30.200 LOG 1: После dispatch: cmd=lua_error, data тип=nil, data=[]
+2026-03-17 22:35:58.100 LOG 0: Запрос от C# (req_id=1): {"id":1,"createdTime":1773776154293,"cmd":"get_order_by_number","data":{"createdTime":1773776152777,"cmd":"get_order_by_number","data":"TQBR|123456789"}}
+2026-03-17 22:35:58.150 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 22:35:58.200 LOG 1: После dispatch: cmd=lua_error, data тип=nil, data=[]
+2026-03-17 23:50:16.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 23:50:16.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 23:50:16.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 23:50:25.050 LOG 0: Запрос от C# (req_id=1): {"cmd":"get_order_by_number","id":1,"data":{"cmd":"get_order_by_number","createdTime":1773780625495,"data":"TQBR|123456789"},"createdTime":1773780625497}
+2026-03-17 23:50:25.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 23:50:25.150 LOG 1: SEND RESP: req_id=1 cmd=lua_error
+2026-03-17 23:50:25.200 LOG 1: После dispatch: cmd=lua_error, data тип=nil, data=[]
+2026-03-17 23:51:59.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 23:51:59.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 23:51:59.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 23:52:06.050 LOG 0: Запрос от C# (req_id=1): {"createdTime":1773780726847,"cmd":"get_order_by_number","data":{"createdTime":1773780726844,"cmd":"get_order_by_number","data":"TQBR|123456789"},"id":1}
+2026-03-17 23:52:06.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 23:52:06.150 LOG 1: После dispatch req_id=1cmd= lua_error, data тип=nil, data=[]
+2026-03-17 23:52:30.050 LOG 0: Запрос от C# (req_id=1): {"createdTime":1773780750214,"cmd":"get_order_by_number","data":{"createdTime":1773780750200,"cmd":"get_order_by_number","data":"TQBR|123456789"},"id":1}
+2026-03-17 23:52:30.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 23:52:30.150 LOG 1: После dispatch req_id=1cmd= lua_error, data тип=nil, data=[]
+2026-03-17 23:53:54.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 23:53:54.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 23:53:54.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 23:58:47.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 23:58:47.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 23:58:47.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-17 23:58:53.050 LOG 0: Запрос от C# (req_id=1): {"id":1,"createdTime":1773781133196,"cmd":"get_order_by_number","data":{"createdTime":1773781133192,"cmd":"get_order_by_number","data":"TQBR|123456789"}}
+2026-03-17 23:58:53.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° TQBR|123456789 РЅРµ РЅР°Р№РґРµРЅР°
+2026-03-17 23:59:33.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-17 23:59:33.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-17 23:59:33.150 LOG 1: QUIK# connected via shared memory (variant 2)
