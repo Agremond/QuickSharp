@@ -416,7 +416,7 @@ function qsfunctions.Subscribe_Level_II_Quotes(msg)
     local class_code = spl[1]
     local sec_code   = spl[2]
 
-    log(string.format("Подписка Level II: class=%s, sec=%s", class_code, sec_code), 1)
+    log(string.format("Subscribe Level II: class=%s, sec=%s", class_code, sec_code), 1)
 
     local result = Subscribe_Level_II_Quotes(class_code, sec_code)
 

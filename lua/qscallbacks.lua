@@ -25,7 +25,7 @@ end
 
 local function sendEvent(cmd, data)
     if not qsutils.is_connected() then return end
-
+    --log("QUIK#" .. cmd, 1)
     local msg = {
         t   = timemsec(),
         cmd = cmd,
@@ -98,6 +98,7 @@ end
 --------------------------------------------------------------------------------
 
 function OnAllTrade(alltrade)
+    
     sendEvent("OnAllTrade", alltrade)
 end
 

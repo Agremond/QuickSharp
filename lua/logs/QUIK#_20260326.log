@@ -1,0 +1,10 @@
+2026-03-26 17:34:12.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-26 17:34:12.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-26 17:34:12.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-26 17:54:41.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-26 17:54:41.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-26 17:54:41.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-27 17:54:52.050 LOG 0: Запрос от C# 1 (req_id=1): {"createdTime":1774623292294,"id":1,"cmd":"Subscribe_Level_II_Quotes","data":{"createdTime":1774623292282,"cmd":"Subscribe_Level_II_Quotes","data":"SPBFUT|RIM6"}}
+2026-03-27 17:54:52.100 LOG 1: Subscribe_Level_II_Quotes called | raw data: SPBFUT|RIM6
+2026-03-27 17:54:52.150 LOG 1: Subscribe Level II: class=SPBFUT, sec=RIM6
+2026-03-27 17:54:52.200 LOG 1: После dispatch: cmd=Subscribe_Level_II_Quotes, data тип=boolean
