@@ -1,34 +1,19 @@
-// Copyright (c) 2014-2026 QuikSharp Community
-// Licensed under the Apache License, Version 2.0
-
-using Newtonsoft.Json;
+using QuikSharp.DataStructures;
+using QUIKSharp.DataStructures;
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp
 {
     /// <summary>
-    /// Интерфейс сообщения для транспорта
+    /// Интерфейс сообщения для транспорта (System.Text.Json версия)
     /// </summary>
     internal interface IMessage
     {
-        /// <summary>
-        /// Уникальный идентификатор сообщения для сопоставления запрос/ответ
-        /// </summary>
         long? Id { get; set; }
-
-        /// <summary>
-        /// Команда или функция, к которой относится сообщение
-        /// </summary>
         string cmd { get; set; }
-
-        /// <summary>
-        /// Время создания в миллисекундах (как в Lua socket.gettime()*1000)
-        /// </summary>
         long CreatedTime { get; set; }
-
-        /// <summary>
-        /// Сообщение действительно до указанного времени (необязательно)
-        /// </summary>
         DateTime? ValidUntil { get; set; }
     }
 
@@ -37,7 +22,7 @@ namespace QuikSharp
     /// </summary>
     internal abstract class BaseMessage : IMessage
     {
-        protected static readonly long Epoch = (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Ticks / 10000L;
+        protected static readonly long Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks / 10000L;
 
         protected BaseMessage(string command = "", DateTime? validUntil = null)
         {
@@ -46,29 +31,27 @@ namespace QuikSharp
             ValidUntil = validUntil;
         }
 
-        [JsonProperty(PropertyName = "id")]
+        [JsonPropertyName("id")]
         public long? Id { get; set; }
 
-        [JsonProperty(PropertyName = "cmd")]
+        [JsonPropertyName("cmd")]
         public string cmd { get; set; }
 
-        [JsonProperty(PropertyName = "t")]
+        [JsonPropertyName("t")]
         public long CreatedTime { get; set; }
 
-        [JsonProperty(PropertyName = "v")]
+        [JsonPropertyName("v")]
         public DateTime? ValidUntil { get; set; }
     }
 
     /// <summary>
-    /// Универсальное сообщение с произвольными данными
+    /// Универсальное сообщение с произвольными данными (полностью на System.Text.Json)
     /// </summary>
     internal class Message : BaseMessage
     {
-        public Message()
-        {
-        }
+        public Message() { }
 
-        public Message(object data, string command, DateTime? validUntil = null)
+        public Message(object? data, string command, DateTime? validUntil = null)
         {
             cmd = command;
             CreatedTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -77,27 +60,70 @@ namespace QuikSharp
         }
 
         /// <summary>
-        /// Данные сообщения (любой тип)
+        /// Данные сообщения (может быть JsonElement после десериализации)
         /// </summary>
-        [JsonProperty(PropertyName = "data")]
-        public object Data { get; set; }
+        [JsonPropertyName("data")]
+        public object? Data { get; set; }
 
         /// <summary>
         /// Ошибка Lua (если есть)
         /// </summary>
-        [JsonProperty(PropertyName = "luaError")]
+        [JsonPropertyName("luaError")]
         public string? LuaError { get; set; }
-
         /// <summary>
-        /// Удобный метод для десериализации Data в нужный тип
+        /// Универсальный метод получения данных в нужном типе (полностью STJ + улучшенная обработка)
         /// </summary>
         public T GetData<T>()
         {
-            if (Data is T t) return t;
+            if (Data is T t)
+                return t;
 
-            // Сериализация через JSON и десериализация в нужный тип
-            string json = JsonConvert.SerializeObject(Data);
-            return JsonConvert.DeserializeObject<T>(json)!;
+            if (Data is JsonElement je)
+            {
+                try
+                {
+                    var result = je.Deserialize<T>(JsonSerializerOptions);
+                    return result ?? throw new JsonException($"Deserialization to {typeof(T).Name} returned null");
+                }
+                catch (JsonException ex)
+                {
+                    Console.WriteLine($"[GetData ERROR] {typeof(T).Name}: {ex.Message}");
+                    Console.WriteLine($"Raw JSON: {je.GetRawText()}");   // используйте GetRawText()
+                                                                         // Возвращаем default вместо падения всего транспорта
+                    return default!;
+                }
+            }
+
+            if (Data != null)
+            {
+                string json = JsonSerializer.Serialize(Data, JsonSerializerOptions);
+                return JsonSerializer.Deserialize<T>(json, JsonSerializerOptions)!;
+            }
+
+            throw new InvalidOperationException($"Data is null, cannot convert to {typeof(T).Name}");
         }
+
+        /// <summary>
+        /// Общие опции сериализации/десериализации (должны совпадать с теми, что используются в ShmQuikTransport)
+        /// </summary>
+        private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
+        {
+            //PropertyNameCaseInsensitive = true,
+            //PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            //DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            NumberHandling = JsonNumberHandling.AllowReadingFromString, // помогает частично
+           
+            Converters =
+            {
+               new StringToDecimalConverter(),
+               new StringToIntConverter(),
+               new EmptyStringToArrayConverter<OrderBook>()
+            }
+            // Можно добавить Converters при необходимости
+        };
     }
 }

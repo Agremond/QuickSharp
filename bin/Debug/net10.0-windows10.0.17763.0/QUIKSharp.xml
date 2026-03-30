@@ -1696,6 +1696,7 @@
             <summary>
             Код бумаги
             </summary>
+            
         </member>
         <member name="P:QuikSharp.DataStructures.OrderBook.LuaTimeStamp">
             <summary>
@@ -6854,27 +6855,7 @@
         </member>
         <member name="T:QuikSharp.IMessage">
             <summary>
-            Интерфейс сообщения для транспорта
-            </summary>
-        </member>
-        <member name="P:QuikSharp.IMessage.Id">
-            <summary>
-            Уникальный идентификатор сообщения для сопоставления запрос/ответ
-            </summary>
-        </member>
-        <member name="P:QuikSharp.IMessage.cmd">
-            <summary>
-            Команда или функция, к которой относится сообщение
-            </summary>
-        </member>
-        <member name="P:QuikSharp.IMessage.CreatedTime">
-            <summary>
-            Время создания в миллисекундах (как в Lua socket.gettime()*1000)
-            </summary>
-        </member>
-        <member name="P:QuikSharp.IMessage.ValidUntil">
-            <summary>
-            Сообщение действительно до указанного времени (необязательно)
+            Интерфейс сообщения для транспорта (System.Text.Json версия)
             </summary>
         </member>
         <member name="T:QuikSharp.BaseMessage">
@@ -6884,12 +6865,12 @@
         </member>
         <member name="T:QuikSharp.Message">
             <summary>
-            Универсальное сообщение с произвольными данными
+            Универсальное сообщение с произвольными данными (полностью на System.Text.Json)
             </summary>
         </member>
         <member name="P:QuikSharp.Message.Data">
             <summary>
-            Данные сообщения (любой тип)
+            Данные сообщения (может быть JsonElement после десериализации)
             </summary>
         </member>
         <member name="P:QuikSharp.Message.LuaError">
@@ -6899,7 +6880,12 @@
         </member>
         <member name="M:QuikSharp.Message.GetData``1">
             <summary>
-            Удобный метод для десериализации Data в нужный тип
+            Универсальный метод получения данных в нужном типе (полностью STJ + улучшенная обработка)
+            </summary>
+        </member>
+        <member name="F:QuikSharp.Message.JsonSerializerOptions">
+            <summary>
+            Общие опции сериализации/десериализации (должны совпадать с теми, что используются в ShmQuikTransport)
             </summary>
         </member>
         <member name="M:QuikSharp.NetworkUtils.IsConnectedNow(System.Net.Sockets.Socket)">

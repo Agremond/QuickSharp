@@ -1,14 +1,15 @@
-﻿using System;
+﻿using QuikSharp.DataStructures;
+using QuikSharp.DataStructures.Transaction;
+using System;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using QuikSharp.DataStructures;
-using QuikSharp.DataStructures.Transaction;
 
 namespace QuikSharp.Transports
 {
@@ -94,9 +95,13 @@ namespace QuikSharp.Transports
         {
             _jsonOpts = jsonOpts ?? new JsonSerializerOptions
             {
+                //PropertyNameCaseInsensitive = true,
+                //PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                //DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                NumberHandling = JsonNumberHandling.AllowReadingFromString, // помогает частично
             };
         }
 
@@ -300,10 +305,16 @@ namespace QuikSharp.Transports
                         _viewCb.ReadArray(HEADER, buffer, 0, (int)len);
 
                         string json = Encoding.UTF8.GetString(buffer);
-                        Console.WriteLine($"RAW RESPONSE (len={len}):");
-                        Console.WriteLine(json);                          // ← самый важный лог!
-                        Console.WriteLine("-----------------------------------");
+                        //Console.WriteLine($"RAW RESPONSE (len={len}):");
+                        //Console.WriteLine(json);                          // ← самый важный лог!
+                        //Console.WriteLine("-----------------------------------");
+
+
                         var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
+
+                        //Console.WriteLine($"[CB] cmd={msg.cmd}, DataType={msg.Data?.GetType()?.FullName ?? "null"}");
+                        //if (msg.Data is System.Text.Json.JsonElement je)
+                        //    Console.WriteLine($"[CB] Raw data JSON:\n{je}");
 
                         if (msg != null)
                             DispatchCallback(msg);
@@ -333,8 +344,24 @@ namespace QuikSharp.Transports
                     case "ontransreply": OnTransReply?.Invoke(msg.GetData<TransactionReply>()); break;
                     case "onstoporder": OnStopOrder?.Invoke(msg.GetData<StopOrder>()); break;
                     case "onalltrade": OnAllTrade?.Invoke(msg.GetData<AllTrade>()); break;
-                    case "onquote": OnQuote?.Invoke((OrderBook) msg.GetData<OrderBook>()); break;
-                    case "onparam": OnParam?.Invoke(msg.GetData<Param>()); break;
+                    case "onquote":
+                        {
+                            var orderBook = msg.GetData<OrderBook>();           // вызываем один раз
+                            //Console.WriteLine($"[Dispatch] GetData<OrderBook> => " +
+                            //                  (orderBook == null ? "NULL" : $"sec_code={orderBook.sec_code}"));
+
+                            OnQuote?.Invoke(orderBook);                         // убираем лишний cast
+                            break;
+                        }
+                    case "onparam":
+                        {
+                            var param = msg.GetData<Param>();// вызываем один раз
+                            //Console.WriteLine($"[Dispatch] GetData<Param> => " +
+                            //                  (param == null ? "NULL" : $"sec_code={param.SecCode}"));
+
+                            OnParam?.Invoke(param);                         // убираем лишний cast
+                            break;
+                        }
                     case "onaccountbalance": OnAccountBalance?.Invoke(msg.GetData<AccountBalance>()); break;
                     case "onaccountposition": OnAccountPosition?.Invoke(msg.GetData<AccountPosition>()); break;
                     case "ondepolimit": OnDepoLimit?.Invoke(msg.GetData<DepoLimitEx>()); break;
