@@ -1,14 +1,9 @@
-using QuikSharp.DataStructures;
-using QUIKSharp.DataStructures;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace QuikSharp
 {
-    /// <summary>
-    /// Интерфейс сообщения для транспорта (System.Text.Json версия)
-    /// </summary>
     internal interface IMessage
     {
         long? Id { get; set; }
@@ -17,9 +12,6 @@ namespace QuikSharp
         DateTime? ValidUntil { get; set; }
     }
 
-    /// <summary>
-    /// Базовый класс сообщения
-    /// </summary>
     internal abstract class BaseMessage : IMessage
     {
         protected static readonly long Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks / 10000L;
@@ -35,7 +27,7 @@ namespace QuikSharp
         public long? Id { get; set; }
 
         [JsonPropertyName("cmd")]
-        public string cmd { get; set; }
+        public string cmd { get; set; } = string.Empty;
 
         [JsonPropertyName("t")]
         public long CreatedTime { get; set; }
@@ -44,9 +36,6 @@ namespace QuikSharp
         public DateTime? ValidUntil { get; set; }
     }
 
-    /// <summary>
-    /// Универсальное сообщение с произвольными данными (полностью на System.Text.Json)
-    /// </summary>
     internal class Message : BaseMessage
     {
         public Message() { }
@@ -59,21 +48,16 @@ namespace QuikSharp
             Data = data;
         }
 
-        /// <summary>
-        /// Данные сообщения (может быть JsonElement после десериализации)
-        /// </summary>
         [JsonPropertyName("data")]
         public object? Data { get; set; }
 
-        /// <summary>
-        /// Ошибка Lua (если есть)
-        /// </summary>
         [JsonPropertyName("luaError")]
         public string? LuaError { get; set; }
+
         /// <summary>
-        /// Универсальный метод получения данных в нужном типе (полностью STJ + улучшенная обработка)
+        /// Улучшенный GetData<T> — безопасная десериализация
         /// </summary>
-        public T GetData<T>()
+        public T? GetData<T>()
         {
             if (Data is T t)
                 return t;
@@ -82,48 +66,34 @@ namespace QuikSharp
             {
                 try
                 {
-                    var result = je.Deserialize<T>(JsonSerializerOptions);
-                    return result ?? throw new JsonException($"Deserialization to {typeof(T).Name} returned null");
+                    return je.Deserialize<T>(QuikJson.Options)
+                        ?? throw new JsonException($"Deserialize to {typeof(T).Name} returned null");
                 }
                 catch (JsonException ex)
                 {
+                    string raw = je.GetRawText();
                     Console.WriteLine($"[GetData ERROR] {typeof(T).Name}: {ex.Message}");
-                    Console.WriteLine($"Raw JSON: {je.GetRawText()}");   // используйте GetRawText()
-                                                                         // Возвращаем default вместо падения всего транспорта
-                    return default!;
+                    Console.WriteLine($"Raw JSON: {raw}");
+                    // Можно дополнительно бросить кастомное исключение, если нужно
+                    throw new JsonException($"Failed to deserialize {typeof(T).Name}. Raw: {raw}", ex);
                 }
             }
 
             if (Data != null)
             {
-                string json = JsonSerializer.Serialize(Data, JsonSerializerOptions);
-                return JsonSerializer.Deserialize<T>(json, JsonSerializerOptions)!;
+                try
+                {
+                    string json = JsonSerializer.Serialize(Data, QuikJson.Options);
+                    return JsonSerializer.Deserialize<T>(json, QuikJson.Options);
+                }
+                catch (JsonException ex)
+                {
+                    Console.WriteLine($"[GetData ERROR] {typeof(T).Name} (fallback): {ex.Message}");
+                    throw;
+                }
             }
 
-            throw new InvalidOperationException($"Data is null, cannot convert to {typeof(T).Name}");
+            return default;
         }
-
-        /// <summary>
-        /// Общие опции сериализации/десериализации (должны совпадать с теми, что используются в ShmQuikTransport)
-        /// </summary>
-        private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
-        {
-            //PropertyNameCaseInsensitive = true,
-            //PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            //DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString, // помогает частично
-           
-            Converters =
-            {
-               new StringToDecimalConverter(),
-               new StringToIntConverter(),
-               new EmptyStringToArrayConverter<OrderBook>()
-            }
-            // Можно добавить Converters при необходимости
-        };
     }
 }

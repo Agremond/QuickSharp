@@ -54,7 +54,7 @@ end
 --------------------------------------------------------------------------------
 
 local logfile
-local is_debug = false
+local is_debug = true
 
 --- Создаёт папку logs и открывает лог-файл на текущий день
 local function openLog()

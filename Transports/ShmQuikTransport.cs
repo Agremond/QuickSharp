@@ -75,7 +75,7 @@ namespace QuikSharp.Transports
         private volatile bool _running;
         private long _nextRequestId = 0;
 
-        private readonly JsonSerializerOptions _jsonOpts;
+        private readonly JsonSerializerOptions _jsonOpts = QuikJson.Options;
 
         // События коллбэков (как в интерфейсе)
         public event Action<Candle>? OnNewCandle;
@@ -246,13 +246,57 @@ namespace QuikSharp.Transports
                         byte[] buffer = new byte[len];
                         _viewResp.ReadArray(HEADER, buffer, 0, (int)len);
 
-                        string json = Encoding.UTF8.GetString(buffer);
-                    //Console.WriteLine($"[{reqId}] RAW RESPONSE (len={len}):");
-                    //Console.WriteLine(json);                          // ← самый важный лог!
-                    //Console.WriteLine("-----------------------------------");
-                    var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
+                        //    string json = Encoding.UTF8.GetString(buffer);
+                        ////Console.WriteLine($"[{reqId}] RAW RESPONSE (len={len}):");
+                        ////Console.WriteLine(json);                          // ← самый важный лог!
+                        ////Console.WriteLine("-----------------------------------");
+                        //var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
 
-                    if (msg != null)
+                        string json = Encoding.UTF8.GetString(buffer).Trim();
+
+
+                        if (string.IsNullOrWhiteSpace(json))
+                        {
+                            Console.WriteLine($"[ResponseLoop] Получен пустой JSON (len={len})");
+                            continue;
+                        }
+
+                        if (!json.StartsWith("{") || !json.EndsWith("}"))
+                        {
+                            Console.WriteLine($"[ResponseLoop] Некорректный JSON (не объект): {json.Substring(0, Math.Min(200, json.Length))}");
+                            continue;
+                        }
+
+                        Message? msg = null;
+                        try
+                        {
+                            msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
+                        }
+                        catch (JsonException ex)
+                        {
+                            Console.WriteLine($"[ResponseLoop] JsonException при десериализации ответа:");
+                            Console.WriteLine($"Raw JSON: {json}");
+                            Console.WriteLine($"Ошибка: {ex.Message}");
+                            OnTransportError?.Invoke(ex);
+                            continue;
+                        }
+
+                        if (msg == null)
+                        {
+                            Console.WriteLine("[ResponseLoop] Десериализованное сообщение = null");
+                            continue;
+                        }
+
+                        if (!string.IsNullOrEmpty(msg.LuaError))
+                        {
+                            Console.WriteLine($"[ResponseLoop] LuaError от QUIK: {msg.LuaError} (cmd={msg.cmd}, id={msg.Id})");
+                            // Можно добавить событие OnLuaError, если нужно
+                            if (_pending.TryRemove(msg.Id ?? 0, out var tcs))
+                                tcs.TrySetException(new Exception($"Lua error: {msg.LuaError}"));
+                            continue;
+                        }
+
+                        if (msg != null)
                     {
                         //Console.WriteLine($"[{msg.Id}] Message recieved (thread {Thread.CurrentThread.ManagedThreadId}). _pendind: {_pending.Count}");
                         if (_pending.TryRemove((long)msg.Id, out var tcs))
@@ -304,13 +348,57 @@ namespace QuikSharp.Transports
                         byte[] buffer = new byte[len];
                         _viewCb.ReadArray(HEADER, buffer, 0, (int)len);
 
-                        string json = Encoding.UTF8.GetString(buffer);
-                        //Console.WriteLine($"RAW RESPONSE (len={len}):");
-                        //Console.WriteLine(json);                          // ← самый важный лог!
-                        //Console.WriteLine("-----------------------------------");
+                        //string json = Encoding.UTF8.GetString(buffer);
+                        ////Console.WriteLine($"RAW RESPONSE (len={len}):");
+                        ////Console.WriteLine(json);                          // ← самый важный лог!
+                        ////Console.WriteLine("-----------------------------------");
 
 
-                        var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
+                        //var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
+                        
+                        string json = Encoding.UTF8.GetString(buffer).Trim();
+
+                        
+                        if (string.IsNullOrWhiteSpace(json))
+                        {
+                            Console.WriteLine($"[ResponseLoop] Получен пустой JSON (len={len})");
+                            continue;
+                        }
+
+                        if (!json.StartsWith("{") || !json.EndsWith("}"))
+                        {
+                            Console.WriteLine($"[ResponseLoop] Некорректный JSON (не объект): {json.Substring(0, Math.Min(200, json.Length))}");
+                            continue;
+                        }
+
+                        Message? msg = null;
+                        try
+                        {
+                            msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
+                        }
+                        catch (JsonException ex)
+                        {
+                            Console.WriteLine($"[ResponseLoop] JsonException при десериализации ответа:");
+                            Console.WriteLine($"Raw JSON: {json}");
+                            Console.WriteLine($"Ошибка: {ex.Message}");
+                            OnTransportError?.Invoke(ex);
+                            continue;
+                        }
+
+                        if (msg == null)
+                        {
+                            Console.WriteLine("[ResponseLoop] Десериализованное сообщение = null");
+                            continue;
+                        }
+
+                        if (!string.IsNullOrEmpty(msg.LuaError))
+                        {
+                            Console.WriteLine($"[ResponseLoop] LuaError от QUIK: {msg.LuaError} (cmd={msg.cmd}, id={msg.Id})");
+                            // Можно добавить событие OnLuaError, если нужно
+                            if (_pending.TryRemove(msg.Id ?? 0, out var tcs))
+                                tcs.TrySetException(new Exception($"Lua error: {msg.LuaError}"));
+                            continue;
+                        }
 
                         //Console.WriteLine($"[CB] cmd={msg.cmd}, DataType={msg.Data?.GetType()?.FullName ?? "null"}");
                         //if (msg.Data is System.Text.Json.JsonElement je)

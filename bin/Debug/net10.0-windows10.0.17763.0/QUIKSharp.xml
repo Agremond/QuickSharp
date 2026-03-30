@@ -6853,41 +6853,7 @@
              </summary>
              <param name="message"></param>
         </member>
-        <member name="T:QuikSharp.IMessage">
-            <summary>
-            Интерфейс сообщения для транспорта (System.Text.Json версия)
-            </summary>
-        </member>
-        <member name="T:QuikSharp.BaseMessage">
-            <summary>
-            Базовый класс сообщения
-            </summary>
-        </member>
-        <member name="T:QuikSharp.Message">
-            <summary>
-            Универсальное сообщение с произвольными данными (полностью на System.Text.Json)
-            </summary>
-        </member>
-        <member name="P:QuikSharp.Message.Data">
-            <summary>
-            Данные сообщения (может быть JsonElement после десериализации)
-            </summary>
-        </member>
-        <member name="P:QuikSharp.Message.LuaError">
-            <summary>
-            Ошибка Lua (если есть)
-            </summary>
-        </member>
-        <member name="M:QuikSharp.Message.GetData``1">
-            <summary>
-            Универсальный метод получения данных в нужном типе (полностью STJ + улучшенная обработка)
-            </summary>
-        </member>
-        <member name="F:QuikSharp.Message.JsonSerializerOptions">
-            <summary>
-            Общие опции сериализации/десериализации (должны совпадать с теми, что используются в ShmQuikTransport)
-            </summary>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:QuikSharp.Message.GetData``1" -->
         <member name="M:QuikSharp.NetworkUtils.IsConnectedNow(System.Net.Sockets.Socket)">
             <summary>
             The connection state of a socket is reflected in the Connected property,

@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\Programming\\QuikSharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\orderfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:orderfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\orderfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -17,15 +17,15 @@
       "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\orderbookfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\orderbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\orderbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\jsonconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -106,17 +106,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\Program.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\Program.cs",
               "ToolTip": "C:\\Programming\\QS.Tests\\Program.cs",
               "RelativeToolTip": "..\\QS.Tests\\Program.cs",
-              "ViewState": "AgIAAHcAAAAAAAAAAAAawJ4AAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAAAnwDsAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:23:21.868Z",
               "IsPinned": true,
@@ -147,58 +147,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "OrderBook.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\OrderBook.cs",
-              "RelativeDocumentMoniker": "DataStructures\\OrderBook.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\OrderBook.cs",
-              "RelativeToolTip": "DataStructures\\OrderBook.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAcwD4AAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T19:34:19.564Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "OrderFunctions.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\OrderFunctions.cs",
-              "RelativeDocumentMoniker": "OrderFunctions.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\OrderFunctions.cs",
-              "RelativeToolTip": "OrderFunctions.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAUwEgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T19:03:57.406Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "OrderBookFunctionsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\OrderBookFunctionsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\OrderBookFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\OrderBookFunctionsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\OrderBookFunctionsTest.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwCcAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T21:40:27.264Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "QuikEventsAdapter.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\QuikEventsAdapter.cs",
-              "RelativeDocumentMoniker": "QuikEventsAdapter.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\QuikEventsAdapter.cs",
-              "RelativeToolTip": "QuikEventsAdapter.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAA0wBUAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-23T06:57:31.416Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -241,15 +189,80 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Message.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\Message.cs",
+              "RelativeDocumentMoniker": "Message.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\Message.cs",
+              "RelativeToolTip": "Message.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAzwEkAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-14T19:20:56.094Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OrderFunctions.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\OrderFunctions.cs",
+              "RelativeDocumentMoniker": "OrderFunctions.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\OrderFunctions.cs",
+              "RelativeToolTip": "OrderFunctions.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAUwFUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T19:03:57.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "QuikEventsAdapter.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\QuikEventsAdapter.cs",
+              "RelativeDocumentMoniker": "QuikEventsAdapter.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\QuikEventsAdapter.cs",
+              "RelativeToolTip": "QuikEventsAdapter.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA0wBUAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-23T06:57:31.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
               "Title": "ShmQuikTransport.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
               "RelativeDocumentMoniker": "Transports\\ShmQuikTransport.cs",
               "ToolTip": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
               "RelativeToolTip": "Transports\\ShmQuikTransport.cs",
-              "ViewState": "AgIAAB0BAAAAAAAAAIAwwD8BAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAAAEBAAAAAAAAAAAAwBsBAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:20:36.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "OrderBookFunctionsTest.cs",
+              "DocumentMoniker": "C:\\Programming\\QS.Tests\\OrderBookFunctionsTest.cs",
+              "RelativeDocumentMoniker": "..\\QS.Tests\\OrderBookFunctionsTest.cs",
+              "ToolTip": "C:\\Programming\\QS.Tests\\OrderBookFunctionsTest.cs",
+              "RelativeToolTip": "..\\QS.Tests\\OrderBookFunctionsTest.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwCcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T21:40:27.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "OrderBook.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\OrderBook.cs",
+              "RelativeDocumentMoniker": "DataStructures\\OrderBook.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\OrderBook.cs",
+              "RelativeToolTip": "DataStructures\\OrderBook.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAcwD4AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-20T19:34:19.564Z",
               "EditorCaption": ""
             },
             {
@@ -315,19 +328,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-15T21:40:33.075Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Message.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\Message.cs",
-              "RelativeDocumentMoniker": "Message.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\Message.cs",
-              "RelativeToolTip": "Message.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAwwE8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:20:56.094Z",
               "EditorCaption": ""
             },
             {
