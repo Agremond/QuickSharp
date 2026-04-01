@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -13,93 +13,93 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Номер сделки в торговой системе
         /// </summary>
-        [JsonProperty("trade_num")]
-        public long TradeNum { get; set; }
+        [JsonPropertyName("trade_num")]
+        public double TradeNum { get; set; }
 
         /// <summary>
         /// Набор битовых флагов:
         /// бит 0 (0x1)  Сделка на продажу
         /// бит 1 (0x2)  Сделка на покупку
         /// </summary>
-        [JsonProperty("flags")]
+        [JsonPropertyName("flags")]
         public AllTradeFlags Flags { get; set; }
 
         /// <summary>
         /// Цена
         /// </summary>
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public double Price { get; set; }
 
         /// <summary>
         /// Количество бумаг в последней сделке в лотах
         /// </summary>
-        [JsonProperty("qty")]
-        public long Qty { get; set; }
+        [JsonPropertyName("qty")]
+        public double Qty { get; set; }
 
         /// <summary>
         /// Объем в денежных средствах
         /// </summary>
-        [JsonProperty("value")]
+        [JsonPropertyName("value")]
         public double Value { get; set; }
 
         /// <summary>
         /// Накопленный купонный доход
         /// </summary>
-        [JsonProperty("accruedint")]
+        [JsonPropertyName("accruedint")]
         public double Accruedint { get; set; }
 
         /// <summary>
         /// Доходность
         /// </summary>
-        [JsonProperty("yield")]
+        [JsonPropertyName("yield")]
         public double Yield { get; set; }
 
         /// <summary>
         /// Код расчетов
         /// </summary>
-        [JsonProperty("settlecode")]
+        [JsonPropertyName("settlecode")]
         public string Settlecode { get; set; }
 
         /// <summary>
         /// Ставка РЕПО (%)
         /// </summary>
-        [JsonProperty("reporate")]
+        [JsonPropertyName("reporate")]
         public double Reporate { get; set; }
 
         /// <summary>
         /// Сумма РЕПО
         /// </summary>
-        [JsonProperty("repovalue")]
+        [JsonPropertyName("repovalue")]
         public double Repovalue { get; set; }
 
         /// <summary>
         /// Объем выкупа РЕПО
         /// </summary>
-        [JsonProperty("repo2value")]
+        [JsonPropertyName("repo2value")]
         public double Repo2Value { get; set; }
 
         /// <summary>
         /// Срок РЕПО в днях
         /// </summary>
-        [JsonProperty("repoterm")]
+        [JsonPropertyName("repoterm")]
         public double Repoterm { get; set; }
 
         /// <summary>
         /// Код бумаги заявки
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Код класса
         /// </summary>
-        [JsonProperty("class_code")]
+        [JsonPropertyName("class_code")]
         public string ClassCode { get; set; }
 
         /// <summary>
         /// Дата и время
         /// </summary>
-        [JsonProperty("datetime")]
+        [JsonPropertyName("datetime")]
         public QuikDateTime Datetime { get; set; }
 
         /// <summary>
@@ -108,33 +108,33 @@ namespace QuikSharp.DataStructures
         /// «1» – Нормальный;
         /// «2» – Закрытие
         /// </summary>
-        [JsonProperty("period")]
+        [JsonPropertyName("period")]
         public int Period { get; set; }
 
         /// <summary>
         /// Открытый интерес
         /// </summary>
-        [JsonProperty("open_interest")]
+        [JsonPropertyName("open_interest")]
         public double OpenInterest { get; set; }
 
         /// <summary>
         /// Код биржи в торговой системе
         /// </summary>
-        [JsonProperty("exchange_code")]
+        [JsonPropertyName("exchange_code")]
         public string ExchangeCode { get; set; }
 
         /// <summary>
         /// Площадка исполнения
         /// </summary>
-        [JsonProperty("exec_market")]
+        [JsonPropertyName("exec_market")]
         public string ExecMarket { get; set; }
 
         /// <summary>
         /// Идентификатор индикативной ставки
         /// </summary>
-        [JsonProperty("benchmark")]
+        [JsonPropertyName("benchmark")]
         public string Benchmark { get; set; }
 
-        public long LuaTimeStamp { get; set; }
+        public double LuaTimeStamp { get; set; }
     }
 }

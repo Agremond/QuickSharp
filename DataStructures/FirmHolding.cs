@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -10,49 +10,49 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Код инструмента
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Входящий остаток
         /// </summary>
-        [JsonProperty("openbal")]
+        [JsonPropertyName("openbal")]
         public double OpenBal { get; set; }
 
         /// <summary>
         /// Текущий остаток
         /// </summary>
-        [JsonProperty("currentpos")]
+        [JsonPropertyName("currentpos")]
         public double CurrentPos { get; set; }
 
         /// <summary>
         /// Количество инструментов в активных заявках на покупку 
         /// </summary>
-        [JsonProperty("plannedposbuy")]
+        [JsonPropertyName("plannedposbuy")]
         public double PlannedPosBuy { get; set; }
 
         /// <summary>
         /// Количество инструментов в активных заявках на продажу
         /// </summary>
-        [JsonProperty("plannedpossell")]
+        [JsonPropertyName("plannedpossell")]
         public double PlannedPosSell { get; set; }
 
         /// <summary>
         /// Куплено
         /// </summary>
-        [JsonProperty("usqtyb")]
+        [JsonPropertyName("usqtyb")]
         public double UsQtyB { get; set; }
 
         /// <summary>
         /// Продано
         /// </summary>
-        [JsonProperty("usqtys")]
+        [JsonPropertyName("usqtys")]
         public double UsQtyS { get; set; }
     }
 }

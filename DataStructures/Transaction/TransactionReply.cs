@@ -11,7 +11,7 @@ namespace QuikSharp.DataStructures.Transaction
     public class TransactionReply : IWithLuaTimeStamp
     {
         [JsonProperty("lua_timestamp")]
-        public long LuaTimeStamp { get; internal set; }
+        public double LuaTimeStamp { get; internal set; }
 
         /// <summary>
         /// Пользовательский идентификатор транзакции
@@ -52,25 +52,25 @@ namespace QuikSharp.DataStructures.Transaction
         /// Идентификатор пользователя у брокера. Для каждого брокера он свой и меняться не должен.
         /// </summary>
         [JsonProperty("uid")]
-        public long Uid { get; set; }
+        public double Uid { get; set; }
 
         /// <summary>
         /// Флаги транзакции (временно не используется)
         /// </summary>
         [JsonProperty("flags")]
-        public long Flags { get; set; }
+        public double Flags { get; set; }
 
         /// <summary>
         /// Идентификатор транзакции на сервере
         /// </summary>
         [JsonProperty("server_trans_id")]
-        public long ServerTransID { get; set; }
+        public double ServerTransID { get; set; }
 
         /// <summary>
         /// Номер заявки
         /// </summary>
         [JsonProperty("order_num")]
-        public long? OrderNum { get; set; }
+        public double? OrderNum { get; set; }
 
         /// <summary>
         /// Цена
@@ -152,7 +152,7 @@ namespace QuikSharp.DataStructures.Transaction
         /// Номер первой заявки, которая выставлялась при автоматической замене кода клиента. Используется, если на сервере QUIK настроена замена кода клиента для кросс-сделки
         /// </summary>
         [JsonProperty("first_ordernum")]
-        public long FirstOrderNum { get; set; }
+        public double FirstOrderNum { get; set; }
 
         /// <summary>
         /// Дата и время получения шлюзом ответа на транзакцию

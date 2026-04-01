@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -14,25 +14,25 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Код инструмента
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Код торгового счета
         /// </summary>
-        [JsonProperty("trdaccid")]
+        [JsonPropertyName("trdaccid")]
         public string TrdAccId { get; set; }
 
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Код клиента
         /// </summary>
-        [JsonProperty("client_code")]
+        [JsonPropertyName("client_code")]
         public string ClientCode { get; set; }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace QuikSharp.DataStructures
         /// ///«0» – обычные лимиты,
         /// ///значение не равное «0» – технологические лимиты
         /// </summary>
-        [JsonProperty("limit_kind")]
+        [JsonPropertyName("limit_kind")]
         public int LimitKindInt { get; set; }
 
         // ReSharper restore InconsistentNaming

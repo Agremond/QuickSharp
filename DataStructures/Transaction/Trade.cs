@@ -11,19 +11,19 @@ namespace QuikSharp.DataStructures.Transaction
     public class Trade : IWithLuaTimeStamp
     {
         [JsonProperty("lua_timestamp")]
-        public long LuaTimeStamp { get; internal set; }
+        public double LuaTimeStamp { get; internal set; }
 
         /// <summary>
         /// Номер сделки в торговой системе
         /// </summary>
         [JsonProperty("trade_num")]
-        public long TradeNum { get; set; }
+        public double TradeNum { get; set; }
 
         /// <summary>
         /// Номер заявки в торговой системе
         /// </summary>
         [JsonProperty("order_num")]
-        public long OrderNum { get; set; }
+        public double OrderNum { get; set; }
 
         /// <summary>
         /// Поручение/комментарий, обычно: код клиента/номер поручения

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using System;
 
 namespace QuikSharp.DataStructures
@@ -15,19 +15,19 @@ namespace QuikSharp.DataStructures
         /// <summary>
         ///
         /// </summary>
-        [JsonProperty("lua_timestamp")]
+        [JsonPropertyName("lua_timestamp")]
         public long LuaTimeStamp { get; internal set; }
 
         /// <summary>
         /// Регистрационный номер стоп-заявки на сервере QUIK
         /// </summary>
-        [JsonProperty("order_num")]
+        [JsonPropertyName("order_num")]
         public long OrderNum { get; set; }
 
         /// <summary>
         /// Время выставления
         /// </summary>
-        [JsonProperty("ordertime")]
+        [JsonPropertyName("ordertime")]
         public double OrderTime { get; set; }
 
         private int _flags;
@@ -35,7 +35,7 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Набор битовых флагов.
         /// </summary>
-        [JsonProperty("flags")]
+        [JsonPropertyName("flags")]
         public int Flags
         {
             get { return _flags; }
@@ -49,24 +49,24 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Поручение/комментарий, обычно: код клиента/номер поручения
         /// </summary>
-        [JsonProperty("brokerref")]
+        [JsonPropertyName("brokerref")]
         public string Comment { get; set; }
 
         /// <summary>
         /// Идентификатор дилера
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Торговый счет
         /// </summary>
-        [JsonProperty("account")]
+        [JsonPropertyName("account")]
         public string Account { get; set; }
 
         private int _conditionInt;
 
-        [JsonProperty("condition")]
+        [JsonPropertyName("condition")]
         public int ConditionInt
         {
             get { return _conditionInt; }
@@ -86,60 +86,60 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Стоп-цена
         /// </summary>
-        [JsonProperty("condition_price")]
+        [JsonPropertyName("condition_price")]
         public decimal ConditionPrice { get; set; }
 
         /// <summary>
         /// Цена
         /// </summary>
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public decimal Price { get; set; }
 
         /// <summary>
         /// Количество в лотах
         /// </summary>
-        [JsonProperty("qty")]
+        [JsonPropertyName("qty")]
         public int Quantity { get; set; }
 
         /// <summary>
         /// Номер заявки в торговой системе, зарегистрированной по наступлению условия стоп-цены.
         /// </summary>
-        [JsonProperty("linkedorder")]
+        [JsonPropertyName("linkedorder")]
         public long LinkedOrder { get; set; }
 
         /// <summary>
         /// Дата окончания срока действия заявки
         /// </summary>
-        [JsonProperty("expiry")]
+        [JsonPropertyName("expiry")]
         public string Expiry { get; set; }
 
         /// <summary>
         /// Идентификатор транзакции.
         /// </summary>
-        [JsonProperty("trans_id")]
+        [JsonPropertyName("trans_id")]
         public long TransId { get; set; }
 
         /// <summary>
         /// Код клиента
         /// </summary>
-        [JsonProperty("client_code")]
+        [JsonPropertyName("client_code")]
         public string ClientCode { get; set; }
 
         /// <summary>
         /// Связанная заявка
         /// </summary>
-        [JsonProperty("co_order_num")]
+        [JsonPropertyName("co_order_num")]
         public long CoOrderNumber { get; set; }
 
         /// <summary>
         /// Цена связанной заявки
         /// </summary>
-        [JsonProperty("co_order_price")]
+        [JsonPropertyName("co_order_price")]
         public decimal CoOrderPrice { get; set; }
 
         private int _stopOrderTypeInt;
 
-        [JsonProperty("stop_order_type")]
+        [JsonPropertyName("stop_order_type")]
         public int StopOrderTypeInt
         {
             get { return _stopOrderTypeInt; }
@@ -153,133 +153,133 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Дата выставления
         /// </summary>
-        [JsonProperty("orderdate")]
+        [JsonPropertyName("orderdate")]
         public long OrderDate { get; set; }
 
         /// <summary>
         /// Сделка условия
         /// </summary>
-        [JsonProperty("alltrade_num")]
+        [JsonPropertyName("alltrade_num")]
         public long AllTradeNumber { get; set; }
 
         /// <summary>
         /// Набор битовых флагов
         /// </summary>
-        [JsonProperty("stopflags")]
+        [JsonPropertyName("stopflags")]
         public Transaction.StopOrderTradeFlags StopFlags { get; set; }
 
         /// <summary>
         /// Отступ от min/max
         /// </summary>
-        [JsonProperty("offset")]
+        [JsonPropertyName("offset")]
         public decimal Offset { get; set; }
 
         /// <summary>
         /// Защитный спред
         /// </summary>
-        [JsonProperty("spread")]
+        [JsonPropertyName("spread")]
         public decimal Spread { get; set; }
 
         /// <summary>
         /// Активное количество
         /// </summary>
-        [JsonProperty("balance")]
+        [JsonPropertyName("balance")]
         public decimal Balance { get; set; }
 
         /// <summary>
         /// Идентификатор пользователя
         /// </summary>
-        [JsonProperty("uid")]
+        [JsonPropertyName("uid")]
         public decimal UserId { get; set; }
 
         /// <summary>
         /// Исполненное количество
         /// </summary>
-        [JsonProperty("filled_qty")]
+        [JsonPropertyName("filled_qty")]
         public int FilledQuantity { get; set; }
 
         /// <summary>
         /// Время снятия заявки
         /// </summary>
-        [JsonProperty("withdraw_time")]
+        [JsonPropertyName("withdraw_time")]
         public int WithdrawTime { get; set; }
 
         /// <summary>
         /// Стоп-лимит цена (для заявок типа «Тэйк-профит и стоп-лимит»)
         /// </summary>
-        [JsonProperty("condition_price2")]
+        [JsonPropertyName("condition_price2")]
         public decimal ConditionPrice2 { get; set; }
 
         /// <summary>
         /// Время начала периода действия заявки типа «Тэйк-профит и стоп-лимит»
         /// </summary>
-        [JsonProperty("active_from_time")]
+        [JsonPropertyName("active_from_time")]
         public int ActiveFromTime { get; set; }
 
         /// <summary>
         /// Время окончания периода действия заявки типа «Тэйк-профит и стоп-лимит»
         /// </summary>
-        [JsonProperty("active_to_time")]
+        [JsonPropertyName("active_to_time")]
         public int ActiveToTime { get; set; }
 
         /// <summary>
         /// Код бумаги заявки
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Код класса заявки
         /// </summary>
-        [JsonProperty("class_code")]
+        [JsonPropertyName("class_code")]
         public string ClassCode { get; set; }
 
         /// <summary>
         /// Код инструмента стоп-цены
         /// </summary>
-        [JsonProperty("condition_sec_code")]
+        [JsonPropertyName("condition_sec_code")]
         public string ConditionSecCode { get; set; }
 
         /// <summary>
         /// Код класса стоп-цены
         /// </summary>
-        [JsonProperty("condition_class_code")]
+        [JsonPropertyName("condition_class_code")]
         public string ConditionClassCode { get; set; }
 
         /// <summary>
         /// Идентификатор пользователя, снявшего стоп-заявку
         /// </summary>
-        [JsonProperty("canceled_uid")]
+        [JsonPropertyName("canceled_uid")]
         public decimal CanceledUserID { get; set; }
 
         /// <summary>
         /// Время выставления стоп-заявки
         /// </summary>
-        [JsonProperty("order_date_time")]
+        [JsonPropertyName("order_date_time")]
         public QuikDateTime OrderDateTime { get; set; }
 
         /// <summary>
         /// Время снятия стоп-заявки
         /// </summary>
-        [JsonProperty("withdraw_datetime")]
+        [JsonPropertyName("withdraw_datetime")]
         public QuikDateTime WithdrawDateTime { get; set; }
 
         /// <summary>
         /// Дата и время активации стоп-заявки
         /// </summary>
-        [JsonProperty("activation_date_time")]
+        [JsonPropertyName("activation_date_time")]
         public QuikDateTime ActivationDateTime { get; set; }
 
         /// <summary>
         /// Единицы измерения отступа
         /// </summary>
-        [JsonProperty("offset_unit")]
+        [JsonPropertyName("offset_unit")]
         public OffsetUnits OffsetUnit { get; set; }
 
         /// <summary>
         /// Единицы измерения защитного спреда
         /// </summary>
-        [JsonProperty("spread_unit")]
+        [JsonPropertyName("spread_unit")]
         public OffsetUnits SpreadUnit { get; set; }
 
         /// <summary>

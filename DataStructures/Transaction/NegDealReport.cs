@@ -8,7 +8,7 @@ namespace QuikSharp.DataStructures.Transaction
     public class NegDealReport : IWithLuaTimeStamp
     {
         [JsonProperty("lua_timestamp")]
-        public long LuaTimeStamp { get; internal set; }
+        public double LuaTimeStamp { get; internal set; }
 
         /// <summary>
         /// Отчет

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -19,14 +19,14 @@ namespace QuikSharp.DataStructures
         /// «5» - время,
         /// «6» - дата
         /// </summary>
-        [JsonProperty("param_type")]
+        [JsonPropertyName("param_type")]
         public string ParamType { get; set; }
 
         /// <summary>
         /// Значение параметра. Для param_type = 3 значение параметра равно «0», в остальных случаях – числовое представление.
         /// Для перечислимых типов значение равно порядковому значению перечисления
         /// </summary>
-        [JsonProperty("param_value")]
+        [JsonPropertyName("param_value")]
         public string ParamValue { get; set; }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace QuikSharp.DataStructures
         /// В строковом представлении учитываются разделители разрядов, разделители целой и дробной части.
         /// Для перечислимых типов выводятся соответствующие им строковые значения
         /// </summary>
-        [JsonProperty("param_image")]
+        [JsonPropertyName("param_image")]
         public string ParamImage { get; set; }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace QuikSharp.DataStructures
         /// «0» – ошибка;
         /// «1» – параметр найден;
         /// </summary>
-        [JsonProperty("result")]
+        [JsonPropertyName("result")]
         public string Result { get; set; }
 
-        public long LuaTimeStamp { get; set; }
+        public double LuaTimeStamp { get; set; }
     }
 }

@@ -8,19 +8,19 @@ namespace QuikSharp.DataStructures.Transaction
     public class NegDeals : IWithLuaTimeStamp
     {
         [JsonProperty("lua_timestamp")]
-        public long LuaTimeStamp { get; internal set; }
+        public double LuaTimeStamp { get; internal set; }
 
         /// <summary>
         /// Номер
         /// </summary>
         [JsonProperty("neg_deal_num")]
-        public long NegDealNumber { get; set; }
+        public double NegDealNumber { get; set; }
 
         /// <summary>
         /// Время выставления заявки
         /// </summary>
         [JsonProperty("neg_deal_time")]
-        public long NegDealTime { get; set; }
+        public double NegDealTime { get; set; }
 
         private OrderTradeFlags _flags;
 

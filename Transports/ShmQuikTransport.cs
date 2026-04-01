@@ -246,14 +246,14 @@ namespace QuikSharp.Transports
                         byte[] buffer = new byte[len];
                         _viewResp.ReadArray(HEADER, buffer, 0, (int)len);
 
-                        //    string json = Encoding.UTF8.GetString(buffer);
-                        ////Console.WriteLine($"[{reqId}] RAW RESPONSE (len={len}):");
-                        ////Console.WriteLine(json);                          // ← самый важный лог!
-                        ////Console.WriteLine("-----------------------------------");
+                        //string json = Encoding.UTF8.GetString(buffer);
+                        
                         //var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
 
                         string json = Encoding.UTF8.GetString(buffer).Trim();
-
+                        //Console.WriteLine($"[{reqId}] RAW RESPONSE (len={len}):");
+                        //Console.WriteLine(json);                          // ← самый важный лог!
+                        //Console.WriteLine("-----------------------------------");
 
                         if (string.IsNullOrWhiteSpace(json))
                         {
@@ -348,13 +348,7 @@ namespace QuikSharp.Transports
                         byte[] buffer = new byte[len];
                         _viewCb.ReadArray(HEADER, buffer, 0, (int)len);
 
-                        //string json = Encoding.UTF8.GetString(buffer);
-                        ////Console.WriteLine($"RAW RESPONSE (len={len}):");
-                        ////Console.WriteLine(json);                          // ← самый важный лог!
-                        ////Console.WriteLine("-----------------------------------");
-
-
-                        //var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
+                        
                         
                         string json = Encoding.UTF8.GetString(buffer).Trim();
 

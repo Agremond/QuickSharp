@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -7,13 +7,13 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Максимально возможное количество бумаги
         /// </summary>
-        [JsonProperty("qty")]
+        [JsonPropertyName("qty")]
         public int Qty { get; set; }
 
         /// <summary>
         /// Сумма комиссии
         /// </summary>
-        [JsonProperty("comission")]
+        [JsonPropertyName("comission")]
         public double Comission { get; set; }
     }
 }

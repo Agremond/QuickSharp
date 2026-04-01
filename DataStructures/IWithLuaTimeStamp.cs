@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -15,7 +15,7 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Lua timestamp
         /// </summary>
-        [JsonProperty("lua_timestamp")]
-        long LuaTimeStamp { get; }
+        [JsonPropertyName("lua_timestamp")]
+        double LuaTimeStamp { get; }
     }
 }

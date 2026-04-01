@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -14,19 +14,19 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Значение параметра на оси Y, к которому будет привязана метка.
         /// </summary>
-        [JsonProperty("yvalue")]
+        [JsonPropertyName("yvalue")]
         public string YValue { get; set; }
 
         /// <summary>
         /// Дата в формате «ГГГГММДД», к которой привязана метка
         /// </summary>
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public string StrDate { get; set; }
 
         /// <summary>
         /// Время в формате «ЧЧММСС», к которому будет привязана метка
         /// </summary>
-        [JsonProperty("time")]
+        [JsonPropertyName("time")]
         public string StrTime { get; set; }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace QuikSharp.DataStructures
         /// Хотя бы один из параметров Text или ImagePath должен быть задан.
         /// Если не был задан, то возвращается пустая строка.
         /// </summary>
-        [JsonProperty("text")]
+        [JsonPropertyName("text")]
         public string Text { get; set; }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace QuikSharp.DataStructures
         /// Хотя бы один из параметров Text или ImagePath должен быть задан.
         /// Если не был задан, то возвращается пустая строка.
         /// </summary>
-        [JsonProperty("image_path")]
+        [JsonPropertyName("image_path")]
         public string ImagePath { get; set; }
 
         /// <summary>
@@ -51,42 +51,42 @@ namespace QuikSharp.DataStructures
         /// (возможно 4 варианта: LEFT, RIGHT, TOP, BOTTOM)   -- по умолчанию LEFT
         /// Если не был задан, то возвращается "LEFT"
         /// </summary>
-        [JsonProperty("alignment")]
+        [JsonPropertyName("alignment")]
         public string Alignment { get; set; }
 
         /// <summary>
         /// Текст всплывающей подсказки
         /// Если не был задан, то возвращается пустая строка.
         /// </summary>
-        [JsonProperty("hint")]
+        [JsonPropertyName("hint")]
         public string Hint { get; set; }
 
         /// <summary>
         /// Красная компонента цвета в формате RGB. Число в интервале [0;255]
         /// По умолчанию 0. Если не был задан, то возвращается "0".
         /// </summary>
-        [JsonProperty("r")]
+        [JsonPropertyName("r")]
         public string Red { get; set; }
 
         /// <summary>
         /// Зеленая компонента цвета в формате RGB. Число в интервале [0;255]
         /// По умолчанию 0. Если не был задан, то возвращается "0".
         /// </summary>
-        [JsonProperty("g")]
+        [JsonPropertyName("g")]
         public string Green { get; set; }
 
         /// <summary>
         /// Синяя компонента цвета в формате RGB. Число в интервале [0;255]
         /// По умолчанию 0. Если не был задан, то возвращается "0".
         /// </summary>
-        [JsonProperty("b")]
+        [JsonPropertyName("b")]
         public string Blue { get; set; }
 
         /// <summary>
         /// Прозрачность метки (картинки) в процентах. Значение должно быть в промежутке [0; 100]
         /// Если не был задан, то возвращается "0".
         /// </summary>
-        [JsonProperty("transparency")]
+        [JsonPropertyName("transparency")]
         public string Transparency { get; set; }
 
         /// <summary>
@@ -95,21 +95,21 @@ namespace QuikSharp.DataStructures
         /// рисуется и у текста есть черный фон. если картинка отсутствует и нужен только текст, то делать = 1.
         /// Если не был задан, то возвращается "0".
         /// </summary>
-        [JsonProperty("transparent_background")]
+        [JsonPropertyName("transparent_background")]
         public string TranBackgrnd { get; set; }
 
         /// <summary>
         /// Название шрифта (по умолчанию = "Arial")
         /// Если не был задан, то возвращается пустая строка.
         /// </summary>
-        [JsonProperty("font_face_name")]
+        [JsonPropertyName("font_face_name")]
         public string FontName { get; set; }
 
         /// <summary>
         /// Размер шрифта (по умолчанию = 12)
         /// Если не был задан, то возвращается "0".
         /// </summary>
-        [JsonProperty("font_height")]
+        [JsonPropertyName("font_height")]
         public string FontHeight { get; set; }
     }
 }

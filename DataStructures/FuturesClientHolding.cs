@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -13,19 +13,19 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string firmId { get; set; }
 
         /// <summary>
         /// Торговый счет
         /// </summary>
-        [JsonProperty("trdaccid")]
+        [JsonPropertyName("trdaccid")]
         public string trdAccId { get; set; }
 
         /// <summary>
         /// Код фьючерсного контракта
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string secCode { get; set; }
 
         /// <summary>
@@ -34,85 +34,85 @@ namespace QuikSharp.DataStructures
         /// «Клиентские и дополнительные счета»;
         /// «Все счета торг. членов»;
         /// </summary>
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string type { get; set; }
 
         /// <summary>
         /// Входящие длинные позиции
         /// </summary>
-        [JsonProperty("startbuy")]
+        [JsonPropertyName("startbuy")]
         public double startBuy { get; set; }
 
         /// <summary>
         /// Входящие короткие позиции
         /// </summary>
-        [JsonProperty("startsell")]
+        [JsonPropertyName("startsell")]
         public double startSell { get; set; }
 
         /// <summary>
         /// Входящие чистые позиции
         /// </summary>
-        [JsonProperty("startnet")]
+        [JsonPropertyName("startnet")]
         public double startNet { get; set; }
 
         /// <summary>
         /// Текущие длинные позиции
         /// </summary>
-        [JsonProperty("todaybuy")]
+        [JsonPropertyName("todaybuy")]
         public double todayBuy { get; set; }
 
         /// <summary>
         /// Текущие короткие позиции
         /// </summary>
-        [JsonProperty("todaysell")]
+        [JsonPropertyName("todaysell")]
         public double todaySell { get; set; }
 
         /// <summary>
         /// Текущие чистые позиции
         /// </summary>
-        [JsonProperty("totalnet")]
+        [JsonPropertyName("totalnet")]
         public double totalNet { get; set; }
 
         /// <summary>
         /// Активные на покупку
         /// </summary>
-        [JsonProperty("openbuys")]
+        [JsonPropertyName("openbuys")]
         public double openBuys { get; set; }
 
         /// <summary>
         /// Активные на продажу
         /// </summary>
-        [JsonProperty("opensells")]
+        [JsonPropertyName("opensells")]
         public double openSells { get; set; }
 
         /// <summary>
         /// Оценка текущих чистых позиций
         /// </summary>
-        [JsonProperty("cbplused")]
+        [JsonPropertyName("cbplused")]
         public double cbPlUsed { get; set; }
 
         /// <summary>
         /// Плановые чистые позиции
         /// </summary>
-        [JsonProperty("cbplplanned")]
+        [JsonPropertyName("cbplplanned")]
         public double cbpPPlanned { get; set; }
 
         /// <summary>
         /// Вариационная маржа
         /// </summary>
-        [JsonProperty("varmargin")]
+        [JsonPropertyName("varmargin")]
         public double varMargin { get; set; }
 
         /// <summary>
         /// Эффективная цена позиций
         /// </summary>
-        [JsonProperty("avrposnprice")]
+        [JsonPropertyName("avrposnprice")]
         public double avrPosnPrice { get; set; }
 
         /// <summary>
         /// Стоимость позиций
         /// </summary>
-        [JsonProperty("positionvalue")]
+        [JsonPropertyName("positionvalue")]
         public double positionValue { get; set; }
 
         /// <summary>
@@ -120,14 +120,14 @@ namespace QuikSharp.DataStructures
         /// Отображается с точностью до 2 двух знаков.
         /// При этом, в поле «varmargin» транслируется вариационная маржа, рассчитанная с учетом установленных границ изменения цены
         /// </summary>
-        [JsonProperty("real_varmargin ")]
+        [JsonPropertyName("real_varmargin ")]
         public double realVarMargin { get; set; }
 
         /// <summary>
         /// Суммарная вариационная маржа по итогам основного клиринга начисленная по всем позициям.
         /// Отображается с точностью до 2 двух знаков
         /// </summary>
-        [JsonProperty("total_varmargin ")]
+        [JsonPropertyName("total_varmargin ")]
         public double totalVarMargin { get; set; }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace QuikSharp.DataStructures
         /// «6» – завершился основной клиринг; 
         /// «7» – завершилась вечерняя сессия
         /// </summary>
-        [JsonProperty("session_status ")]
+        [JsonPropertyName("session_status ")]
         public int SessionStatus { get; set; }
 
-        public long LuaTimeStamp { get; set; }
+        public double LuaTimeStamp { get; set; }
     }
 }

@@ -8,13 +8,13 @@ namespace QuikSharp.DataStructures.Transaction
     public class NegTrade : IWithLuaTimeStamp
     {
         [JsonProperty("lua_timestamp")]
-        public long LuaTimeStamp { get; internal set; }
+        public double LuaTimeStamp { get; internal set; }
 
         /// <summary>
         /// Номер сделки в торговой системе
         /// </summary>
         [JsonProperty("trade_num")]
-        public long TradeNum { get; set; }
+        public double TradeNum { get; set; }
 
         /// <summary>
         /// Дата торгов
@@ -92,13 +92,13 @@ namespace QuikSharp.DataStructures.Transaction
         /// Отчет
         /// </summary>
         [JsonProperty("report_num")]
-        public long ReportNumber { get; set; }
+        public double ReportNumber { get; set; }
 
         /// <summary>
         /// Отчет партнера
         /// </summary>
         [JsonProperty("cpreport_num")]
-        public long CpReportNumber { get; set; }
+        public double CpReportNumber { get; set; }
 
         /// <summary>
         /// Накопленный купонный доход
@@ -110,7 +110,7 @@ namespace QuikSharp.DataStructures.Transaction
         /// Номер сделки 1-ой части РЕПО
         /// </summary>
         [JsonProperty("repotradeno")]
-        public long RepoTradeNo { get; set; }
+        public double RepoTradeNo { get; set; }
 
         /// <summary>
         /// Цена 1-ой части РЕПО
@@ -268,7 +268,7 @@ namespace QuikSharp.DataStructures.Transaction
         /// Номер заявки в торговой системе
         /// </summary>
         [JsonProperty("order_num")]
-        public long OrderNum { get; set; }
+        public double OrderNum { get; set; }
 
         /// <summary>
         /// Дата заключения
@@ -390,7 +390,7 @@ namespace QuikSharp.DataStructures.Transaction
         /// Номер поручения
         /// </summary>
         [JsonProperty("confirmreport")]
-        public long ConfirmReport { get; set; }
+        public double ConfirmReport { get; set; }
 
         /// <summary>
         /// Внешняя ссылка, используется для обратной связи с внешними системами

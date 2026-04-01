@@ -1,7 +1,7 @@
 // Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -15,31 +15,31 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Код фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Наименование класса
         /// </summary>
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Код класса
         /// </summary>
-        [JsonProperty("code")]
+        [JsonPropertyName("code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Количество параметров в классе
         /// </summary>
-        [JsonProperty("npars")]
+        [JsonPropertyName("npars")]
         public int NPars { get; set; }
 
         /// <summary>
         /// Количество бумаг в классе
         /// </summary>
-        [JsonProperty("nsecs")]
+        [JsonPropertyName("nsecs")]
         public int NSecs { get; set; }
 
         // ReSharper restore InconsistentNaming

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -10,85 +10,85 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Код инструмента
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Код класса
         /// </summary>
-        [JsonProperty("class_code")]
+        [JsonPropertyName("class_code")]
         public string ClassCode { get; set; }
 
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Торговый счет
         /// </summary>
-        [JsonProperty("account")]
+        [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
         /// Идентификатор расчетного счета/кода в клиринговой организации
         /// </summary>
-        [JsonProperty("bank_acc_id")]
+        [JsonPropertyName("bank_acc_id")]
         public string BankAccId { get; set; }
 
         /// <summary>
         /// Дата расчётов
         /// </summary>
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public int Date { get; set; }
 
         /// <summary>
         /// Дебит (Размер денежных обязательств)
         /// </summary>
-        [JsonProperty("debit")]
+        [JsonPropertyName("debit")]
         public double Debit { get; set; }
 
         /// <summary>
         /// Кредит (Размер денежных требований)
         /// </summary>
-        [JsonProperty("credit")]
+        [JsonPropertyName("credit")]
         public double Credit { get; set; }
 
         /// <summary>
         /// Сумма денежных средств в заявках на покупку
         /// </summary>
-        [JsonProperty("value_buy")]
+        [JsonPropertyName("value_buy")]
         public double ValueBuy{ get; set; }
 
         /// <summary>
         /// Сумма денежных средств в заявках на продажу
         /// </summary>
-        [JsonProperty("value_sell")]
+        [JsonPropertyName("value_sell")]
         public double ValueSell { get; set; }
 
         /// <summary>
         /// Сумма возврата компенсационного перевода
         /// </summary>
-        [JsonProperty("margin_call")]
+        [JsonPropertyName("margin_call")]
         public double MarginCall { get; set; }
 
         /// <summary>
         /// Плановая позиция Т+
         /// </summary>
-        [JsonProperty("planned_covered")]
+        [JsonPropertyName("planned_covered")]
         public long PlannedCovered { get; set; }
 
         /// <summary>
         /// Размер денежных обязательств на начало дня, с точностью до 2 знаков после десятичного разделителя
         /// </summary>
-        [JsonProperty("debit_balance")]
+        [JsonPropertyName("debit_balance")]
         public double DebitBalance { get; set; }
 
         /// <summary>
         /// Размер денежных требований на начало дня, с точностью до 2 знаков после десятичного разделителя
         /// </summary>
-        [JsonProperty("credit_balance")]
+        [JsonPropertyName("credit_balance")]
         public double CreditBalance { get; set; }
     }
 }

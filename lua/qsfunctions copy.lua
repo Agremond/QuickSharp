@@ -1,11 +1,11 @@
-﻿-- qsfunctions.lua
+-- qsfunctions.lua
 -- Обработчики команд QUIK# (Lua → C# / внешний процесс)
 -- Вызываются через dispatch_and_process при получении JSON-сообщения с полем "cmd"
 
 local json = require "dkjson"
 
 local qsfunctions = {}
-local is_debug = true
+local is_debug = false
 
 local function send_error(msg, error_text)
     msg.cmd       = "lua_error"

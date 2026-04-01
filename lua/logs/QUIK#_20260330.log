@@ -8,3 +8,14 @@
 2026-03-30 18:03:27.750 LOG 1: Subscribe_Level_II_Quotes called | raw data: SPBFUT|RIM6
 2026-03-30 18:03:27.800 LOG 1: Subscribe Level II: class=SPBFUT, sec=RIM6
 2026-03-30 18:03:27.850 LOG 1: После dispatch: cmd=Subscribe_Level_II_Quotes, data тип=boolean
+2026-03-30 23:09:12.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
+2026-03-30 23:09:12.100 LOG 1: Shared memory IPC (variant 2) initialized
+2026-03-30 23:09:12.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-03-30 23:16:43.050 LOG 0: Запрос от C# 1 (req_id=1): {"t":1774901803363,"cmd":"getClientCode","id":1,"data":{"cmd":"getClientCode","t":1774901803360,"data":""}}
+2026-03-30 23:16:43.100 LOG 1: После dispatch: cmd=getClientCode, data тип=table
+2026-03-31 21:25:55.100 LOG 0: Запрос от C# 1 (req_id=1): {"t":1774981555810,"cmd":"getClientCode","id":1,"data":{"cmd":"getClientCode","t":1774981555807,"data":""}}
+2026-03-31 21:25:55.150 LOG 1: После dispatch: cmd=getClientCode, data тип=table
+2026-03-31 21:26:28.100 LOG 0: Запрос от C# 1 (req_id=1): {"t":1774981588206,"cmd":"getClientCode","id":1,"data":{"cmd":"getClientCode","t":1774981588203,"data":""}}
+2026-03-31 21:26:28.150 LOG 1: После dispatch: cmd=getClientCode, data тип=table
+2026-03-31 21:27:09.050 LOG 0: Запрос от C# 1 (req_id=1): {"t":1774981613392,"cmd":"getClientCode","id":1,"data":{"cmd":"getClientCode","t":1774981608801,"data":""}}
+2026-03-31 21:27:09.100 LOG 1: После dispatch: cmd=getClientCode, data тип=table

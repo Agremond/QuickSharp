@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -10,85 +10,85 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Номер счета депо в Депозитарии (НДЦ)
         /// </summary>
-        [JsonProperty("depo_account")]
+        [JsonPropertyName("depo_account")]
         public string DepoAccount { get; set; }
 
         /// <summary>
         /// Торговый счет
         /// </summary>
-        [JsonProperty("account")]
+        [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
         /// Идентификатор расчетного счета/кода в клиринговой организации
         /// </summary>
-        [JsonProperty("bank_acc_id")]
+        [JsonPropertyName("bank_acc_id")]
         public string BankAccId { get; set; }
 
         /// <summary>
         /// Дата расчетов
         /// </summary>
-        [JsonProperty("settle_date")]
+        [JsonPropertyName("settle_date")]
         public int SettleDate { get; set; }
 
         /// <summary>
         /// Количество инструментов в сделках
         /// </summary>
-        [JsonProperty("qty")]
+        [JsonPropertyName("qty")]
         public long Quantity { get; set; }
 
         /// <summary>
         /// Количество инструментов в заявках на покупку
         /// </summary>
-        [JsonProperty("qty_buy")]
+        [JsonPropertyName("qty_buy")]
         public long QuantityBuy { get; set; }
 
         /// <summary>
         /// Количество инструментов в заявках на продажу
         /// </summary>
-        [JsonProperty("qty_sell")]
+        [JsonPropertyName("qty_sell")]
         public long QuantitySell { get; set; }
 
         /// <summary>
         /// Нетто-позиция
         /// </summary>
-        [JsonProperty("netto")]
+        [JsonPropertyName("netto")]
         public long Netto { get; set; }
 
         /// <summary>
         /// Дебит
         /// </summary>
-        [JsonProperty("debit")]
+        [JsonPropertyName("debit")]
         public double Debit { get; set; }
 
         /// <summary>
         /// Кредит
         /// </summary>
-        [JsonProperty("credit")]
+        [JsonPropertyName("credit")]
         public double Credit { get; set; }
 
         /// <summary>
         /// Код инструмента
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Код класса
         /// </summary>
-        [JsonProperty("class_code")]
+        [JsonPropertyName("class_code")]
         public string ClassCode { get; set; }
 
         /// <summary>
         /// Плановая позиция Т+
         /// </summary>
-        [JsonProperty("planned_covered")]
+        [JsonPropertyName("planned_covered")]
         public long PlannedCovered { get; set; }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace QuikSharp.DataStructures
         /// «0» – торговый раздел; 
         /// «1» – раздел обеспечения
         /// </summary>
-        [JsonProperty("firm_use")]
+        [JsonPropertyName("firm_use")]
         public int FirmUse { get; set; }
     }
 }

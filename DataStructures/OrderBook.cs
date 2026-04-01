@@ -42,7 +42,7 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// time in msec from lua epoch
         /// </summary>
-        public long LuaTimeStamp { get; set; }
+        public double LuaTimeStamp { get; set; }
 
         /// <summary>
         /// Result of getInfoParam("SERVERTIME") right before getQuoteLevel2 call

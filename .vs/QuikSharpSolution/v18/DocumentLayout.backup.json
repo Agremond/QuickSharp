@@ -3,33 +3,210 @@
   "WorkspaceRootPath": "C:\\Programming\\QuikSharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\orderfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:orderfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\accountbalance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\accountbalance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\transactionenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\transactionenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\orderfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\tradesaccounts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\tradesaccounts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\stoporder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\stoporder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\securityinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\securityinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\orderbookfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\rmholding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\rmholding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\quiktable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\quiktable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\portfolioinfoex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\portfolioinfoex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\portfolioinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\portfolioinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\paramtable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\paramtable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\param.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\param.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\orderbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\orderbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\optionboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\optionboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\moneylimitex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\moneylimitex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\moneylimitdelete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\moneylimitdelete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\moneylimit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\moneylimit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\label.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\label.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\jsonconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\jsonconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\iwithluatimestamp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\iwithluatimestamp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\futureslimits.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\futureslimits.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\futureslimitdelete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\futureslimitdelete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\futuresclientholding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\futuresclientholding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\firmholding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\firmholding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\firm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\firm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\depolimitex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\depolimitex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\depolimitdelete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\depolimitdelete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\depolimit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\depolimit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\classinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\classinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\ccpholding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\ccpholding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\candle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\candle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\calcbuysellresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\calcbuysellresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\buysellinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\buysellinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\alltrade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\alltrade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\accountposition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\accountposition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\tradingfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\quikjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:quikjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\transaction\\transactionreply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\transaction\\transactionreply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\transaction\\negtrade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\transaction\\negtrade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\transaction\\trade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\transaction\\trade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\transaction\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\transaction\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\transaction\\negdealreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\transaction\\negdealreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\transaction\\negdeals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\transaction\\negdeals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\candlefunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\classfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\quikevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:quikevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\orderfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\classfunctions\\classfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:classfunctions\\classfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\orderfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:orderfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\orderbookfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\quikeventsadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,34 +216,12 @@
       "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\transactionspectest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\quikevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:quikevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\param.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\param.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\datastructures\\candle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:datastructures\\candle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\transports\\iquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:transports\\iquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\orderbookfunctions\\orderbookfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:orderbookfunctions\\orderbookfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\candlefunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\classfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\ping.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -81,10 +236,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\debugfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:debugfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\quikjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:quikjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
@@ -110,13 +261,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 35,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\Program.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\Program.cs",
               "ToolTip": "C:\\Programming\\QS.Tests\\Program.cs",
               "RelativeToolTip": "..\\QS.Tests\\Program.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAnwDsAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAewLAAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:23:21.868Z",
               "IsPinned": true,
@@ -124,7 +275,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 48,
               "Title": "QuikEvents.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\QuikEvents.cs",
               "RelativeDocumentMoniker": "QuikEvents.cs",
@@ -134,6 +285,448 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-23T06:57:32.896Z",
               "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PortfolioInfoEx.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\PortfolioInfoEx.cs",
+              "RelativeDocumentMoniker": "DataStructures\\PortfolioInfoEx.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\PortfolioInfoEx.cs",
+              "RelativeToolTip": "DataStructures\\PortfolioInfoEx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:58:29.667Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "QuikTable.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\QuikTable.cs",
+              "RelativeDocumentMoniker": "DataStructures\\QuikTable.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\QuikTable.cs",
+              "RelativeToolTip": "DataStructures\\QuikTable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:58:35.287Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RMHolding.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\RMHolding.cs",
+              "RelativeDocumentMoniker": "DataStructures\\RMHolding.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\RMHolding.cs",
+              "RelativeToolTip": "DataStructures\\RMHolding.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:58:38.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SecurityInfo.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\SecurityInfo.cs",
+              "RelativeDocumentMoniker": "DataStructures\\SecurityInfo.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\SecurityInfo.cs",
+              "RelativeToolTip": "DataStructures\\SecurityInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:58:43.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StopOrder.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\StopOrder.cs",
+              "RelativeDocumentMoniker": "DataStructures\\StopOrder.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\StopOrder.cs",
+              "RelativeToolTip": "DataStructures\\StopOrder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:58:49.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TradesAccounts.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\TradesAccounts.cs",
+              "RelativeDocumentMoniker": "DataStructures\\TradesAccounts.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\TradesAccounts.cs",
+              "RelativeToolTip": "DataStructures\\TradesAccounts.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:58:54.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TransactionEnums.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\TransactionEnums.cs",
+              "RelativeDocumentMoniker": "DataStructures\\TransactionEnums.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\TransactionEnums.cs",
+              "RelativeToolTip": "DataStructures\\TransactionEnums.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:58:57.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccountBalance.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\AccountBalance.cs",
+              "RelativeDocumentMoniker": "DataStructures\\AccountBalance.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\AccountBalance.cs",
+              "RelativeToolTip": "DataStructures\\AccountBalance.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:44:06.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PortfolioInfo.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\PortfolioInfo.cs",
+              "RelativeDocumentMoniker": "DataStructures\\PortfolioInfo.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\PortfolioInfo.cs",
+              "RelativeToolTip": "DataStructures\\PortfolioInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:58:26.946Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ParamTable.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\ParamTable.cs",
+              "RelativeDocumentMoniker": "DataStructures\\ParamTable.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\ParamTable.cs",
+              "RelativeToolTip": "DataStructures\\ParamTable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:17:47.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Param.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Param.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Param.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Param.cs",
+              "RelativeToolTip": "DataStructures\\Param.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T19:10:24.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "OrderBook.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\OrderBook.cs",
+              "RelativeDocumentMoniker": "DataStructures\\OrderBook.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\OrderBook.cs",
+              "RelativeToolTip": "DataStructures\\OrderBook.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAcwAoAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-20T19:34:19.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "OptionBoard.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\OptionBoard.cs",
+              "RelativeDocumentMoniker": "DataStructures\\OptionBoard.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\OptionBoard.cs",
+              "RelativeToolTip": "DataStructures\\OptionBoard.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:57:40.273Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MoneyLimitEx.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\MoneyLimitEx.cs",
+              "RelativeDocumentMoniker": "DataStructures\\MoneyLimitEx.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\MoneyLimitEx.cs",
+              "RelativeToolTip": "DataStructures\\MoneyLimitEx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:41:01.061Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MoneyLimitDelete.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\MoneyLimitDelete.cs",
+              "RelativeDocumentMoniker": "DataStructures\\MoneyLimitDelete.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\MoneyLimitDelete.cs",
+              "RelativeToolTip": "DataStructures\\MoneyLimitDelete.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:41:04.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "MoneyLimit.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\MoneyLimit.cs",
+              "RelativeDocumentMoniker": "DataStructures\\MoneyLimit.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\MoneyLimit.cs",
+              "RelativeToolTip": "DataStructures\\MoneyLimit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:41:09.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Label.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Label.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Label.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Label.cs",
+              "RelativeToolTip": "DataStructures\\Label.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:57:26.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "JsonConverter.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\JsonConverter.cs",
+              "RelativeDocumentMoniker": "DataStructures\\JsonConverter.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\JsonConverter.cs",
+              "RelativeToolTip": "DataStructures\\JsonConverter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T19:35:20.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IWithLuaTimeStamp.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\IWithLuaTimeStamp.cs",
+              "RelativeDocumentMoniker": "DataStructures\\IWithLuaTimeStamp.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\IWithLuaTimeStamp.cs",
+              "RelativeToolTip": "DataStructures\\IWithLuaTimeStamp.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:16:39.21Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "FuturesLimits.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\FuturesLimits.cs",
+              "RelativeDocumentMoniker": "DataStructures\\FuturesLimits.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\FuturesLimits.cs",
+              "RelativeToolTip": "DataStructures\\FuturesLimits.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:57:14.495Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "FuturesLimitDelete.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\FuturesLimitDelete.cs",
+              "RelativeDocumentMoniker": "DataStructures\\FuturesLimitDelete.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\FuturesLimitDelete.cs",
+              "RelativeToolTip": "DataStructures\\FuturesLimitDelete.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:56:10.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "FuturesClientHolding.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\FuturesClientHolding.cs",
+              "RelativeDocumentMoniker": "DataStructures\\FuturesClientHolding.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\FuturesClientHolding.cs",
+              "RelativeToolTip": "DataStructures\\FuturesClientHolding.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:16:17.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "FirmHolding.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\FirmHolding.cs",
+              "RelativeDocumentMoniker": "DataStructures\\FirmHolding.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\FirmHolding.cs",
+              "RelativeToolTip": "DataStructures\\FirmHolding.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:55:57.67Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Firm.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Firm.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Firm.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Firm.cs",
+              "RelativeToolTip": "DataStructures\\Firm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:55:41.598Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "DepoLimitEx.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\DepoLimitEx.cs",
+              "RelativeDocumentMoniker": "DataStructures\\DepoLimitEx.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\DepoLimitEx.cs",
+              "RelativeToolTip": "DataStructures\\DepoLimitEx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:13:56.679Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "DepoLimitDelete.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\DepoLimitDelete.cs",
+              "RelativeDocumentMoniker": "DataStructures\\DepoLimitDelete.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\DepoLimitDelete.cs",
+              "RelativeToolTip": "DataStructures\\DepoLimitDelete.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:43:53.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "DepoLimit.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\DepoLimit.cs",
+              "RelativeDocumentMoniker": "DataStructures\\DepoLimit.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\DepoLimit.cs",
+              "RelativeToolTip": "DataStructures\\DepoLimit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:43:58.493Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ClassInfo.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\ClassInfo.cs",
+              "RelativeDocumentMoniker": "DataStructures\\ClassInfo.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\ClassInfo.cs",
+              "RelativeToolTip": "DataStructures\\ClassInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:47:12.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "CCPHolding.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\CCPHolding.cs",
+              "RelativeDocumentMoniker": "DataStructures\\CCPHolding.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\CCPHolding.cs",
+              "RelativeToolTip": "DataStructures\\CCPHolding.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:44:28.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "CalcBuySellResult.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\CalcBuySellResult.cs",
+              "RelativeDocumentMoniker": "DataStructures\\CalcBuySellResult.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\CalcBuySellResult.cs",
+              "RelativeToolTip": "DataStructures\\CalcBuySellResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:44:18.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "BuySellInfo.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\BuySellInfo.cs",
+              "RelativeDocumentMoniker": "DataStructures\\BuySellInfo.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\BuySellInfo.cs",
+              "RelativeToolTip": "DataStructures\\BuySellInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:44:15.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "AllTrade.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\AllTrade.cs",
+              "RelativeDocumentMoniker": "DataStructures\\AllTrade.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\AllTrade.cs",
+              "RelativeToolTip": "DataStructures\\AllTrade.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:17:04.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "AccountPosition.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\AccountPosition.cs",
+              "RelativeDocumentMoniker": "DataStructures\\AccountPosition.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\AccountPosition.cs",
+              "RelativeToolTip": "DataStructures\\AccountPosition.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:44:09.216Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Candle.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Candle.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Candle.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Candle.cs",
+              "RelativeToolTip": "DataStructures\\Candle.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T19:10:33.861Z",
               "EditorCaption": ""
             },
             {
@@ -150,20 +743,163 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "OrderFunctionsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\OrderFunctionsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\OrderFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\OrderFunctionsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\OrderFunctionsTest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBoAAAAMAAAAAAAAAA==",
+              "DocumentIndex": 34,
+              "Title": "ShmQuikTransport.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
+              "RelativeDocumentMoniker": "Transports\\ShmQuikTransport.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
+              "RelativeToolTip": "Transports\\ShmQuikTransport.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAnwDEAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T19:02:09.974Z",
+              "WhenOpened": "2026-03-14T19:20:36.024Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 36,
+              "Title": "TradingFunctions.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\TradingFunctions\\TradingFunctions.cs",
+              "RelativeDocumentMoniker": "TradingFunctions\\TradingFunctions.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\TradingFunctions\\TradingFunctions.cs",
+              "RelativeToolTip": "TradingFunctions\\TradingFunctions.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAswCkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T18:56:06.17Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "NegDealReport.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\NegDealReport.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Transaction\\NegDealReport.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\NegDealReport.cs",
+              "RelativeToolTip": "DataStructures\\Transaction\\NegDealReport.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:18:03.49Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "TradingFunctionsTest.cs",
+              "DocumentMoniker": "C:\\Programming\\QS.Tests\\TradingFunctionsTest.cs",
+              "RelativeDocumentMoniker": "..\\QS.Tests\\TradingFunctionsTest.cs",
+              "ToolTip": "C:\\Programming\\QS.Tests\\TradingFunctionsTest.cs",
+              "RelativeToolTip": "..\\QS.Tests\\TradingFunctionsTest.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAywDcAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-31T19:07:47.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "NegTrade.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\NegTrade.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Transaction\\NegTrade.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\NegTrade.cs",
+              "RelativeToolTip": "DataStructures\\Transaction\\NegTrade.cs",
+              "ViewState": "AgIAAIcBAAAAAAAAAAAYwIgBAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:18:21.458Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "QuikJson.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\QuikJson.cs",
+              "RelativeDocumentMoniker": "QuikJson.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\QuikJson.cs",
+              "RelativeToolTip": "QuikJson.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-20T19:01:53.041Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Trade.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\Trade.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Transaction\\Trade.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\Trade.cs",
+              "RelativeToolTip": "DataStructures\\Transaction\\Trade.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:18:16.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "NegDeals.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\NegDeals.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Transaction\\NegDeals.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\NegDeals.cs",
+              "RelativeToolTip": "DataStructures\\Transaction\\NegDeals.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAADwvwoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:17:52.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "Order.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\Order.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Transaction\\Order.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\Order.cs",
+              "RelativeToolTip": "DataStructures\\Transaction\\Order.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAuwBMAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:18:07.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "TransactionReply.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\TransactionReply.cs",
+              "RelativeDocumentMoniker": "DataStructures\\Transaction\\TransactionReply.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Transaction\\TransactionReply.cs",
+              "RelativeToolTip": "DataStructures\\Transaction\\TransactionReply.cs",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAwwKIAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:18:52.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "CandleFunctionsTest.cs",
+              "DocumentMoniker": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs",
+              "RelativeDocumentMoniker": "..\\QS.Tests\\CandleFunctionsTest.cs",
+              "ToolTip": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs",
+              "RelativeToolTip": "..\\QS.Tests\\CandleFunctionsTest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAACMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-14T19:30:59.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "Message.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\Message.cs",
+              "RelativeDocumentMoniker": "Message.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\Message.cs",
+              "RelativeToolTip": "Message.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAuwEwAAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-14T19:20:56.094Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
               "Title": "IQuikTransport.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\Transports\\IQuikTransport.cs",
               "RelativeDocumentMoniker": "Transports\\IQuikTransport.cs",
@@ -171,51 +907,62 @@
               "RelativeToolTip": "Transports\\IQuikTransport.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAlwEMAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:15:23.193Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-14T19:15:23.193Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "CandleFunctionsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\CandleFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\CandleFunctionsTest.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAowC8AAAAnAAAAAAAAAA==",
+              "DocumentIndex": 49,
+              "Title": "OrderFunctionsTest.cs",
+              "DocumentMoniker": "C:\\Programming\\QS.Tests\\OrderFunctionsTest.cs",
+              "RelativeDocumentMoniker": "..\\QS.Tests\\OrderFunctionsTest.cs",
+              "ToolTip": "C:\\Programming\\QS.Tests\\OrderFunctionsTest.cs",
+              "RelativeToolTip": "..\\QS.Tests\\OrderFunctionsTest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwB0AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:30:59.232Z",
+              "WhenOpened": "2026-03-15T19:02:09.974Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Message.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\Message.cs",
-              "RelativeDocumentMoniker": "Message.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\Message.cs",
-              "RelativeToolTip": "Message.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAzwEkAAAAxAAAAAAAAAA==",
+              "DocumentIndex": 50,
+              "Title": "ClassFunctions.cs",
+              "DocumentMoniker": "C:\\Programming\\QuikSharp\\ClassFunctions\\ClassFunctions.cs",
+              "RelativeDocumentMoniker": "ClassFunctions\\ClassFunctions.cs",
+              "ToolTip": "C:\\Programming\\QuikSharp\\ClassFunctions\\ClassFunctions.cs",
+              "RelativeToolTip": "ClassFunctions\\ClassFunctions.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAqwEoAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:20:56.094Z",
+              "WhenOpened": "2026-03-31T18:32:07.087Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 47,
+              "Title": "ClassFunctionsTest.cs",
+              "DocumentMoniker": "C:\\Programming\\QS.Tests\\ClassFunctionsTest.cs",
+              "RelativeDocumentMoniker": "..\\QS.Tests\\ClassFunctionsTest.cs",
+              "ToolTip": "C:\\Programming\\QS.Tests\\ClassFunctionsTest.cs",
+              "RelativeToolTip": "..\\QS.Tests\\ClassFunctionsTest.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-14T19:32:31.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
               "Title": "OrderFunctions.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\OrderFunctions.cs",
               "RelativeDocumentMoniker": "OrderFunctions.cs",
               "ToolTip": "C:\\Programming\\QuikSharp\\OrderFunctions.cs",
               "RelativeToolTip": "OrderFunctions.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAUwFUAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAUwEkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T19:03:57.406Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-15T19:03:57.406Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 53,
               "Title": "QuikEventsAdapter.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\QuikEventsAdapter.cs",
               "RelativeDocumentMoniker": "QuikEventsAdapter.cs",
@@ -223,25 +970,11 @@
               "RelativeToolTip": "QuikEventsAdapter.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAA0wBUAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-23T06:57:31.416Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-23T06:57:31.416Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ShmQuikTransport.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
-              "RelativeDocumentMoniker": "Transports\\ShmQuikTransport.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
-              "RelativeToolTip": "Transports\\ShmQuikTransport.cs",
-              "ViewState": "AgIAAAEBAAAAAAAAAAAAwBsBAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:20:36.024Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 52,
               "Title": "OrderBookFunctionsTest.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\OrderBookFunctionsTest.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\OrderBookFunctionsTest.cs",
@@ -249,51 +982,11 @@
               "RelativeToolTip": "..\\QS.Tests\\OrderBookFunctionsTest.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAQwCcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T21:40:27.264Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-15T21:40:27.264Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "OrderBook.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\OrderBook.cs",
-              "RelativeDocumentMoniker": "DataStructures\\OrderBook.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\OrderBook.cs",
-              "RelativeToolTip": "DataStructures\\OrderBook.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAcwD4AAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T19:34:19.564Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Param.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Param.cs",
-              "RelativeDocumentMoniker": "DataStructures\\Param.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Param.cs",
-              "RelativeToolTip": "DataStructures\\Param.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T19:10:24.54Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "TradingFunctions.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\TradingFunctions\\TradingFunctions.cs",
-              "RelativeDocumentMoniker": "TradingFunctions\\TradingFunctions.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\TradingFunctions\\TradingFunctions.cs",
-              "RelativeToolTip": "TradingFunctions\\TradingFunctions.cs",
-              "ViewState": "AgIAACMAAACAZmZmZmYVwEAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T18:56:06.17Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 56,
               "Title": "OrderBookFunctions.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\OrderBookFunctions\\OrderBookFunctions.cs",
               "RelativeDocumentMoniker": "OrderBookFunctions\\OrderBookFunctions.cs",
@@ -301,25 +994,11 @@
               "RelativeToolTip": "OrderBookFunctions\\OrderBookFunctions.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-16T18:39:25.227Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-16T18:39:25.227Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ClassFunctionsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\ClassFunctionsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\ClassFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\ClassFunctionsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\ClassFunctionsTest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:32:31.238Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 57,
               "Title": "Ping.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\Ping.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\Ping.cs",
@@ -327,12 +1006,11 @@
               "RelativeToolTip": "..\\QS.Tests\\Ping.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T21:40:33.075Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-15T21:40:33.075Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 60,
               "Title": "DebugFunctions.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\DebugFunctions.cs",
               "RelativeDocumentMoniker": "DebugFunctions.cs",
@@ -344,19 +1022,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "QuikJson.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\QuikJson.cs",
-              "RelativeDocumentMoniker": "QuikJson.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\QuikJson.cs",
-              "RelativeToolTip": "QuikJson.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-20T19:01:53.041Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 54,
               "Title": "TransactionSpecTest.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\TransactionSpecTest.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\TransactionSpecTest.cs",
@@ -364,38 +1030,11 @@
               "RelativeToolTip": "..\\QS.Tests\\TransactionSpecTest.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAYwBsAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T21:40:34.959Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-15T21:40:34.959Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "JsonConverter.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\JsonConverter.cs",
-              "RelativeDocumentMoniker": "DataStructures\\JsonConverter.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\JsonConverter.cs",
-              "RelativeToolTip": "DataStructures\\JsonConverter.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAABtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T19:35:20.767Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Candle.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\DataStructures\\Candle.cs",
-              "RelativeDocumentMoniker": "DataStructures\\Candle.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\DataStructures\\Candle.cs",
-              "RelativeToolTip": "DataStructures\\Candle.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T19:10:33.861Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 59,
               "Title": "qscallbacks.lua",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\lua\\BKP 18-02\\qscallbacks.lua",
               "RelativeDocumentMoniker": "lua\\BKP 18-02\\qscallbacks.lua",
@@ -407,7 +1046,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 58,
               "Title": "ServiceFuncitonsTest.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\ServiceFuncitonsTest.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\ServiceFuncitonsTest.cs",
@@ -419,7 +1058,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 61,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
@@ -431,7 +1070,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 63,
               "Title": "QuikSharp.AssemblyInfo.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\obj\\Debug\\net10.0-windows10.0.17763.0\\QuikSharp.AssemblyInfo.cs",
               "RelativeDocumentMoniker": "obj\\Debug\\net10.0-windows10.0.17763.0\\QuikSharp.AssemblyInfo.cs",
@@ -443,7 +1082,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 62,
               "Title": ".NETCoreApp,Version=v10.0.AssemblyAttributes.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\obj\\Debug\\net10.0-windows10.0.17763.0\\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs",
               "RelativeDocumentMoniker": "obj\\Debug\\net10.0-windows10.0.17763.0\\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs",

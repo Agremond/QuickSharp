@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -14,85 +14,85 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Код бумаги
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Торговый счет
         /// </summary>
-        [JsonProperty("trdaccid")]
+        [JsonPropertyName("trdaccid")]
         public string TrdAccId { get; set; }
 
         /// <summary>
         /// Счет депо
         /// </summary>
-        [JsonProperty("depaccid")]
+        [JsonPropertyName("depaccid")]
         public string DepAccId { get; set; }
 
         /// <summary>
         /// Входящий остаток
         /// </summary>
-        [JsonProperty("openbal")]
+        [JsonPropertyName("openbal")]
         public double OpenBal { get; set; }
 
         /// <summary>
         /// Текущий остаток
         /// </summary>
-        [JsonProperty("currentpos")]
+        [JsonPropertyName("currentpos")]
         public double CurrentPos { get; set; }
 
         /// <summary>
         /// Плановая продажа
         /// </summary>
-        [JsonProperty("plannedpossell")]
+        [JsonPropertyName("plannedpossell")]
         public double PlannedPosSell { get; set; }
 
         /// <summary>
         /// Плановая покупка
         /// </summary>
-        [JsonProperty("plannedposbuy")]
+        [JsonPropertyName("plannedposbuy")]
         public double PlannedPosBuy { get; set; }
 
         /// <summary>
         /// Контрольный остаток простого клиринга, равен входящему остатку минус плановая позиция на продажу, включенная в простой клиринг
         /// </summary>
-        [JsonProperty("planbal")]
+        [JsonPropertyName("planbal")]
         public double PlanBal { get; set; }
 
         /// <summary>
         /// Куплено
         /// </summary>
-        [JsonProperty("usqtyb")]
+        [JsonPropertyName("usqtyb")]
         public double UsQtyB { get; set; }
 
         /// <summary>
         /// Продано
         /// </summary>
-        [JsonProperty("usqtys")]
+        [JsonPropertyName("usqtys")]
         public double UsQtyS { get; set; }
 
         /// <summary>
         /// Плановый остаток, равен текущему остатку минус плановая позиция на продажу
         /// </summary>
-        [JsonProperty("planned")]
+        [JsonPropertyName("planned")]
         public double Planned { get; set; }
 
         /// <summary>
         /// Плановая позиция после проведения расчетов
         /// </summary>
-        [JsonProperty("settlebal")]
+        [JsonPropertyName("settlebal")]
         public double SettleBal { get; set; }
 
         /// <summary>
         /// Идентификатор расчетного счета/кода в клиринговой организации
         /// </summary>
-        [JsonProperty("bank_acc_id")]
+        [JsonPropertyName("bank_acc_id")]
         public string BankAccId { get; set; }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace QuikSharp.DataStructures
         /// «0» – для обычных счетов,
         /// «1» – для счета обеспечения.
         /// </summary>
-        [JsonProperty("firmuse")]
+        [JsonPropertyName("firmuse")]
         public double FirmUse { get; set; }
 
         // ReSharper restore InconsistentNaming

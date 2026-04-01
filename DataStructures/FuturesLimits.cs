@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -14,13 +14,13 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Торговый счет
         /// </summary>
-        [JsonProperty("trdaccid")]
+        [JsonPropertyName("trdaccid")]
         public string TrdAccId { get; set; }
 
         /// <summary>
@@ -32,92 +32,92 @@ namespace QuikSharp.DataStructures
         /// «4» – «Клиринговые залоговые рубли»,
         /// «5» – «Лимит открытых позиций на спот-рынке»
         /// </summary>
-        [JsonProperty("limit_type")]
+        [JsonPropertyName("limit_type")]
         public int LimitType { get; set; }
 
         /// <summary>
         /// Коэффициент ликвидности
         /// </summary>
-        [JsonProperty("liquidity_coef")]
+        [JsonPropertyName("liquidity_coef")]
         public double LiquidityCoef { get; set; }
 
         /// <summary>
         /// Предыдущий лимит открытых позиций на спот-рынке
         /// </summary>
-        [JsonProperty("cbp_prev_limit")]
+        [JsonPropertyName("cbp_prev_limit")]
         public double CbpPrevLimit { get; set; }
 
         /// <summary>
         /// Лимит открытых позиций
         /// </summary>
-        [JsonProperty("cbplimit")]
+        [JsonPropertyName("cbplimit")]
         public double CbpLimit { get; set; }
 
         /// <summary>
         /// Текущие чистые позиции
         /// </summary>
-        [JsonProperty("cbplused")]
+        [JsonPropertyName("cbplused")]
         public double CbpLUsed { get; set; }
 
         /// <summary>
         /// Плановые чистые позиции
         /// </summary>
-        [JsonProperty("cbplplanned")]
+        [JsonPropertyName("cbplplanned")]
         public double CbpLPlanned { get; set; }
 
         /// <summary>
         /// Вариационная маржа
         /// </summary>
-        [JsonProperty("varmargin")]
+        [JsonPropertyName("varmargin")]
         public double VarMargin { get; set; }
 
         /// <summary>
         /// Накопленный купонный доход
         /// </summary>
-        [JsonProperty("accruedint")]
+        [JsonPropertyName("accruedint")]
         public double AccruedInt { get; set; }
 
         /// <summary>
         /// Текущие чистые позиции (под заявки)
         /// </summary>
-        [JsonProperty("cbplused_for_orders")]
+        [JsonPropertyName("cbplused_for_orders")]
         public double CbpLUsedForOrders { get; set; }
 
         /// <summary>
         /// Текущие чистые позиции (под открытые позиции)
         /// </summary>
-        [JsonProperty("cbplused_for_positions")]
+        [JsonPropertyName("cbplused_for_positions")]
         public double CbpLUsedForPositions { get; set; }
 
         /// <summary>
         /// Премия по опционам
         /// </summary>
-        [JsonProperty("options_premium")]
+        [JsonPropertyName("options_premium")]
         public double OptionsPremium { get; set; }
 
         /// <summary>
         /// Биржевые сборы
         /// </summary>
-        [JsonProperty("ts_comission")]
+        [JsonPropertyName("ts_comission")]
         public double TSComission { get; set; }
 
         /// <summary>
         /// Коэффициент клиентского гарантийного обеспечения
         /// </summary>
-        [JsonProperty("kgo")]
+        [JsonPropertyName("kgo")]
         public double KGO { get; set; }
 
         /// <summary>
         /// Валюта, в которой транслируется ограничение
         /// </summary>
-        [JsonProperty("currcode")]
+        [JsonPropertyName("currcode")]
         public string CurrCode { get; set; }
 
         /// <summary>
         /// Реально начисленная в ходе клиринга вариационная маржа. Отображается с точностью до 2 двух знаков.
         /// При этом, в поле «varmargin» транслируется вариационная маржа, рассчитанная с учетом установленных границ изменения цены
         /// </summary>
-        [JsonProperty("real_varmargin")]
+        [JsonPropertyName("real_varmargin")]
         public double RealVarMargin { get; set; }
 
         /// <summary>
@@ -128,25 +128,25 @@ namespace QuikSharp.DataStructures
         /// «3» – КПУР(клиент с повышенным уровнем риска); 
         /// «4» – КОУР(клиент с особым уровнем риска)
         /// </summary>
-        [JsonProperty("risk_level")]
+        [JsonPropertyName("risk_level")]
         public int RiskLevel { get; set; }
 
         /// <summary>
         /// Гарантийное обеспечение без учета заявок, с учетом текущего реализованного риска (с учетом текущих цен) по риск-параметрам на начало сессии
         /// </summary>
-        [JsonProperty("go_without_orders")]
+        [JsonPropertyName("go_without_orders")]
         public double GOWithoutOrders { get; set; }
 
         /// <summary>
         /// Гарантийное обеспечение без учета заявок с учетом текущих риск-параметров и рыночных данных, в ден. выражении. Отображается с точностью до 2 знаков после разделителя
         /// </summary>
-        [JsonProperty("go_planned")]
+        [JsonPropertyName("go_planned")]
         public double GOPlanned { get; set; }
 
         /// <summary>
         /// Индикативная вариационная маржа с учетом текущего индикативного курса валют, руб. (рассчитывается аналогично текущей индикативной вариационной марже, учитывает в т.ч. вариационную маржу по закрытым позициям). Рассчитывается торговой системой срочного рынка Московской Биржи. Отображается с точностью до 2 знаков после разделителя
         /// </summary>
-        [JsonProperty("indicative_varmargin")]
+        [JsonPropertyName("indicative_varmargin")]
         public double IndicativeVarMargin { get; set; }
 
         // ReSharper restore InconsistentNaming

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -13,37 +13,37 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Минимальная цена сделки
         /// </summary>
-        [JsonProperty("low")]
+        [JsonPropertyName("low")]
         public decimal Low { get; set; }
 
         /// <summary>
         /// Цена закрытия
         /// </summary>
-        [JsonProperty("close")]
+        [JsonPropertyName("close")]
         public decimal Close { get; set; }
 
         /// <summary>
         /// Максимальная цена сделки
         /// </summary>
-        [JsonProperty("high")]
+        [JsonPropertyName("high")]
         public decimal High { get; set; }
 
         /// <summary>
         /// Цена открытия
         /// </summary>
-        [JsonProperty("open")]
+        [JsonPropertyName("open")]
         public decimal Open { get; set; }
 
         /// <summary>
         /// Объем последней сделки
         /// </summary>
-        [JsonProperty("volume")]
+        [JsonPropertyName("volume")]
         public decimal Volume { get; set; }
 
         /// <summary>
         /// Дата и время
         /// </summary>
-        [JsonProperty("datetime")]
+        [JsonPropertyName("datetime")]
         public QuikDateTime Datetime { get; set; }
 
         //todo: not wrapped following:
@@ -56,19 +56,19 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Код инструмента.
         /// </summary>
-        [JsonProperty("sec")]
+        [JsonPropertyName("sec")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Код класса.
         /// </summary>
-        [JsonProperty("class")]
+        [JsonPropertyName("class")]
         public string ClassCode { get; set; }
 
         /// <summary>
         /// Интервал подписки.
         /// </summary>
-        [JsonProperty("interval")]
+        [JsonPropertyName("interval")]
         public CandleInterval Interval { get; set; }
 
         #endregion Candles subscription info

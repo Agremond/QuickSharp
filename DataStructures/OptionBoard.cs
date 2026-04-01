@@ -1,7 +1,7 @@
 // Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures
 {
@@ -13,67 +13,67 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Strike
         /// </summary>
-        [JsonProperty("Strike")]
+        [JsonPropertyName("Strike")]
         public double Strike { get; set; }
 
         /// <summary>
         /// Code
         /// </summary>
-        [JsonProperty("code")]
+        [JsonPropertyName("code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Volatility
         /// </summary>
-        [JsonProperty("Volatility")]
+        [JsonPropertyName("Volatility")]
         public double Volatility { get; set; }
 
         /// <summary>
         /// OptionBase
         /// </summary>
-        [JsonProperty("OPTIONBASE")]
+        [JsonPropertyName("OPTIONBASE")]
         public string OPTIONBASE { get; set; }
 
         /// <summary>
         /// Offer
         /// </summary>
-        [JsonProperty("OFFER")]
+        [JsonPropertyName("OFFER")]
         public double OFFER { get; set; }
 
         /// <summary>
         /// Longname
         /// </summary>
-        [JsonProperty("Longname")]
+        [JsonPropertyName("Longname")]
         public string Longname { get; set; }
 
         /// <summary>
         /// Name
         /// </summary>
-        [JsonProperty("Name")]
+        [JsonPropertyName("Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// OptionType
         /// </summary>
-        [JsonProperty("OPTIONTYPE")]
+        [JsonPropertyName("OPTIONTYPE")]
         public string OPTIONTYPE { get; set; }
 
         /// <summary>
         /// ShortName
         /// </summary>
-        [JsonProperty("shortname")]
+        [JsonPropertyName("shortname")]
         public string Shortname { get; set; }
 
         /// <summary>
         /// Bid
         /// </summary>
-        [JsonProperty("BID")]
+        [JsonPropertyName("BID")]
         public double BID { get; set; }
 
         /// <summary>
         /// DaysToMatDate
         /// </summary>
-        [JsonProperty("DAYS_TO_MAT_DATE")]
+        [JsonPropertyName("DAYS_TO_MAT_DATE")]
         public int DAYSTOMATDATE { get; set; }
     }
 }
