@@ -70,14 +70,5 @@ namespace QuikSharp.DataStructures
         public PriceQuantity[] offer { get; set; }
 
 
-        //[JsonPropertyName("bid")]
-        //[JsonConverter(typeof(EmptyStringToArrayConverter<OrderBook>))]
-        //public OrderBook[]? Bid { get; set; } = Array.Empty<OrderBook>();
-
-        //[JsonPropertyName("offer")]
-        //[JsonConverter(typeof(EmptyStringToArrayConverter<OrderBook>))]
-        //public OrderBook[]? Offer { get; set; } = Array.Empty<OrderBook>();
-
-        // ReSharper restore InconsistentNaming
     }
 }

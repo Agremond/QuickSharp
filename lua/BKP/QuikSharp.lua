@@ -1,15 +1,15 @@
--- QuikSharp.lua
--- Главный скрипт QUIK# с использованием shared memory (ipc.shm + ipc.sem)
--- Адаптировано под qsutils.lua (версия с connect / receiveRequest / sendResponse)
+п»ї-- QuikSharp.lua
+-- Р“Р»Р°РІРЅС‹Р№ СЃРєСЂРёРїС‚ QUIK# СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј shared memory (ipc.shm + ipc.sem)
+-- РђРґР°РїС‚РёСЂРѕРІР°РЅРѕ РїРѕРґ qsutils.lua (РІРµСЂСЃРёСЏ СЃ connect / receiveRequest / sendResponse)
 
 local util = require "qsutils"
-local json = require "dkjson"           -- если нужно вручную
+local json = require "dkjson"           -- РµСЃР»Рё РЅСѓР¶РЅРѕ РІСЂСѓС‡РЅСѓСЋ
 
--- Подключаем колбэки и функции QUIK (если файлы существуют)
-local qf = require "qsfunctions"        -- обработка команд
-local callbacks = require "qscallbacks" -- обработка событий
+-- РџРѕРґРєР»СЋС‡Р°РµРј РєРѕР»Р±СЌРєРё Рё С„СѓРЅРєС†РёРё QUIK (РµСЃР»Рё С„Р°Р№Р»С‹ СЃСѓС‰РµСЃС‚РІСѓСЋС‚)
+local qf = require "qsfunctions"        -- РѕР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґ
+local callbacks = require "qscallbacks" -- РѕР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
 
--- Определяем, запущены ли мы в QUIK
+-- РћРїСЂРµРґРµР»СЏРµРј, Р·Р°РїСѓС‰РµРЅС‹ Р»Рё РјС‹ РІ QUIK
 function is_quik()
     return getScriptPath ~= nil
 end
@@ -51,46 +51,46 @@ end
 
 log("Detected Quik version: " .. (quikVersion or "unknown") .. ", script path: " .. script_path, 0)
 
--- Глобальный флаг работы скрипта
+-- Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ С„Р»Р°Рі СЂР°Р±РѕС‚С‹ СЃРєСЂРёРїС‚Р°
 function IsScriptRunning()
     return getScriptPath() ~= nil
 end
 
---- Главная функция (QUIK вызывает автоматически)
+--- Р“Р»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ (QUIK РІС‹Р·С‹РІР°РµС‚ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё)
 function main()
-    message("QuikSharp: запуск...", 1)
+    message("QuikSharp: Р·Р°РїСѓСЃРє...", 1)
 
     local connected = util.connect()
     if not connected then
-        message("QuikSharp: не удалось инициализировать shared memory", 3)
+        message("QuikSharp: РЅРµ СѓРґР°Р»РѕСЃСЊ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ shared memory", 3)
         return
     end
 
-    message("QuikSharp: IPC (shared memory) успешно инициализирован", 1)
+    message("QuikSharp: IPC (shared memory) СѓСЃРїРµС€РЅРѕ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅ", 1)
 
     while IsScriptRunning() do
-        local cmd, req_id, err = util.receiveRequest(0.050)   -- 50 мс — комфортный баланс
+        local cmd, req_id, err = util.receiveRequest(0.050)   -- 50 РјСЃ вЂ” РєРѕРјС„РѕСЂС‚РЅС‹Р№ Р±Р°Р»Р°РЅСЃ
 
         if cmd then
             -- --------------------------------
-            -- Нормальный запрос с телом
+            -- РќРѕСЂРјР°Р»СЊРЅС‹Р№ Р·Р°РїСЂРѕСЃ СЃ С‚РµР»РѕРј
             -- --------------------------------
-            log("Запрос от C# (req_id="..tostring(req_id).."): " .. to_json(cmd), 0)
+            log("Р—Р°РїСЂРѕСЃ РѕС‚ C# (req_id="..tostring(req_id).."): " .. to_json(cmd), 0)
 
             local result = qf.dispatch_and_process(cmd)
 
             local ok, send_err = util.sendResponse(result)
             if not ok then
-                log("Ошибка отправки ответа: " .. tostring(send_err), 2)
+                log("РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РѕС‚РІРµС‚Р°: " .. tostring(send_err), 2)
             end
 
         elseif err == "timeout" then
-            -- Обычное дело — просто ждём дальше
+            -- РћР±С‹С‡РЅРѕРµ РґРµР»Рѕ вЂ” РїСЂРѕСЃС‚Рѕ Р¶РґС‘Рј РґР°Р»СЊС€Рµ
             sleep(5)
 
         elseif err == "empty body" then
             -- --------------------------------
-            -- Пустое сообщение — можно ответить pong / heartbeat
+            -- РџСѓСЃС‚РѕРµ СЃРѕРѕР±С‰РµРЅРёРµ вЂ” РјРѕР¶РЅРѕ РѕС‚РІРµС‚РёС‚СЊ pong / heartbeat
             -- --------------------------------
             local response = {
                 cmd     = "heartbeat",
@@ -100,35 +100,35 @@ function main()
             }
             local ok, send_err = util.sendResponse(response)
             if not ok then
-                log("Ошибка отправки heartbeat: " .. tostring(send_err), 2)
+                log("РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё heartbeat: " .. tostring(send_err), 2)
             end
 
         else
             -- --------------------------------
-            -- Ошибка чтения / парсинга / магии
+            -- РћС€РёР±РєР° С‡С‚РµРЅРёСЏ / РїР°СЂСЃРёРЅРіР° / РјР°РіРёРё
             -- --------------------------------
             if err then
-                log("Ошибка приёма запроса: " .. tostring(err), 2)
+                log("РћС€РёР±РєР° РїСЂРёС‘РјР° Р·Р°РїСЂРѕСЃР°: " .. tostring(err), 2)
             end
-            sleep(10)   -- небольшая пауза перед следующей попыткой
+            sleep(10)   -- РЅРµР±РѕР»СЊС€Р°СЏ РїР°СѓР·Р° РїРµСЂРµРґ СЃР»РµРґСѓСЋС‰РµР№ РїРѕРїС‹С‚РєРѕР№
         end
     end
 
     util.Close()
-    message("QuikSharp: скрипт остановлен", 1)
+    message("QuikSharp: СЃРєСЂРёРїС‚ РѕСЃС‚Р°РЅРѕРІР»РµРЅ", 1)
 end
 
--- Стандартные QUIK-колбэки
+-- РЎС‚Р°РЅРґР°СЂС‚РЅС‹Рµ QUIK-РєРѕР»Р±СЌРєРё
 function OnInit()
-    -- можно добавить дополнительную инициализацию, если нужно
+    -- РјРѕР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅСѓСЋ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЋ, РµСЃР»Рё РЅСѓР¶РЅРѕ
 end
 
 function OnStop()
     util.Close()
-    message("QuikSharp: OnStop > IPC закрыт", 1)
+    message("QuikSharp: OnStop > IPC Р·Р°РєСЂС‹С‚", 1)
 end
 
--- Примеры колбэков QUIK > C#
+-- РџСЂРёРјРµСЂС‹ РєРѕР»Р±СЌРєРѕРІ QUIK > C#
 function OnOrder(order)
     if callbacks and callbacks.OnOrder then
         local data = callbacks.OnOrder(order)
@@ -143,7 +143,7 @@ function OnTrade(trade)
     end
 end
 
--- Добавь другие события по необходимости:
--- OnParam, OnStopOrder, OnMoneyLimits, OnDepoLimits, OnFuturesClientHolding и т.д.
+-- Р”РѕР±Р°РІСЊ РґСЂСѓРіРёРµ СЃРѕР±С‹С‚РёСЏ РїРѕ РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё:
+-- OnParam, OnStopOrder, OnMoneyLimits, OnDepoLimits, OnFuturesClientHolding Рё С‚.Рґ.
 
-message("QuikSharp загружен и готов к работе (SHM-версия)", 1)
+message("QuikSharp Р·Р°РіСЂСѓР¶РµРЅ Рё РіРѕС‚РѕРІ Рє СЂР°Р±РѕС‚Рµ (SHM-РІРµСЂСЃРёСЏ)", 1)

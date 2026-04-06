@@ -6773,7 +6773,7 @@
         </member>
         <member name="T:QuikSharp.OrderFunctions">
             <summary>
-            Класс для работы с заявками через новый транспорт SHM / IQuikTransport.
+            Класс для работы с заявками через новый транспорт SHM.
             </summary>
         </member>
         <member name="M:QuikSharp.OrderFunctions.CreateOrder(QuikSharp.DataStructures.Transaction.Order,System.Threading.CancellationToken)">
@@ -6788,7 +6788,17 @@
         </member>
         <member name="M:QuikSharp.OrderFunctions.GetOrder(System.String,System.Int64,System.Threading.CancellationToken)">
             <summary>
-            Получение заявки по номеру.
+            Получение заявки по номеру (classCode + orderId). Возвращает null, если заявка не найдена.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.OrderFunctions.GetOrder_by_Number(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Получение заявки по номеру (только orderNum). Возвращает null, если заявка не найдена.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.OrderFunctions.GetOrder_by_transID(System.String,System.String,System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Получение заявки по ID транзакции. Возвращает null, если заявка не найдена.
             </summary>
         </member>
         <member name="M:QuikSharp.OrderFunctions.GetOrders(System.Threading.CancellationToken)">
@@ -6798,17 +6808,7 @@
         </member>
         <member name="M:QuikSharp.OrderFunctions.GetOrders(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
-            Получение заявок для инструмента.
-            </summary>
-        </member>
-        <member name="M:QuikSharp.OrderFunctions.GetOrder_by_transID(System.String,System.String,System.Int64,System.Threading.CancellationToken)">
-            <summary>
-            Получение заявки по ID транзакции.
-            </summary>
-        </member>
-        <member name="M:QuikSharp.OrderFunctions.GetOrder_by_Number(System.Int64,System.Threading.CancellationToken)">
-            <summary>
-            Получение заявки по номеру.
+            Получение заявок по инструменту (classCode + secCode).
             </summary>
         </member>
         <member name="T:QuikSharp.Quik">

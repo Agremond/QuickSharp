@@ -51,7 +51,7 @@ namespace QuikSharp
         [JsonPropertyName("data")]
         public object? Data { get; set; }
 
-        [JsonPropertyName("luaError")]
+        [JsonPropertyName("lua_error")]
         public string? LuaError { get; set; }
 
         /// <summary>

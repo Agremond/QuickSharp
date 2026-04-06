@@ -1,3 +1,6 @@
 2026-04-01 21:20:39.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
 2026-04-01 21:20:39.100 LOG 1: Shared memory IPC (variant 2) initialized
 2026-04-01 21:20:39.150 LOG 1: QUIK# connected via shared memory (variant 2)
+2026-04-02 21:52:04.050 LOG 0: Запрос от C# 1 (req_id=1): {"data":{"data":"TQBR|999999999999","cmd":"get_order_by_number","t":1775155924249},"id":1,"cmd":"get_order_by_number","t":1775155924251}
+2026-04-02 21:52:04.100 LOG 3: get_order_by_number: Р·Р°СЏРІРєР° 999999999999 РЅРµ РЅР°Р№РґРµРЅР°
+2026-04-02 21:52:04.150 LOG 1: После dispatch: cmd=lua_error, data тип=nil

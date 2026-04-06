@@ -1,4 +1,5 @@
-﻿using QuikSharp.DataStructures;
+﻿
+using QuikSharp.DataStructures;
 using QuikSharp.DataStructures.Transaction;
 using System;
 using System.Buffers.Binary;
@@ -95,13 +96,12 @@ namespace QuikSharp.Transports
         {
             _jsonOpts = jsonOpts ?? new JsonSerializerOptions
             {
-                //PropertyNameCaseInsensitive = true,
-                //PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                //DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+                               
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 NumberHandling = JsonNumberHandling.AllowReadingFromString, // помогает частично
+               
             };
         }
 
@@ -198,7 +198,7 @@ namespace QuikSharp.Transports
                 cts.CancelAfter(TimeSpan.FromSeconds(45)); // настраиваемый таймаут
 
                 var winner = await Task.WhenAny(responseTask, Task.Delay(Timeout.Infinite, cts.Token));
-
+                
                 if (winner != responseTask)
                 {
                       _pending.TryRemove(reqId, out _);
@@ -251,7 +251,7 @@ namespace QuikSharp.Transports
                         //var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
 
                         string json = Encoding.UTF8.GetString(buffer).Trim();
-                        //Console.WriteLine($"[{reqId}] RAW RESPONSE (len={len}):");
+                        //Console.WriteLine($"[{reqId}] RAW d RESPONSE (len={len}):");
                         //Console.WriteLine(json);                          // ← самый важный лог!
                         //Console.WriteLine("-----------------------------------");
 
@@ -297,7 +297,7 @@ namespace QuikSharp.Transports
                         }
 
                         if (msg != null)
-                    {
+                        {
                         //Console.WriteLine($"[{msg.Id}] Message recieved (thread {Thread.CurrentThread.ManagedThreadId}). _pendind: {_pending.Count}");
                         if (_pending.TryRemove((long)msg.Id, out var tcs))
                         {
@@ -308,7 +308,7 @@ namespace QuikSharp.Transports
                     }
                     else
                     {
-                        //Console.WriteLine($"[{msg.Id}]  Ответ пришёл, но в _pending уже НЕТ! (thread {Thread.CurrentThread.ManagedThreadId})"); 
+                        Console.WriteLine($"[{msg.Id}]  Ответ пришёл, но в _pending уже НЕТ! (thread {Thread.CurrentThread.ManagedThreadId})"); 
                             
                     }
 
@@ -351,8 +351,10 @@ namespace QuikSharp.Transports
                         
                         
                         string json = Encoding.UTF8.GetString(buffer).Trim();
+                       
+                        //Console.WriteLine(json);                          // ← самый важный лог!
+                        //Console.WriteLine("-----------------------------------");
 
-                        
                         if (string.IsNullOrWhiteSpace(json))
                         {
                             Console.WriteLine($"[ResponseLoop] Получен пустой JSON (len={len})");
@@ -372,9 +374,9 @@ namespace QuikSharp.Transports
                         }
                         catch (JsonException ex)
                         {
-                            Console.WriteLine($"[ResponseLoop] JsonException при десериализации ответа:");
-                            Console.WriteLine($"Raw JSON: {json}");
-                            Console.WriteLine($"Ошибка: {ex.Message}");
+                            //Console.WriteLine($"[ResponseLoop] JsonException при десериализации ответа:");
+                            //Console.WriteLine($"Raw JSON: {json}");
+                            //Console.WriteLine($"Ошибка: {ex.Message}");
                             OnTransportError?.Invoke(ex);
                             continue;
                         }

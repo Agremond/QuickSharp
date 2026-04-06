@@ -44,12 +44,15 @@ function qsfunctions.dispatch_and_process(msg)
         function() return handler(msg) end,
         get_traceback
     )
+    log("result : " .. type(result), 3)
+   
     if status then
         local res = result or msg
 
         if type(res.lua_error) == "string" and res.lua_error ~= "" then
-            res.cmd = "lua_error"           -- ← опционально, если хочешь отдельный cmd
-            res.data = nil
+            res.cmd = "lua_error"
+            --log("lua_error DD : " .. type(result) .. "   " .. res.lua_error, 3)
+            res.data = json.null
         else
             res.cmd = res.cmd or msg.cmd
             res.lua_error = nil
@@ -417,9 +420,9 @@ function qsfunctions.getTradeAccount(msg)
             debug_log("getTradeAccount: index", tostring(i),
                 "class_codes =", tostring(ta.class_codes),
                 "trdaccid =", tostring(ta.trdaccid))
-
             if ta.class_codes and ta.trdaccid then
-                if string.find(ta.class_codes, "|" .. msg.data .. "|", 1, true) then
+                if string.find(ta.class_codes, "|" .. msg.data.data .. "|", 1, true) then
+                    
                     msg.data = ta.trdaccid
                     return msg
                 end
@@ -443,9 +446,11 @@ function qsfunctions.getTradeAccounts(msg)
         if not ok or not ta then
             debug_log("getTradeAccounts: failed at index", tostring(i))
         else
+           
             debug_log("getTradeAccounts: index", tostring(i),
                 "class_codes =", tostring(ta.class_codes))
-
+           
+            debug_log("getTradeAccounts: total valid =", tostring(#accounts))
             if ta.class_codes and ta.class_codes ~= "" then
                 table.insert(accounts, ta)
             end
@@ -721,123 +726,164 @@ end
 -- Заявки (orders)
 --------------------------------------------------------------------------------
 
+-- function qsfunctions.get_orders(msg)
+--     local class_code, sec_code = nil, nil
+
+--     -- Разбор фильтра (class_code|sec_code)
+--     if msg.data and msg.data.data and msg.data.data ~= "" then
+--         local spl = split(msg.data.data, "|")
+--         if #spl >= 1 then class_code = spl[1] end
+--         if #spl >= 2 then sec_code = spl[2] end
+--     end
+
+--     local orders = {}
+--     local count = getNumberOf("orders")
+
+--     for i = 0, count - 1 do
+--         local order = getItem("orders", i)
+--         if order then
+--             -- Фильтрация по инструменту (если указан)
+--             if not class_code or 
+--                (order.class_code == class_code and order.sec_code == sec_code) then
+                
+--                 -- Принудительно делаем числовой индекс (очень важно для сериализации!)
+--                 table.insert(orders, order)
+--             end
+--         end
+--     end
+
+--     msg.data = orders
+
+--     msg.count = #orders
+--     msg.filtered = (class_code ~= nil)
+
+--     return msg
+-- end
+
 function qsfunctions.get_orders(msg)
-    local class_code, sec_code
-    if msg.data.data and msg.data.data ~= "" then
+    local class_code, sec_code = nil, nil
+
+    debug_log("get_orders() вызвана. msg.data.data =", msg.data and msg.data.data or "nil")
+
+    -- Разбор фильтра (class_code|sec_code)
+    if msg.data and msg.data.data and msg.data.data ~= "" then
         local spl = split(msg.data.data, "|")
-        class_code, sec_code = spl[1], spl[2]
+        if #spl >= 1 then 
+            class_code = spl[1] 
+            debug_log("  → class_code =", class_code)
+        end
+        if #spl >= 2 then 
+            sec_code = spl[2] 
+            debug_log("  → sec_code =", sec_code)
+        end
+    else
+        debug_log("  → фильтр не указан (будут возвращены все заявки)")
     end
 
     local orders = {}
-    for i = 0, getNumberOf("orders") - 1 do
+    local count = getNumberOf("orders")
+    
+    debug_log("  → всего заявок в терминале:", count)
+
+    for i = 0, count - 1 do
         local order = getItem("orders", i)
-        if not class_code or (order.class_code == class_code and order.sec_code == sec_code) then
-            table.insert(orders, order)
+        if order then
+            -- Фильтрация по инструменту (если указан)
+            local match = true
+            
+            if class_code then
+                match = (order.class_code == class_code and order.sec_code == sec_code)
+                
+                if not match then
+                    debug_log("  → пропущена заявка #" .. i .. " (не совпадает инструмент):", 
+                              order.class_code, order.sec_code, 
+                              "→ нужен:", class_code, sec_code)
+                end
+            end
+
+            if match then
+                -- Принудительно делаем числовой индекс (очень важно для сериализации!)
+                table.insert(orders, order)
+                debug_log("  → добавлена заявка #" .. i .. " order_num =", order.order_num or "nil", 
+                          "status =", order.flags or "nil")
+            end
+        else
+            debug_log("  → getItem('orders', " .. i .. ") вернул nil!")
         end
     end
+    debug_log("заявки ", tostring(orders))
     msg.data = orders
+    msg.count = #orders
+    msg.filtered = (class_code ~= nil)
+
+    debug_log("get_orders() завершена. Возвращено заявок:", #orders, 
+              "filtered =", tostring(msg.filtered))
+
     return msg
 end
 
 function qsfunctions.getOrder_by_ID(msg)
-    local class_code, sec_code, trans_id
-    if msg.data.data and msg.data.data ~= "" then
+    local class_code, sec_code, trans_id = nil, nil, nil
+
+    -- Разбор фильтра (class_code|sec_code|trans_id)
+    if msg.data and msg.data.data and msg.data.data ~= "" then
         local spl = split(msg.data.data, "|")
-        class_code, sec_code, trans_id = spl[1], spl[2], spl[3]
+        if #spl >= 1 then class_code = spl[1] end
+        if #spl >= 2 then sec_code   = spl[2] end
+        if #spl >= 3 then trans_id   = spl[3] end
     end
 
-    local order_num = 0
-    local res
-    for i = 0, getNumberOf("orders") - 1 do
+    local orders = {} 
+    local count = getNumberOf("orders")
+
+    for i = 0, count - 1 do
         local order = getItem("orders", i)
-        if order.class_code == class_code and order.sec_code == sec_code
-           and order.trans_id == tonumber(trans_id) and order.order_num > order_num then
-            order_num = order.order_num
-            res = order
+        if order then
+            if order.class_code == class_code 
+               and order.sec_code == sec_code 
+               and order.trans_id == tonumber(trans_id) then
+                
+                table.insert(orders, order)
+            end
         end
     end
-    msg.data = res
+
+    -- Гарантируем возврат массива (даже пустого)
+    msg.data = orders
+    msg.count = #orders
+    msg.filtered = true
+
     return msg
 end
 
--- function qsfunctions.getOrder_by_Number(msg)
---     local order_num = tonumber(msg.data.data)
---     for i = 0, getNumberOf("orders") - 1 do
---         local order = getItem("orders", i)
---         if order.order_num == order_num then
---             msg.data = order
---             return msg
---         end
---     end
---     msg.data = nil
---     return msg
--- end
 
--- function qsfunctions.get_order_by_number(msg)
---     -- Поддержка обоих форматов, которые может присылать твой C#
---     local order_str = (type(msg.data) == "table" and (msg.data.data or msg.data)) or msg.data
-
---     if type(order_str) ~= "string" or order_str == "" then
---         --msg.data.cmd       = "lua_error"
---         msg.data = "get_order_by_number: data должно быть строкой CLASS|ORDER_ID"
---         --msg.data      = nil
---         return msg
---     end
-
---     local spl = split(order_str, "|")
---     if #spl < 2 then
---         --msg.data.cmd      = "lua_error"
---         msg.data  = "get_order_by_number: неверный формат (ожидается CLASS|ORDER_ID)"
---         --msg.data.data       = nil
---         return msg
---     end
-
---     local class_code = tostring(spl[1])
---     local order_num  = tonumber(spl[2])
-
---     if not order_num or order_num <= 0 then
---         --msg.data.cmd       = "lua_error"
---         msg.data = "get_order_by_number: ORDER_ID должен быть положительным числом"
---         --msg.data.data       = nil
---         return msg
---     end
-
---     local order = getOrderByNumber(class_code, order_num)
-
---     if type(order) == "table" and order.order_num and order.order_num > 0 then
---         msg.cmd       = "get_order_by_number"
---         msg.data      = order
---         msg.lua_error = nil
---     else
---         log(string.format("get_order_by_number: order %s|%s not found", class_code, order_num), 3)  
---         --msg.data.cmd       = "lua_error"
---         msg.data = "Order not found: " .. class_code .. "|" .. tostring(order_num)
---         --msg.data      = nil
---     end
-
---     return msg
--- end
 
 function qsfunctions.get_order_by_number(msg)
-    
     local spl = split(msg.data.data or "", "|")
     local class_code = tostring(spl[1] or "")
-    local order_id   = math.tointeger(spl[2])
+    local order_id   = math.tointeger(spl[2] or 0)
 
     if not order_id or order_id == 0 or class_code == "" then
         msg.lua_error = "Ошибка парсинга: требуется Class|OrderNum"
-        msg.data = {}
+        msg.data = {}                   
+        msg.count = 0
         return msg
     end
 
     local order = getOrderByNumber(class_code, order_id)
+
+    local result = {}
+
     if order and order.order_num and order.order_num ~= 0 then
         local flags = math.tointeger(order.flags or 0)
         local state = 2
-        if (flags & 0x1) ~= 0 then state = 1
-        elseif (flags & 0x2) ~= 0 then state = 3 end
+        if (flags & 0x1) ~= 0 then 
+            state = 1 
+        elseif (flags & 0x2) ~= 0 then 
+            state = 3 
+        end
 
-        msg.data = {
+        result = {
             order_num  = math.tointeger(order.order_num),
             sec_code   = tostring(order.sec_code),
             class_code = tostring(order.class_code),
@@ -854,14 +900,21 @@ function qsfunctions.get_order_by_number(msg)
                 sec   = math.tointeger(order.datetime.sec)
             }
         }
+
+        msg.count = 1
     else
         log("get_order_by_number: заявка " .. tostring(order_id) .. " не найдена", 3)
-        msg.data = "0"
-        msg.lua_error = "Заявка не найдена"
+        msg.data = {}
+        msg.count = 0
     end
+
+    -- Всегда возвращаем массив (даже если одна заявка или пусто)
+    msg.data = result   -- оборачиваем в массив для единообразия
+    -- Если нужно возвращать просто объект при нахождении одной заявки — можно убрать фигурные скобки,
+    -- но по аналогии с get_orders лучше всегда массив.
+
     return msg
 end
-
 --------------------------------------------------------------------------------
 -- Депозитные лимиты
 --------------------------------------------------------------------------------

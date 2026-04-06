@@ -52,7 +52,7 @@ namespace QuikSharp.DataStructures
         /// Номинал
         /// </summary>
         [JsonPropertyName("face_value")]
-        public string FaceValue { get; set; }
+        public double FaceValue { get; set; }
 
         /// <summary>
         /// Код валюты номинала
@@ -71,7 +71,7 @@ namespace QuikSharp.DataStructures
         /// поэтому здесь сохраняем просто как строку
         /// </summary>
         [JsonPropertyName("mat_date")]
-        public string MatDate { get; set; }
+        public double MatDate { get; set; }
 
         /// <summary>
         /// Размер лота
