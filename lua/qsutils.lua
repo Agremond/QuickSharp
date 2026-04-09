@@ -1,26 +1,26 @@
 -- qsutils.lua
--- Ð£Ñ‚Ð¸Ð»Ð¸Ñ‚Ñ‹ Ð´Ð»Ñ QUIK# (Ð²Ð·Ð°Ð¸Ð¼Ð¾Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Lua â†” C# Ñ‡ÐµÑ€ÐµÐ· Ñ€Ð°Ð·Ð´ÐµÐ»ÑÐµÐ¼ÑƒÑŽ Ð¿Ð°Ð¼ÑÑ‚ÑŒ)
+-- Óòèëèòû äëÿ QUIK# (âçàèìîäåéñòâèå Lua ? C# ÷åðåç ðàçäåëÿåìóþ ïàìÿòü)
 
 local json   = require "dkjson"
-local ipcshm = require "ipc.shm"   -- Ñ€Ð°Ð±Ð¾Ñ‚Ð° Ñ shared memory
-local ipcsem = require "ipc.sem"   -- Ñ€Ð°Ð±Ð¾Ñ‚Ð° Ñ ÑÐµÐ¼Ð°Ñ„Ð¾Ñ€Ð°Ð¼Ð¸
+local ipcshm = require "ipc.shm"   -- ðàáîòà ñ shared memory
+local ipcsem = require "ipc.sem"   -- ðàáîòà ñ ñåìàôîðàìè
 
 local qsutils = {}
 
 --------------------------------------------------------------------------------
--- Ð’ÑÐ¿Ð¾Ð¼Ð¾Ð³Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ Ð¸ Ð·Ð°Ð´ÐµÑ€Ð¶ÐºÐ¸
+-- Âñïîìîãàòåëüíûå ôóíêöèè âðåìåíè è çàäåðæêè
 --------------------------------------------------------------------------------
 
---- ÐšÑ€Ð¾ÑÑÐ¿Ð»Ð°Ñ‚Ñ„Ð¾Ñ€Ð¼ÐµÐ½Ð½Ð°Ñ Ð·Ð°Ð´ÐµÑ€Ð¶ÐºÐ° Ð² Ð¼Ð¸Ð»Ð»Ð¸ÑÐµÐºÑƒÐ½Ð´Ð°Ñ…
+--- Êðîññïëàòôîðìåííàÿ çàäåðæêà â ìèëëèñåêóíäàõ
 function delay(msec)
     if sleep then
         pcall(sleep, msec)
     else
-        -- socket.sleep(msec / 1000)   -- Ð·Ð°ÐºÐ¾Ð¼Ð¼ÐµÐ½Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¾, Ñ‚.Ðº. socket Ð¼Ð¾Ð¶ÐµÑ‚ Ð¾Ñ‚ÑÑƒÑ‚ÑÑ‚Ð²Ð¾Ð²Ð°Ñ‚ÑŒ
+        -- socket.sleep(msec / 1000)   -- çàêîììåíòèðîâàíî, ò.ê. socket ìîæåò îòñóòñòâîâàòü
     end
 end
 
---- ÐœÐ¸Ð»Ð»Ð¸ÑÐµÐºÑƒÐ½Ð´Ð½Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ Ñ Ð¼Ð¾Ð½Ð¾Ñ‚Ð¾Ð½Ð½Ñ‹Ð¼ Ð¿Ñ€Ð¸Ñ€Ð°Ñ‰ÐµÐ½Ð¸ÐµÐ¼ (Ð·Ð°Ñ‰Ð¸Ñ‚Ð° Ð¾Ñ‚ ÑÐºÐ°Ñ‡ÐºÐ¾Ð² os.time)
+--- Ìèëëèñåêóíäíîå âðåìÿ ñ ìîíîòîííûì ïðèðàùåíèåì (çàùèòà îò ñêà÷êîâ os.time)
 local time_offset = 0
 local last_os_time = os.time()
 
@@ -30,17 +30,17 @@ function timemsec()
         time_offset = 0
         last_os_time = now
     end
-    time_offset = time_offset + 50          -- Ð³Ñ€ÑƒÐ±Ð¾Ðµ Ð¿Ñ€Ð¸Ñ€Ð°Ñ‰ÐµÐ½Ð¸Ðµ ~50 Ð¼Ñ
+    time_offset = time_offset + 50          -- ãðóáîå ïðèðàùåíèå ~50 ìñ
     return (now * 1000) + (time_offset % 1000)
 end
 
 --------------------------------------------------------------------------------
--- Ð Ð°Ð±Ð¾Ñ‚Ð° Ñ Ð¿ÑƒÑ‚ÑÐ¼Ð¸ Ð¸ Ð¸Ð¼ÐµÐ½ÐµÐ¼ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð°
+-- Ðàáîòà ñ ïóòÿìè è èìåíåì ñêðèïòà
 --------------------------------------------------------------------------------
 
 local script_path = getScriptPath and getScriptPath() or "."
 
---- Ð˜Ð¼Ñ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð° Ð±ÐµÐ· Ð¿ÑƒÑ‚Ð¸ Ð¸ Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¸Ñ
+--- Èìÿ òåêóùåãî ñêðèïòà áåç ïóòè è ðàñøèðåíèÿ
 function scriptFilename()
     if not debug or not debug.getinfo then
         return nil
@@ -50,25 +50,25 @@ function scriptFilename()
 end
 
 --------------------------------------------------------------------------------
--- Ð›Ð¾Ð³Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ
+-- Ëîãèðîâàíèå
 --------------------------------------------------------------------------------
 
 local logfile
 local is_debug = true
 
---- Ð¡Ð¾Ð·Ð´Ð°Ñ‘Ñ‚ Ð¿Ð°Ð¿ÐºÑƒ logs Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÐµÑ‚ Ð»Ð¾Ð³-Ñ„Ð°Ð¹Ð» Ð½Ð° Ñ‚ÐµÐºÑƒÑ‰Ð¸Ð¹ Ð´ÐµÐ½ÑŒ
+--- Ñîçäà¸ò ïàïêó logs è îòêðûâàåò ëîã-ôàéë íà òåêóùèé äåíü
 local function openLog()
     os.execute('mkdir "' .. script_path .. '\\logs" 2>nul')
     local filename = script_path .. "\\logs\\QUIK#_" .. os.date("%Y%m%d") .. ".log"
     local f = io.open(filename, "a")
     if not f then
-        -- Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð½Ð°Ñ Ð¿Ð¾Ð¿Ñ‹Ñ‚ÐºÐ° (Ð¸Ð½Ð¾Ð³Ð´Ð° Ð¿Ð¾Ð¼Ð¾Ð³Ð°ÐµÑ‚)
+        -- ïîâòîðíàÿ ïîïûòêà (èíîãäà ïîìîãàåò)
         f = io.open(filename, "a")
     end
     return f
 end
 
---- Ð—Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÑ‚ Ð»Ð¾Ð³-Ñ„Ð°Ð¹Ð», ÐµÑÐ»Ð¸ Ð¾Ð½ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚
+--- Çàêðûâàåò ëîã-ôàéë, åñëè îí îòêðûò
 local function closeLog()
     if logfile then
         pcall(logfile.close, logfile)
@@ -76,24 +76,24 @@ local function closeLog()
     end
 end
 
---- ÐžÑÐ½Ð¾Ð²Ð½Ð°Ñ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð»Ð¾Ð³Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ (Ð² Ñ„Ð°Ð¹Ð» + Ð² Ð¾ÐºÐ½Ð¾ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹ QUIK)
+--- Îñíîâíàÿ ôóíêöèÿ ëîãèðîâàíèÿ (â ôàéë + â îêíî ñîîáùåíèé QUIK)
 function log(msg, level)
     msg = msg or ""
     level = level or 0
 
     local logLine = "LOG " .. level .. ": " .. msg
 
-    -- Ð’Ñ‹Ð²Ð¾Ð´ Ð² ÐºÐ¾Ð½ÑÐ¾Ð»ÑŒ
+    -- Âûâîä â êîíñîëü
     print(logLine)
 
-    -- Ð’Ñ‹Ð²Ð¾Ð´ Ð² Ð¾ÐºÐ½Ð¾ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹ QUIK (Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð²Ð°Ð¶Ð½Ñ‹Ðµ ÑƒÑ€Ð¾Ð²Ð½Ð¸ Ð¸Ð»Ð¸ Ð¿Ñ€Ð¸ Ð´ÐµÐ±Ð°Ð³Ðµ)
+    -- Âûâîä â îêíî ñîîáùåíèé QUIK (òîëüêî âàæíûå óðîâíè èëè ïðè äåáàãå)
     if (level >= 1 and level <= 3) or is_debug then
         if message then
             pcall(message, msg, level)
         end
     end
 
-    -- Ð—Ð°Ð¿Ð¸ÑÑŒ Ð² Ñ„Ð°Ð¹Ð»
+    -- Çàïèñü â ôàéë
     if logfile then
         local ms = math.floor(timemsec() % 1000)
         local timestamp = os.date("%Y-%m-%d %H:%M:%S") .. string.format(".%03d", ms)
@@ -105,10 +105,10 @@ end
 logfile = openLog()
 
 --------------------------------------------------------------------------------
--- Ð Ð°Ð±Ð¾Ñ‚Ð° Ñ ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸ÐµÐ¹
+-- Ðàáîòà ñ êîíôèãóðàöèåé
 --------------------------------------------------------------------------------
 
---- Ð§Ð¸Ñ‚Ð°ÐµÑ‚ config.json Ð¸ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñƒ Ð¸Ð»Ð¸ nil
+--- ×èòàåò config.json è âîçâðàùàåò òàáëèöó èëè nil
 local function readConfigAsJson()
     local path = script_path .. "\\config.json"
     local f = io.open(path, "r")
@@ -119,7 +119,7 @@ local function readConfigAsJson()
     return from_json(content)
 end
 
---- Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿Ð¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ñ Ð´Ð»Ñ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ð¾Ð³Ð¾ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð° Ð¸Ð· config.json
+--- Âîçâðàùàåò ïàðàìåòðû ïîäêëþ÷åíèÿ äëÿ óêàçàííîãî ñêðèïòà èç config.json
 function paramsFromConfig(scriptName)
     local defaults = {
         "127.0.0.1",   -- responseHostname
@@ -143,7 +143,7 @@ function paramsFromConfig(scriptName)
         end
     end
 
-    return defaults   -- ÐµÑÐ»Ð¸ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ð½Ð°ÑˆÐ»Ð¸ â€” Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÐ¼ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ
+    return defaults   -- åñëè íè÷åãî íå íàøëè — âîçâðàùàåì çíà÷åíèÿ ïî óìîë÷àíèþ
 end
 
 function split(inputstr, sep)
@@ -173,7 +173,7 @@ end
 
 
 --------------------------------------------------------------------------------
--- JSON ÑƒÑ‚Ð¸Ð»Ð¸Ñ‚Ñ‹
+-- JSON óòèëèòû
 --------------------------------------------------------------------------------
 
 function from_json(str)
@@ -196,10 +196,10 @@ function to_json(tbl)
 end
 
 --------------------------------------------------------------------------------
--- IPC Ñ‡ÐµÑ€ÐµÐ· Ñ€Ð°Ð·Ð´ÐµÐ»ÑÐµÐ¼ÑƒÑŽ Ð¿Ð°Ð¼ÑÑ‚ÑŒ (Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚ 2 â€” Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ð±ÑƒÑ„ÐµÑ€Ñ‹)
+-- IPC ÷åðåç ðàçäåëÿåìóþ ïàìÿòü (âàðèàíò 2 — îòäåëüíûå áóôåðû)
 --------------------------------------------------------------------------------
 
--- Ð˜Ð¼ÐµÐ½Ð° Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² IPC
+-- Èìåíà îáúåêòîâ IPC
 local REQ_SHM_NAME  = "QuikSharp_Request_Shmem"
 local RESP_SHM_NAME = "QuikSharp_Response_Shmem"
 local CB_SHM_NAME   = "QuikSharp_Callback_Shmem"
@@ -212,7 +212,7 @@ local REQ_MTX_NAME  = "QuikSharp_Request_MutexSem"
 local RESP_MTX_NAME = "QuikSharp_Response_MutexSem"
 local CB_MTX_NAME   = "QuikSharp_Callback_MutexSem"
 
--- Ð Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð¿Ð°Ð¼ÑÑ‚Ð¸
+-- Ðàçìåðû ïàìÿòè
 local SHM_SIZE_REQ = 1024 * 1024      -- 1 MB
 local SHM_SIZE_RESP = 1024 * 1024     -- 1 MB
 local SHM_SIZE_CB  = 2 * 1024 * 1024  -- 2 MB
@@ -227,11 +227,11 @@ local req_mtx, resp_mtx, cb_mtx
 
 local is_connected = false
 
---- Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð²ÑÐµÑ… Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ñ€Ð°Ð·Ð´ÐµÐ»ÑÐµÐ¼Ð¾Ð¹ Ð¿Ð°Ð¼ÑÑ‚Ð¸ Ð¸ ÑÐ¸Ð½Ñ…Ñ€Ð¾Ð½Ð¸Ð·Ð°Ñ†Ð¸Ð¸
+--- Èíèöèàëèçàöèÿ âñåõ îáúåêòîâ ðàçäåëÿåìîé ïàìÿòè è ñèíõðîíèçàöèè
 local function init_shm()
     if req_shm then return true end
 
-    -- Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ shared memory
+    -- Ñîçäàíèå shared memory
     local ok, err
 
     ok, err = ipcshm.create(REQ_SHM_NAME, SHM_SIZE_REQ)
@@ -246,17 +246,17 @@ local function init_shm()
     if not ok then log("ipcshm.create CB failed: " .. tostring(err), 3); return false end
     cb_shm = ok
 
-    -- Ð¡ÐµÐ¼Ð°Ñ„Ð¾Ñ€Ñ‹ ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ð¹ (ÑÑ‡Ñ‘Ñ‚Ñ‡Ð¸ÐºÐ¸)
+    -- Ñåìàôîðû ñîáûòèé (ñ÷¸ò÷èêè)
     ok, err = ipcsem.open(REQ_SEM_NAME, 1);  if not ok then return false end; req_sem  = ok; req_sem:dec()
     ok, err = ipcsem.open(RESP_SEM_NAME, 1); if not ok then return false end; resp_sem = ok; resp_sem:dec()
     ok, err = ipcsem.open(CB_SEM_NAME, 1);   if not ok then return false end; cb_sem   = ok; cb_sem:dec()
 
-    -- ÐœÑŒÑŽÑ‚ÐµÐºÑÑ‹ (Ð²Ð·Ð°Ð¸Ð¼Ð½Ð¾Ðµ Ð¸ÑÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ)
+    -- Ìüþòåêñû (âçàèìíîå èñêëþ÷åíèå)
     ok, err = ipcsem.open(REQ_MTX_NAME, 1);  if not ok then return false end; req_mtx  = ok
     ok, err = ipcsem.open(RESP_MTX_NAME, 1); if not ok then return false end; resp_mtx = ok
     ok, err = ipcsem.open(CB_MTX_NAME, 1);   if not ok then return false end; cb_mtx   = ok
 
-    -- Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¾Ð² Ð² Ð¿Ð°Ð¼ÑÑ‚Ð¸
+    -- Èíèöèàëèçàöèÿ çàãîëîâêîâ â ïàìÿòè
     local header = string.pack("<I4I4I4I4I4I4", MAGIC, VERSION, 0, 0, 0, 0)
     req_shm:seek("set");  req_shm:write(header)
     resp_shm:seek("set"); resp_shm:write(header)
@@ -267,7 +267,7 @@ local function init_shm()
 end
 
 --------------------------------------------------------------------------------
--- ÐžÑÐ½Ð¾Ð²Ð½Ñ‹Ðµ Ð¿ÑƒÐ±Ð»Ð¸Ñ‡Ð½Ñ‹Ðµ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸
+-- Îñíîâíûå ïóáëè÷íûå ôóíêöèè
 --------------------------------------------------------------------------------
 
 function qsutils.connect()
@@ -284,7 +284,7 @@ function qsutils.connect()
     return true
 end
 
---- Ð§Ñ‚ÐµÐ½Ð¸Ðµ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° Ð¾Ñ‚ C# (Ð±Ð»Ð¾ÐºÐ¸Ñ€ÑƒÑŽÑ‰ÐµÐµ Ñ Ñ‚Ð°Ð¹Ð¼Ð°ÑƒÑ‚Ð¾Ð¼)
+--- ×òåíèå çàïðîñà îò C# (áëîêèðóþùåå ñ òàéìàóòîì)
 function qsutils.receiveRequest(timeout_sec)
     if not is_connected then return nil, "not connected" end
     timeout_sec = timeout_sec or 5.0
@@ -333,7 +333,7 @@ function qsutils.receiveRequest(timeout_sec)
     return tbl, req_id
 end
 
---- ÐžÑ‚Ð¿Ñ€Ð°Ð²ÐºÐ° Ð¾Ñ‚Ð²ÐµÑ‚Ð° Ð¸Ð»Ð¸ callback'Ð° Ð² C#
+--- Îòïðàâêà îòâåòà èëè callback'à â C#
 local function send_message(msg_table, is_callback)
     if not is_connected then return nil, "not connected" end
 
@@ -396,7 +396,7 @@ end
 
 qsutils.is_connected = function() return is_connected end
 
--- Ð”Ð»Ñ ÑÐ¾Ð²Ð¼ÐµÑÑ‚Ð¸Ð¼Ð¾ÑÑ‚Ð¸ ÑÐ¾ ÑÑ‚Ð°Ñ€Ñ‹Ð¼ ÐºÐ¾Ð´Ð¾Ð¼
+-- Äëÿ ñîâìåñòèìîñòè ñî ñòàðûì êîäîì
 sendResponse = qsutils.sendResponse
 sendCallback = qsutils.sendCallback
 

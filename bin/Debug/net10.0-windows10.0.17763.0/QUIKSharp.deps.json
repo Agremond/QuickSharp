@@ -11,7 +11,6 @@
           "BenchmarkDotNet": "0.15.8",
           "MySqlConnector": "2.5.0",
           "NUnit": "4.4.0",
-          "Newtonsoft.Json": "13.0.4",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.17763.57"
         },
         "runtime": {
@@ -237,14 +236,6 @@
           }
         }
       },
-      "Newtonsoft.Json/13.0.4": {
-        "runtime": {
-          "lib/net6.0/Newtonsoft.Json.dll": {
-            "assemblyVersion": "13.0.0.0",
-            "fileVersion": "13.0.4.30916"
-          }
-        }
-      },
       "NUnit/4.4.0": {
         "runtime": {
           "lib/net8.0/nunit.framework.dll": {
@@ -441,13 +432,6 @@
       "sha512": "sha512-hoAwfHHF8DlRRqwHOhN3u1KLi+XbX/4LPS7Anfa+SYC97vRyIfdEOEEfj1L50q01Ik8aDNvmDrNmu/VPFiAiaQ==",
       "path": "mysqlconnector/2.5.0",
       "hashPath": "mysqlconnector.2.5.0.nupkg.sha512"
-    },
-    "Newtonsoft.Json/13.0.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A==",
-      "path": "newtonsoft.json/13.0.4",
-      "hashPath": "newtonsoft.json.13.0.4.nupkg.sha512"
     },
     "NUnit/4.4.0": {
       "type": "package",

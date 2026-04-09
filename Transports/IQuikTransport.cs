@@ -25,6 +25,12 @@ namespace QuikSharp.Transports
         /// </summary>
         Task ConnectAsync(CancellationToken ct = default);
 
+
+        /// <summary>
+        /// Отправка транзакции
+        /// </summary>
+        Task<long> SendTransaction(Transaction transaction);
+
         /// <summary>
         /// Универсальный метод отправки запроса и получения ответа
         /// </summary>

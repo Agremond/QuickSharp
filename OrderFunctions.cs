@@ -14,16 +14,18 @@ namespace QuikSharp
     /// </summary>
     public class OrderFunctions
     {
-        private readonly IQuikTransport Transport;
+        private readonly IQuikTransport _transport;
 
         public OrderFunctions(IQuikTransport transport)
         {
-            Transport = transport ?? throw new ArgumentNullException(nameof(transport));
+            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
         }
+
 
         /// <summary>
         /// Создание новой заявки.
         /// </summary>
+        /// <param name="order">Инфомация о новой заявки, на основе которой будет сформирована транзакция.</param>
         public async Task<long> CreateOrder(Order order, CancellationToken ct = default)
         {
             var txn = new Transaction
@@ -41,12 +43,9 @@ namespace QuikSharp
                     : ExecutionCondition.PUT_IN_QUEUE
             };
 
-            var message = new Message(txn, "send_transaction");
-            var resp = await Transport.SendAsync<Message, long>(message, "send_transaction", ct)
-                                      .ConfigureAwait(false);
-
-            return resp;
+            return await _transport.SendTransaction(txn).ConfigureAwait(false);
         }
+
 
         /// <summary>
         /// Отмена заявки.
@@ -61,11 +60,7 @@ namespace QuikSharp
                 ORDER_KEY = order.OrderNum.ToString()
             };
 
-            var message = new Message(txn, "send_transaction");
-            var resp = await Transport.SendAsync<Message, long>(message, "send_transaction", ct)
-                                      .ConfigureAwait(false);
-
-            return resp;
+            return await _transport.SendTransaction(txn).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -75,7 +70,7 @@ namespace QuikSharp
         {
             var msg = new Message($"{classCode}|{orderId}", "get_order_by_number");
 
-            var orders = await Transport.SendAsync<Message, Order[]>(msg, "get_order_by_number", ct)
+            var orders = await _transport.SendAsync<Message, Order[]>(msg, "get_order_by_number", ct)
                                         .ConfigureAwait(false);
 
             return orders?.FirstOrDefault();
@@ -88,7 +83,7 @@ namespace QuikSharp
         {
             var msg = new Message(orderNum.ToString(), "get_order_by_number");
 
-            var orders = await Transport.SendAsync<Message, Order[]>(msg, "get_order_by_number", ct)
+            var orders = await _transport.SendAsync<Message, Order[]>(msg, "get_order_by_number", ct)
                                         .ConfigureAwait(false);
 
             return orders?.FirstOrDefault();
@@ -101,7 +96,7 @@ namespace QuikSharp
         {
             var msg = new Message($"{classCode}|{securityCode}|{transId}", "getOrder_by_ID");
 
-            var orders = await Transport.SendAsync<Message, Order[]>(msg, "getOrder_by_ID", ct)
+            var orders = await _transport.SendAsync<Message, Order[]>(msg, "getOrder_by_ID", ct)
                                         .ConfigureAwait(false);
 
             return orders?.FirstOrDefault();
@@ -114,7 +109,7 @@ namespace QuikSharp
         {
             var msg = new Message("", "get_orders");
 
-            var orders = await Transport.SendAsync<Message, List<Order>>(msg, "get_orders", ct)
+            var orders = await _transport.SendAsync<Message, List<Order>>(msg, "get_orders", ct)
                                         .ConfigureAwait(false);
 
             return orders ?? new List<Order>();
@@ -127,7 +122,7 @@ namespace QuikSharp
         {
             var msg = new Message($"{classCode}|{securityCode}", "get_orders");
 
-            var orders = await Transport.SendAsync<Message, List<Order>>(msg, "get_orders", ct)
+            var orders = await _transport.SendAsync<Message, List<Order>>(msg, "get_orders", ct)
                                         .ConfigureAwait(false);
 
             return orders ?? new List<Order>();

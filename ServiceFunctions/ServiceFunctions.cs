@@ -155,7 +155,7 @@ namespace QuikSharp
         //    }
         //    else
         //    {
-        //        throw new NotSupportedException("Transport does not support correlation ID initialization.");
+        //        throw new NotSupportedException("_transport does not support correlation ID initialization.");
         //    }
         //}
     }

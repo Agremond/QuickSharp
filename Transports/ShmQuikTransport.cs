@@ -40,7 +40,7 @@ namespace QuikSharp.Transports
         private const int REQ_SIZE = 1 * 1024 * 1024;
         private const int RESP_SIZE = 1 * 1024 * 1024;
         private const int CB_SIZE = 2 * 1024 * 1024;
-
+        
         private const uint MSG_TYPE_REQUEST = 1;
         private const uint MSG_TYPE_RESPONSE = 2;
         public event Action<TransactionReply>? OnTransReply;
@@ -90,6 +90,11 @@ namespace QuikSharp.Transports
         public event Action<string>? OnUnknownCallback;
         public event Action<Exception>? OnTransportError;
 
+        // Поля для генерации ID 
+        private long _correlationId = 0;                    // для обычных уникальных ID
+        private int _transactionId = 0;                     // для TRANS_ID
+        private readonly object _transIdLock = new object(); // отдельная блокировка для TRANS_ID
+
         public bool IsConnected => _running;
 
         public ShmQuikTransport(JsonSerializerOptions? jsonOpts = null)
@@ -100,9 +105,61 @@ namespace QuikSharp.Transports
                 DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                NumberHandling = JsonNumberHandling.AllowReadingFromString, // помогает частично
-               
+                //NumberHandling = JsonNumberHandling.AllowReadingFromString, // помогает частично
+                NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
+
             };
+        }
+
+        /// <summary>
+        /// Генерирует новый уникальный ID для текущей сессии (быстрый, потокобезопасный)
+        /// Подходит для request Id, message Id и т.д.
+        /// </summary>
+        internal long GetNewUniqueId()
+        {
+            var newId = Interlocked.Increment(ref _correlationId);
+
+            // Защита от переполнения (теоретически)
+            if (newId > 0)
+                return newId;
+
+            // Если вдруг переполнилось (крайне маловероятно)
+            Interlocked.Exchange(ref _correlationId, 1);
+            return 1;
+        }
+
+        /// <summary>
+        /// Генерирует уникальный TRANS_ID для отправки транзакций в QUIK
+        /// Значение от 1 до ~2.29 млрд, как требует QUIK
+        /// Без MMF — простой, надёжный и быстрый вариант
+        /// </summary>
+        internal int GetUniqueTransactionId()
+        {
+            lock (_transIdLock)
+            {
+                if (_transactionId == 0)
+                {
+                    // Первый запуск в этой сессии — инициализируем красивым значением
+                    _transactionId = Convert.ToInt32(DateTime.Now.ToString("ddHHmmss"));
+
+                    // Если получилось 0 или слишком маленькое — корректируем
+                    if (_transactionId < 100)
+                        _transactionId = 100000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond;
+                }
+                else
+                {
+                    _transactionId++;
+
+                    // QUIK имеет ограничение: максимальное значение TRANS_ID ≈ 2 294 967 294
+                    // Поэтому делаем циклический сброс с запасом
+                    if (_transactionId >= 2_147_483_000)   // чуть меньше int.MaxValue с запасом
+                    {
+                        _transactionId = 100;
+                    }
+                }
+
+                return _transactionId;
+            }
         }
 
         public async Task ConnectAsync(CancellationToken ct = default)
@@ -141,13 +198,41 @@ namespace QuikSharp.Transports
 
             await Task.CompletedTask; // для совместимости с async
         }
+        // ------------------------------------------------------------------------
+        // Транзакции
+        // ------------------------------------------------------------------------
+
+        public async Task<long> SendTransaction(Transaction transaction)
+        {
+            if (!transaction.TRANS_ID.HasValue || transaction.TRANS_ID.Value == 0)
+            {
+                transaction.TRANS_ID = GetUniqueTransactionId();  
+            }
+
+            if (string.IsNullOrWhiteSpace(transaction.CLIENT_CODE))
+                transaction.CLIENT_CODE = transaction.TRANS_ID.Value.ToString();
+
+            try
+            {
+                var success = await SendAsync<Message, bool>(
+                    new Message(transaction, "sendTransaction"), "sendTransaction")
+                    .ConfigureAwait(false);
+
+                return success ? transaction.TRANS_ID.Value : -transaction.TRANS_ID.Value;
+            }
+            catch (Exception ex)
+            {
+                transaction.ErrorMessage = ex.Message;
+                return -transaction.TRANS_ID.Value;
+            }
+        }
 
         public async Task<TResponse> SendAsync<TRequest, TResponse>(
             TRequest request,
             string command,
             CancellationToken ct = default)
         {
-            if (!_running) throw new InvalidOperationException("Transport not running");
+            if (!_running) throw new InvalidOperationException("_transport not running");
 
             long reqId = Interlocked.Increment(ref _nextRequestId);
        // Console.WriteLine($"New request id = {reqId} (current pending count: {_pending.Count})");
@@ -251,9 +336,9 @@ namespace QuikSharp.Transports
                         //var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
 
                         string json = Encoding.UTF8.GetString(buffer).Trim();
-                        //Console.WriteLine($"[{reqId}] RAW d RESPONSE (len={len}):");
-                        //Console.WriteLine(json);                          // ← самый важный лог!
-                        //Console.WriteLine("-----------------------------------");
+                        Console.WriteLine($"[{reqId}] RAW d RESPONSE (len={len}):");
+                        Console.WriteLine(json);                     
+                        Console.WriteLine("-----------------------------------");
 
                         if (string.IsNullOrWhiteSpace(json))
                         {

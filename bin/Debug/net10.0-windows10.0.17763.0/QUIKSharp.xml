@@ -3186,68 +3186,28 @@
         </member>
         <member name="T:QuikSharp.DataStructures.QuikDateTime">
             <summary>
-            Формат даты и времени, используемый таблицах.
-            Для корректного отображения даты и времени все параметры должны быть заданы.
+            Формат даты и времени, используемый в таблицах QUIK.
             </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.mcs">
-            <summary>
-            Микросекунды игнорируются в текущей версии.
-            </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.ms">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.sec">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.min">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.hour">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.day">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.week_day">
-            <summary>
-            Monday is 1
-            </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.month">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:QuikSharp.DataStructures.QuikDateTime.year">
-             <summary>
-            
-             </summary>
         </member>
         <member name="M:QuikSharp.DataStructures.QuikDateTime.op_Explicit(QuikSharp.DataStructures.QuikDateTime)~System.DateTime">
-             <summary>
-            
-             </summary>
-             <param name="qdt"></param>
-             <returns></returns>
+            <summary>
+            Явное преобразование QuikDateTime → DateTime (с учётом микросекунд)
+            </summary>
         </member>
         <member name="M:QuikSharp.DataStructures.QuikDateTime.op_Explicit(System.DateTime)~QuikSharp.DataStructures.QuikDateTime">
-             <summary>
-            
-             </summary>
-             <param name="dt"></param>
-             <returns></returns>
+            <summary>
+            Явное преобразование DateTime → QuikDateTime
+            </summary>
+        </member>
+        <member name="T:QuikSharp.DataStructures.QuikDateTimeExtensions">
+            <summary>
+            Методы расширения для QuikDateTime
+            </summary>
+        </member>
+        <member name="M:QuikSharp.DataStructures.QuikDateTimeExtensions.ToDateTime(QuikSharp.DataStructures.QuikDateTime)">
+            <summary>
+            Безопасное преобразование QuikDateTime в DateTime
+            </summary>
         </member>
         <member name="T:QuikSharp.DataStructures.QuikTable">
             <summary>
@@ -6780,6 +6740,7 @@
             <summary>
             Создание новой заявки.
             </summary>
+            <param name="order">Инфомация о новой заявки, на основе которой будет сформирована транзакция.</param>
         </member>
         <member name="M:QuikSharp.OrderFunctions.KillOrder(QuikSharp.DataStructures.Transaction.Order,System.Threading.CancellationToken)">
             <summary>
@@ -7091,27 +7052,41 @@
         </member>
         <member name="T:QuikSharp.JsonExtensions">
             <summary>
-            Lightweight JSON helpers (SHM architecture ready)
+            Lightweight JSON helpers (адаптировано под System.Text.Json + SHM)
             </summary>
+        </member>
+        <member name="M:QuikSharp.JsonExtensions.FromJson``1(System.String)">
+            <summary>Десериализация из строки</summary>
+        </member>
+        <member name="M:QuikSharp.JsonExtensions.FromJson(System.String,System.Type)">
+            <summary>Десериализация из строки в указанный тип</summary>
+        </member>
+        <member name="M:QuikSharp.JsonExtensions.ToJson``1(``0)">
+            <summary>Сериализация в компактный JSON</summary>
+        </member>
+        <member name="M:QuikSharp.JsonExtensions.ToJsonFormatted``1(``0)">
+            <summary>Сериализация с отступами (для отладки)</summary>
         </member>
         <member name="T:QuikSharp.SafeEnumConverter`1">
             <summary>
-            Limits enum serialization only to defined values
+            Безопасный конвертер enum'ов:
+            - При сериализации: если значение не определено в enum → пишет null
+            - При десериализации: неизвестное значение → default(T)
             </summary>
         </member>
         <member name="T:QuikSharp.DecimalG29ToStringConverter">
             <summary>
-            Serialize Decimal to string without trailing zeros
+            Decimal → string без лишних нулей в конце (аналог "G29")
             </summary>
         </member>
         <member name="T:QuikSharp.HHMMSSDateTimeConverter">
             <summary>
-            Convert DateTime to HHmmss
+            DateTime → строка в формате HHmmss и обратно
             </summary>
         </member>
-        <member name="T:QuikSharp.JsonArrayPool">
+        <member name="T:QuikSharp.ZipExtensions">
             <summary>
-            Shared ArrayPool for JSON.NET
+            Вспомогательные методы для GZip (оставлены без изменений)
             </summary>
         </member>
         <member name="T:QuikSharp.InfoParams">
@@ -7335,6 +7310,11 @@
             Асинхронное подключение к QUIK (TCP — сокеты, SHM — память + семафоры)
             </summary>
         </member>
+        <member name="M:QuikSharp.Transports.IQuikTransport.SendTransaction(QuikSharp.DataStructures.Transaction.Transaction)">
+            <summary>
+            Отправка транзакции
+            </summary>
+        </member>
         <member name="M:QuikSharp.Transports.IQuikTransport.SendAsync``2(``0,System.String,System.Threading.CancellationToken)">
             <summary>
             Универсальный метод отправки запроса и получения ответа
@@ -7410,6 +7390,19 @@
             <summary>
             Транспорт на основе Shared Memory + Semaphore + Mutex (вариант с отдельными буферами)
             Совместим с Lua-скриптом QUIK# (отдельные буферы для request/response/callback)
+            </summary>
+        </member>
+        <member name="M:QuikSharp.Transports.ShmQuikTransport.GetNewUniqueId">
+            <summary>
+            Генерирует новый уникальный ID для текущей сессии (быстрый, потокобезопасный)
+            Подходит для request Id, message Id и т.д.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.Transports.ShmQuikTransport.GetUniqueTransactionId">
+            <summary>
+            Генерирует уникальный TRANS_ID для отправки транзакций в QUIK
+            Значение от 1 до ~2.29 млрд, как требует QUIK
+            Без MMF — простой, надёжный и быстрый вариант
             </summary>
         </member>
     </members>

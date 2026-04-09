@@ -8,7 +8,27 @@ using System.Threading.Tasks;
 using QuikSharp.DataStructures;
 using QuikSharp.DataStructures.Transaction;
 using QuikSharp.Transports;
-
+/// Функции взаимодействия скрипта Lua и Рабочего места QUIK
+/// +getDepo - функция для получения информации по бумажным лимитам
+/// +getMoney - функция для получения информации по денежным лимитам
+/// +getMoneyEx - функция для получения информации по денежным лимитам указанного типа
+/// +getFuturesLimit - функция для получения информации по фьючерсным лимитам
+/// +getFuturesHolding - функция для получения информации по фьючерсным позициям
+/// +getFuturesClientHoldings - функция для получения информации по всем фьючерсным позициям
+/// +paramRequest - Функция заказывает получение параметров Таблицы текущих торгов
+/// +cancelParamRequest - Функция отменяет заказ на получение параметров Таблицы текущих торгов
+/// +getParamEx - функция для получения значений Таблицы текущих значений параметров
+/// +getParamEx2 - функция для получения всех значений Таблицы текущих значений параметров
+/// +getTradeDate - функция для получения даты торговой сессии
+/// +sendTransaction - функция для работы с заявками
+/// +CalcBuySell - функция для расчета максимально возможного количества лотов в заявке
+/// +getPortfolioInfo - функция для получения значений параметров таблицы «Клиентский портфель»
+/// +getPortfolioInfoEx - функция для получения значений параметров таблицы «Клиентский портфель» с учетом вида лимита
+/// +getBuySellInfo - функция для получения параметров таблицы «Купить/Продать»
+/// +getBuySellInfoEx - функция для получения параметров (включая вид лимита) таблицы «Купить/Продать»
+/// getTrdAccByClientCode - Функция возвращает торговый счет срочного рынка, соответствующий коду клиента фондового рынка с единой денежной позицией
+/// getClientCodeByTrdAcc - Функция возвращает код клиента фондового рынка с единой денежной позицией, соответствующий торговому счету срочного рынка
+/// isUcpClient - Функция предназначена для получения признака, указывающего имеет ли клиент единую денежную позицию
 namespace QuikSharp
 {
     public class TradingFunctions
@@ -178,47 +198,20 @@ namespace QuikSharp
             return await _transport.SendAsync<Message, List<AllTrade>>(new Message(payload, "get_all_trades"), "get_all_trades").ConfigureAwait(false) ?? new List<AllTrade>();
         }
 
-        // ------------------------------------------------------------------------
-        // Транзакции
-        // ------------------------------------------------------------------------
-
-        public async Task<long> SendTransaction(Transaction transaction)
-        {
-            if (!transaction.TRANS_ID.HasValue || transaction.TRANS_ID.Value == 0)
-                throw new ArgumentException("TRANS_ID должен быть установлен перед отправкой");
-
-            if (string.IsNullOrWhiteSpace(transaction.CLIENT_CODE))
-                transaction.CLIENT_CODE = transaction.TRANS_ID.Value.ToString();
-
-            try
-            {
-                var success = await _transport.SendAsync<Message, bool>(
-                    new Message(transaction, "sendTransaction"), "sendTransaction").ConfigureAwait(false);
-
-                return success ? transaction.TRANS_ID.Value : -transaction.TRANS_ID.Value;
-            }
-            catch (Exception ex)
-            {
-                transaction.ErrorMessage = ex.Message;
-                return -transaction.TRANS_ID.Value;
-            }
-        }
-
+     
         // ------------------------------------------------------------------------
         // Остальные методы
         // ------------------------------------------------------------------------
 
-        //public async Task<DateTime> GetTradeDate()
-        //{
-        //    // отправляем запрос на транспорт
-        //    var result = await _transport.SendAsync<Message, QuikDateTime>(
-        //        new Message("", "getTradeDate"),
-        //        "getTradeDate"
-        //    ).ConfigureAwait(false);
+        public async Task<DateTime> GetTradeDate()
+        {
+            var result = await _transport.SendAsync<Message, QuikDateTime>(
+                new Message("", "getTradeDate"),
+                "getTradeDate"
+            ).ConfigureAwait(false);
 
-        //    // безопасно преобразуем к DateTime через расширение
-        //    return result?.ToDateTime() ?? default;
-        //}
+            return result.ToDateTime();
+        }
 
         public async Task<CalcBuySellResult> CalcBuySell(
             string classCode, string secCode, string clientCode, string trdAccId,

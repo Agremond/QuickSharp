@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2014-2020 QuikSharp Authors https://github.com/finsight/QuikSharp/blob/master/AUTHORS.md. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures.Transaction
 {
@@ -10,13 +10,13 @@ namespace QuikSharp.DataStructures.Transaction
     /// </summary>
     public class TransactionReply : IWithLuaTimeStamp
     {
-        [JsonProperty("lua_timestamp")]
+        [JsonPropertyName("lua_timestamp")]
         public double LuaTimeStamp { get; internal set; }
 
         /// <summary>
         /// Пользовательский идентификатор транзакции
         /// </summary>
-        [JsonProperty("trans_id")]
+        [JsonPropertyName("trans_id")]
         public int TransID { get; set; }
 
         /// <summary>
@@ -33,109 +33,109 @@ namespace QuikSharp.DataStructures.Transaction
         /// «12» - не удалось дождаться ответа на транзакцию, т.к. истек таймаут ожидания. Может возникнуть при подаче транзакций из QPILE.
         /// «13» - транзакция отвергнута, т.к. ее выполнение могло привести к кросс-сделке (т.е. сделке с тем же самым клиентским счетом).
         /// </summary>
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public int Status { get; set; }
 
         /// <summary>
         /// Сообщение
         /// </summary>
-        [JsonProperty("result_msg")]
+        [JsonPropertyName("result_msg")]
         public string ResultMsg { get; set; }
 
         /// <summary>
         /// Время (в QLUA представлено как число)
         /// </summary>
-        [JsonProperty("time")]
+        [JsonPropertyName("time")]
         public string Time { get; set; }
 
         /// <summary>
         /// Идентификатор пользователя у брокера. Для каждого брокера он свой и меняться не должен.
         /// </summary>
-        [JsonProperty("uid")]
+        [JsonPropertyName("uid")]
         public double Uid { get; set; }
 
         /// <summary>
         /// Флаги транзакции (временно не используется)
         /// </summary>
-        [JsonProperty("flags")]
+        [JsonPropertyName("flags")]
         public double Flags { get; set; }
 
         /// <summary>
         /// Идентификатор транзакции на сервере
         /// </summary>
-        [JsonProperty("server_trans_id")]
+        [JsonPropertyName("server_trans_id")]
         public double ServerTransID { get; set; }
 
         /// <summary>
         /// Номер заявки
         /// </summary>
-        [JsonProperty("order_num")]
+        [JsonPropertyName("order_num")]
         public double? OrderNum { get; set; }
 
         /// <summary>
         /// Цена
         /// </summary>
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public double? Price { get; set; }
 
         /// <summary>
         /// Количество
         /// </summary>
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public double? Quantity { get; set; }
 
         /// <summary>
         /// Остаток
         /// </summary>
-        [JsonProperty("balance")]
+        [JsonPropertyName("balance")]
         public double? Balance { get; set; }
 
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firm_id")]
+        [JsonPropertyName("firm_id")]
         public string FirmID { get; set; }
 
         /// <summary>
         /// Торговый счет
         /// </summary>
-        [JsonProperty("account")]
+        [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
         /// Код клиента
         /// </summary>
-        [JsonProperty("client_code")]
+        [JsonPropertyName("client_code")]
         public string ClientCode { get; set; }
 
         /// <summary>
         /// Поручение/комментарий, обычно: код клиента/номер поручения
         /// </summary>
-        [JsonProperty("brokerref")]
+        [JsonPropertyName("brokerref")]
         public string Comment { get; set; }
 
         /// <summary>
         /// Код класса
         /// </summary>
-        [JsonProperty("class_code")]
+        [JsonPropertyName("class_code")]
         public string ClassCode { get; set; }
 
         /// <summary>
         /// Код бумаги
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Биржевой номер заявки
         /// </summary>
-        [JsonProperty("exchange_code")]
+        [JsonPropertyName("exchange_code")]
         public string ExchangeCode { get; set; }
 
         /// <summary>
         /// Числовой код ошибки. Значение равно «0», если транзакция выполнена успешно
         /// </summary>
-        [JsonProperty("error_code")]
+        [JsonPropertyName("error_code")]
         public int ErrorCode { get; set; }
 
         /// <summary>
@@ -145,38 +145,38 @@ namespace QuikSharp.DataStructures.Transaction
         /// «3» – Библиотека расчёта лимитов; 
         /// «4» – Шлюз торговой системы
         /// </summary>
-        [JsonProperty("error_source")]
+        [JsonPropertyName("error_source")]
         public int ErrorSource { get; set; }
 
         /// <summary>
         /// Номер первой заявки, которая выставлялась при автоматической замене кода клиента. Используется, если на сервере QUIK настроена замена кода клиента для кросс-сделки
         /// </summary>
-        [JsonProperty("first_ordernum")]
+        [JsonPropertyName("first_ordernum")]
         public double FirstOrderNum { get; set; }
 
         /// <summary>
         /// Дата и время получения шлюзом ответа на транзакцию
         /// </summary>
-        [JsonProperty("gate_reply_time")]
+        [JsonPropertyName("gate_reply_time")]
         public QuikDateTime GateReplyTime { get; set; }
 
         /// <summary>
         /// Дата и время отправки транзакции, локальное время клиента в UTC
         /// </summary>
-        [JsonProperty("sent_local_time")]
+        [JsonPropertyName("sent_local_time")]
         public QuikDateTime SentLocalTime { get; set; }
 
         /// <summary>
         /// Дата и время получения ответа на транзакцию, локальное время клиента в UTC
         /// </summary>
-        [JsonProperty("got_local_time")]
+        [JsonPropertyName("got_local_time")]
         public QuikDateTime GotLocalTime { get; set; }
 
         ///// <summary>
         ///// Заявки. Параметр добавляется в ответ на транзакцию только при наличии двух и более заявок, связанных с транзакцией
         ///// Пока непонятно как реализовывать
         ///// </summary>
-        //[JsonProperty("orders")]
+        //[JsonPropertyName("orders")]
         //public List<Order> Orders { get; set; }
     }
 }

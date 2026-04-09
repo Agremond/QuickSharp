@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿
+using System.Text.Json.Serialization;
 
 namespace QuikSharp.DataStructures.Transaction
 {
@@ -7,115 +8,115 @@ namespace QuikSharp.DataStructures.Transaction
     /// </summary>
     public class NegDealReport : IWithLuaTimeStamp
     {
-        [JsonProperty("lua_timestamp")]
+        [JsonPropertyName("lua_timestamp")]
         public double LuaTimeStamp { get; internal set; }
 
         /// <summary>
         /// Отчет
         /// </summary>
-        [JsonProperty("report_num")]
+        [JsonPropertyName("report_num")]
         public long ReportNumber { get; set; }
 
         /// <summary>
         /// Дата отчета
         /// </summary>
-        [JsonProperty("report_date")]
+        [JsonPropertyName("report_date")]
         public int ReportDate { get; set; }
 
         /// <summary>
         /// Набор битовых флагов
         /// </summary>
-        [JsonProperty("flags")]
+        [JsonPropertyName("flags")]
         public NegReportFlags Flags { get; set; }
 
         /// <summary>
         /// Идентификатор пользователя
         /// </summary>
-        [JsonProperty("userid")]
+        [JsonPropertyName("userid")]
         public string UserId { get; set; }
 
         /// <summary>
         /// Идентификатор фирмы
         /// </summary>
-        [JsonProperty("firmid")]
+        [JsonPropertyName("firmid")]
         public string FirmId { get; set; }
 
         /// <summary>
         /// Счет депо
         /// </summary>
-        [JsonProperty("account")]
+        [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
         /// Код фирмы партнера
         /// </summary>
-        [JsonProperty("cpfirmid")]
+        [JsonPropertyName("cpfirmid")]
         public string CpFirmId { get; set; }
 
         /// <summary>
         /// Код торгового счета партнера
         /// </summary>
-        [JsonProperty("cpaccount")]
+        [JsonPropertyName("cpaccount")]
         public string CpAccount { get; set; }
 
         /// <summary>
         /// Количество инструментов, в лотах
         /// </summary>
-        [JsonProperty("qty")]
+        [JsonPropertyName("qty")]
         public int Quantity { get; set; }
 
         /// <summary>
         /// Объем сделки, выраженный в рублях
         /// </summary>
-        [JsonProperty("value")]
+        [JsonPropertyName("value")]
         public decimal Value { get; set; }
 
         /// <summary>
         /// Время снятия заявки
         /// </summary>
-        [JsonProperty("withdraw_time")]
+        [JsonPropertyName("withdraw_time")]
         public int WithdrawTime { get; set; }
 
         /// <summary>
         /// Тип отчета
         /// </summary>
-        [JsonProperty("report_type")]
+        [JsonPropertyName("report_type")]
         public int ReportType { get; set; }
 
         /// <summary>
         /// Вид отчета
         /// </summary>
-        [JsonProperty("report_kind")]
+        [JsonPropertyName("report_kind")]
         public int ReportKind { get; set; }
 
         /// <summary>
         /// Объем комиссии по сделке, выраженный в руб
         /// </summary>
-        [JsonProperty("commission")]
+        [JsonPropertyName("commission")]
         public decimal Commission { get; set; }
 
         /// <summary>
         /// Код инструмента
         /// </summary>
-        [JsonProperty("sec_code")]
+        [JsonPropertyName("sec_code")]
         public string SecCode { get; set; }
 
         /// <summary>
         /// Код класса
         /// </summary>
-        [JsonProperty("class_code")]
+        [JsonPropertyName("class_code")]
         public string ClassCode { get; set; }
 
         /// <summary>
         /// Время отчета
         /// </summary>
-        [JsonProperty("report_time")]
+        [JsonPropertyName("report_time")]
         public int ReportTime { get; set; }
 
         /// <summary>
         /// Дата и время отчета
         /// </summary>
-        [JsonProperty("report_date_time")]
+        [JsonPropertyName("report_date_time")]
         public QuikDateTime ReportDateTime { get; set; }
     }
 }

@@ -68,7 +68,7 @@ namespace QuikSharp
 
             // ========== Торговые функции ==========
             Trading = new TradingFunctions(_transport);
-            StopOrders = new StopOrderFunctions(_transport, Trading);
+            StopOrders = new StopOrderFunctions(_transport);
             Orders = new OrderFunctions(_transport);
             Candles = new CandleFunctions(_transport);
         }

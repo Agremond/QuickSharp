@@ -2120,92 +2120,92 @@
             </summary>
             <param name="id">The container Id.</param>
         </member>
-        <member name="T:Newtonsoft.Json.JsonPropertyAttribute">
+        <member name="T:Newtonsoft.Json.JsonPropertyNameAttribute">
             <summary>
             Instructs the <see cref="T:Newtonsoft.Json.JsonSerializer"/> to always serialize the member with the specified name.
             </summary>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.ItemConverterType">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.ItemConverterType">
             <summary>
             Gets or sets the <see cref="T:Newtonsoft.Json.JsonConverter"/> type used when serializing the property's collection items.
             </summary>
             <value>The collection's items <see cref="T:Newtonsoft.Json.JsonConverter"/> type.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.ItemConverterParameters">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.ItemConverterParameters">
             <summary>
-            The parameter list to use when constructing the <see cref="T:Newtonsoft.Json.JsonConverter"/> described by <see cref="P:Newtonsoft.Json.JsonPropertyAttribute.ItemConverterType"/>.
+            The parameter list to use when constructing the <see cref="T:Newtonsoft.Json.JsonConverter"/> described by <see cref="P:Newtonsoft.Json.JsonPropertyNameAttribute.ItemConverterType"/>.
             If <c>null</c>, the default constructor is used.
             When non-<c>null</c>, there must be a constructor defined in the <see cref="T:Newtonsoft.Json.JsonConverter"/> that exactly matches the number,
             order, and type of these parameters.
             </summary>
             <example>
             <code>
-            [JsonProperty(ItemConverterType = typeof(MyContainerConverter), ItemConverterParameters = new object[] { 123, "Four" })]
+            [JsonPropertyName(ItemConverterType = typeof(MyContainerConverter), ItemConverterParameters = new object[] { 123, "Four" })]
             </code>
             </example>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.NamingStrategyType">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.NamingStrategyType">
             <summary>
             Gets or sets the <see cref="T:System.Type"/> of the <see cref="T:Newtonsoft.Json.Serialization.NamingStrategy"/>.
             </summary>
             <value>The <see cref="T:System.Type"/> of the <see cref="T:Newtonsoft.Json.Serialization.NamingStrategy"/>.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.NamingStrategyParameters">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.NamingStrategyParameters">
             <summary>
-            The parameter list to use when constructing the <see cref="T:Newtonsoft.Json.Serialization.NamingStrategy"/> described by <see cref="P:Newtonsoft.Json.JsonPropertyAttribute.NamingStrategyType"/>.
+            The parameter list to use when constructing the <see cref="T:Newtonsoft.Json.Serialization.NamingStrategy"/> described by <see cref="P:Newtonsoft.Json.JsonPropertyNameAttribute.NamingStrategyType"/>.
             If <c>null</c>, the default constructor is used.
             When non-<c>null</c>, there must be a constructor defined in the <see cref="T:Newtonsoft.Json.Serialization.NamingStrategy"/> that exactly matches the number,
             order, and type of these parameters.
             </summary>
             <example>
             <code>
-            [JsonProperty(NamingStrategyType = typeof(MyNamingStrategy), NamingStrategyParameters = new object[] { 123, "Four" })]
+            [JsonPropertyName(NamingStrategyType = typeof(MyNamingStrategy), NamingStrategyParameters = new object[] { 123, "Four" })]
             </code>
             </example>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.NullValueHandling">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.NullValueHandling">
             <summary>
             Gets or sets the null value handling used when serializing this property.
             </summary>
             <value>The null value handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.DefaultValueHandling">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.DefaultValueHandling">
             <summary>
             Gets or sets the default value handling used when serializing this property.
             </summary>
             <value>The default value handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.ReferenceLoopHandling">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.ReferenceLoopHandling">
             <summary>
             Gets or sets the reference loop handling used when serializing this property.
             </summary>
             <value>The reference loop handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.ObjectCreationHandling">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.ObjectCreationHandling">
             <summary>
             Gets or sets the object creation handling used when deserializing this property.
             </summary>
             <value>The object creation handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.TypeNameHandling">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.TypeNameHandling">
             <summary>
             Gets or sets the type name handling used when serializing this property.
             </summary>
             <value>The type name handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.IsReference">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.IsReference">
             <summary>
             Gets or sets whether this property's value is serialized as a reference.
             </summary>
             <value>Whether this property's value is serialized as a reference.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.Order">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.Order">
             <summary>
             Gets or sets the order of serialization of a member.
             </summary>
             <value>The numeric order of serialization.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.Required">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.Required">
             <summary>
             Gets or sets a value indicating whether this property is required.
             </summary>
@@ -2213,38 +2213,38 @@
             	A value indicating whether this property is required.
             </value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.PropertyName">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.PropertyName">
             <summary>
             Gets or sets the name of the property.
             </summary>
             <value>The name of the property.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.ItemReferenceLoopHandling">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.ItemReferenceLoopHandling">
             <summary>
             Gets or sets the reference loop handling used when serializing the property's collection items.
             </summary>
             <value>The collection's items reference loop handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.ItemTypeNameHandling">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.ItemTypeNameHandling">
             <summary>
             Gets or sets the type name handling used when serializing the property's collection items.
             </summary>
             <value>The collection's items type name handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.JsonPropertyAttribute.ItemIsReference">
+        <member name="P:Newtonsoft.Json.JsonPropertyNameAttribute.ItemIsReference">
             <summary>
             Gets or sets whether this property's collection items are serialized as a reference.
             </summary>
             <value>Whether this property's collection items are serialized as a reference.</value>
         </member>
-        <member name="M:Newtonsoft.Json.JsonPropertyAttribute.#ctor">
+        <member name="M:Newtonsoft.Json.JsonPropertyNameAttribute.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/> class.
+            Initializes a new instance of the <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/> class.
             </summary>
         </member>
-        <member name="M:Newtonsoft.Json.JsonPropertyAttribute.#ctor(System.String)">
+        <member name="M:Newtonsoft.Json.JsonPropertyNameAttribute.#ctor(System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/> class with the specified name.
+            Initializes a new instance of the <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/> class with the specified name.
             </summary>
             <param name="propertyName">Name of the property.</param>
         </member>
@@ -8646,7 +8646,7 @@
         </member>
         <member name="F:Newtonsoft.Json.MemberSerialization.OptIn">
             <summary>
-            Only members marked with <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/> or <see cref="T:System.Runtime.Serialization.DataMemberAttribute"/> are serialized.
+            Only members marked with <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/> or <see cref="T:System.Runtime.Serialization.DataMemberAttribute"/> are serialized.
             This member serialization mode can also be set by marking the class with <see cref="T:System.Runtime.Serialization.DataContractAttribute"/>.
             </summary>
         </member>
@@ -9415,7 +9415,7 @@
             </param>
             <param name="overrideSpecifiedNames">
             A flag indicating whether explicitly specified property names should be processed,
-            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/>.
+            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/>.
             </param>
         </member>
         <member name="M:Newtonsoft.Json.Serialization.CamelCaseNamingStrategy.#ctor(System.Boolean,System.Boolean,System.Boolean)">
@@ -9427,7 +9427,7 @@
             </param>
             <param name="overrideSpecifiedNames">
             A flag indicating whether explicitly specified property names should be processed,
-            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/>.
+            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/>.
             </param>
             <param name="processExtensionDataNames">
             A flag indicating whether extension data names should be processed.
@@ -9548,7 +9548,7 @@
             <param name="objectType">Type of the object.</param>
             <returns>A <see cref="T:Newtonsoft.Json.Serialization.JsonObjectContract"/> for the given type.</returns>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.DefaultContractResolver.CreateConstructorParameters(System.Reflection.ConstructorInfo,Newtonsoft.Json.Serialization.JsonPropertyCollection)">
+        <member name="M:Newtonsoft.Json.Serialization.DefaultContractResolver.CreateConstructorParameters(System.Reflection.ConstructorInfo,Newtonsoft.Json.Serialization.JsonPropertyNameCollection)">
             <summary>
             Creates the constructor parameters.
             </summary>
@@ -9556,13 +9556,13 @@
             <param name="memberProperties">The type's member properties.</param>
             <returns>Properties for the given <see cref="T:System.Reflection.ConstructorInfo"/>.</returns>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.DefaultContractResolver.CreatePropertyFromConstructorParameter(Newtonsoft.Json.Serialization.JsonProperty,System.Reflection.ParameterInfo)">
+        <member name="M:Newtonsoft.Json.Serialization.DefaultContractResolver.CreatePropertyFromConstructorParameter(Newtonsoft.Json.Serialization.JsonPropertyName,System.Reflection.ParameterInfo)">
             <summary>
-            Creates a <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> for the given <see cref="T:System.Reflection.ParameterInfo"/>.
+            Creates a <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> for the given <see cref="T:System.Reflection.ParameterInfo"/>.
             </summary>
             <param name="matchingMemberProperty">The matching member property.</param>
             <param name="parameterInfo">The constructor parameter.</param>
-            <returns>A created <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> for the given <see cref="T:System.Reflection.ParameterInfo"/>.</returns>
+            <returns>A created <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> for the given <see cref="T:System.Reflection.ParameterInfo"/>.</returns>
         </member>
         <member name="M:Newtonsoft.Json.Serialization.DefaultContractResolver.ResolveContractConverter(System.Type)">
             <summary>
@@ -9644,11 +9644,11 @@
         </member>
         <member name="M:Newtonsoft.Json.Serialization.DefaultContractResolver.CreateProperty(System.Reflection.MemberInfo,Newtonsoft.Json.MemberSerialization)">
             <summary>
-            Creates a <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> for the given <see cref="T:System.Reflection.MemberInfo"/>.
+            Creates a <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> for the given <see cref="T:System.Reflection.MemberInfo"/>.
             </summary>
             <param name="memberSerialization">The member's parent <see cref="T:Newtonsoft.Json.MemberSerialization"/>.</param>
-            <param name="member">The member to create a <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> for.</param>
-            <returns>A created <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> for the given <see cref="T:System.Reflection.MemberInfo"/>.</returns>
+            <param name="member">The member to create a <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> for.</param>
+            <returns>A created <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> for the given <see cref="T:System.Reflection.MemberInfo"/>.</returns>
         </member>
         <member name="M:Newtonsoft.Json.Serialization.DefaultContractResolver.ResolvePropertyName(System.String)">
             <summary>
@@ -10246,7 +10246,7 @@
         </member>
         <member name="P:Newtonsoft.Json.Serialization.JsonObjectContract.CreatorParameters">
             <summary>
-            Gets a collection of <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> instances that define the parameters used with <see cref="P:Newtonsoft.Json.Serialization.JsonObjectContract.OverrideCreator"/>.
+            Gets a collection of <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> instances that define the parameters used with <see cref="P:Newtonsoft.Json.Serialization.JsonObjectContract.OverrideCreator"/>.
             </summary>
         </member>
         <member name="P:Newtonsoft.Json.Serialization.JsonObjectContract.OverrideCreator">
@@ -10294,108 +10294,108 @@
             </summary>
             <param name="underlyingType">The underlying type for the contract.</param>
         </member>
-        <member name="T:Newtonsoft.Json.Serialization.JsonProperty">
+        <member name="T:Newtonsoft.Json.Serialization.JsonPropertyName">
             <summary>
             Maps a JSON property to a .NET member or constructor parameter.
             </summary>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.PropertyName">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.PropertyName">
             <summary>
             Gets or sets the name of the property.
             </summary>
             <value>The name of the property.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.DeclaringType">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.DeclaringType">
             <summary>
             Gets or sets the type that declared this property.
             </summary>
             <value>The type that declared this property.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.Order">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.Order">
             <summary>
             Gets or sets the order of serialization of a member.
             </summary>
             <value>The numeric order of serialization.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.UnderlyingName">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.UnderlyingName">
             <summary>
             Gets or sets the name of the underlying member or parameter.
             </summary>
             <value>The name of the underlying member or parameter.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ValueProvider">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ValueProvider">
             <summary>
-            Gets the <see cref="T:Newtonsoft.Json.Serialization.IValueProvider"/> that will get and set the <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> during serialization.
+            Gets the <see cref="T:Newtonsoft.Json.Serialization.IValueProvider"/> that will get and set the <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> during serialization.
             </summary>
-            <value>The <see cref="T:Newtonsoft.Json.Serialization.IValueProvider"/> that will get and set the <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> during serialization.</value>
+            <value>The <see cref="T:Newtonsoft.Json.Serialization.IValueProvider"/> that will get and set the <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> during serialization.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.AttributeProvider">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.AttributeProvider">
             <summary>
             Gets or sets the <see cref="T:Newtonsoft.Json.Serialization.IAttributeProvider"/> for this property.
             </summary>
             <value>The <see cref="T:Newtonsoft.Json.Serialization.IAttributeProvider"/> for this property.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.PropertyType">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.PropertyType">
             <summary>
             Gets or sets the type of the property.
             </summary>
             <value>The type of the property.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.Converter">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.Converter">
             <summary>
             Gets or sets the <see cref="T:Newtonsoft.Json.JsonConverter" /> for the property.
             If set this converter takes precedence over the contract converter for the property type.
             </summary>
             <value>The converter.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.MemberConverter">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.MemberConverter">
             <summary>
             Gets or sets the member converter.
             </summary>
             <value>The member converter.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.Ignored">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.Ignored">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> is ignored.
+            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> is ignored.
             </summary>
             <value><c>true</c> if ignored; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.Readable">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.Readable">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> is readable.
+            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> is readable.
             </summary>
             <value><c>true</c> if readable; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.Writable">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.Writable">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> is writable.
+            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> is writable.
             </summary>
             <value><c>true</c> if writable; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.HasMemberAttribute">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.HasMemberAttribute">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> has a member attribute.
+            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> has a member attribute.
             </summary>
             <value><c>true</c> if has a member attribute; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.DefaultValue">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.DefaultValue">
             <summary>
             Gets the default value.
             </summary>
             <value>The default value.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.Required">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.Required">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> is required.
+            Gets or sets a value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> is required.
             </summary>
-            <value>A value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> is required.</value>
+            <value>A value indicating whether this <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> is required.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.IsRequiredSpecified">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.IsRequiredSpecified">
             <summary>
-            Gets a value indicating whether <see cref="P:Newtonsoft.Json.Serialization.JsonProperty.Required"/> has a value specified.
+            Gets a value indicating whether <see cref="P:Newtonsoft.Json.Serialization.JsonPropertyName.Required"/> has a value specified.
             </summary>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.IsReference">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.IsReference">
             <summary>
             Gets or sets a value indicating whether this property preserves object references.
             </summary>
@@ -10403,61 +10403,61 @@
             	<c>true</c> if this instance is reference; otherwise, <c>false</c>.
             </value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.NullValueHandling">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.NullValueHandling">
             <summary>
             Gets or sets the property null value handling.
             </summary>
             <value>The null value handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.DefaultValueHandling">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.DefaultValueHandling">
             <summary>
             Gets or sets the property default value handling.
             </summary>
             <value>The default value handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ReferenceLoopHandling">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ReferenceLoopHandling">
             <summary>
             Gets or sets the property reference loop handling.
             </summary>
             <value>The reference loop handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ObjectCreationHandling">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ObjectCreationHandling">
             <summary>
             Gets or sets the property object creation handling.
             </summary>
             <value>The object creation handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.TypeNameHandling">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.TypeNameHandling">
             <summary>
             Gets or sets or sets the type name handling.
             </summary>
             <value>The type name handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ShouldSerialize">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ShouldSerialize">
             <summary>
             Gets or sets a predicate used to determine whether the property should be serialized.
             </summary>
             <value>A predicate used to determine whether the property should be serialized.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ShouldDeserialize">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ShouldDeserialize">
             <summary>
             Gets or sets a predicate used to determine whether the property should be deserialized.
             </summary>
             <value>A predicate used to determine whether the property should be deserialized.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.GetIsSpecified">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.GetIsSpecified">
             <summary>
             Gets or sets a predicate used to determine whether the property should be serialized.
             </summary>
             <value>A predicate used to determine whether the property should be serialized.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.SetIsSpecified">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.SetIsSpecified">
             <summary>
             Gets or sets an action used to set whether the property has been deserialized.
             </summary>
             <value>An action used to set whether the property has been deserialized.</value>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonProperty.ToString">
+        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyName.ToString">
             <summary>
             Returns a <see cref="T:System.String"/> that represents this instance.
             </summary>
@@ -10465,64 +10465,64 @@
             A <see cref="T:System.String"/> that represents this instance.
             </returns>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ItemConverter">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ItemConverter">
             <summary>
             Gets or sets the converter used when serializing the property's collection items.
             </summary>
             <value>The collection's items converter.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ItemIsReference">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ItemIsReference">
             <summary>
             Gets or sets whether this property's collection items are serialized as a reference.
             </summary>
             <value>Whether this property's collection items are serialized as a reference.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ItemTypeNameHandling">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ItemTypeNameHandling">
             <summary>
             Gets or sets the type name handling used when serializing the property's collection items.
             </summary>
             <value>The collection's items type name handling.</value>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonProperty.ItemReferenceLoopHandling">
+        <member name="P:Newtonsoft.Json.Serialization.JsonPropertyName.ItemReferenceLoopHandling">
             <summary>
             Gets or sets the reference loop handling used when serializing the property's collection items.
             </summary>
             <value>The collection's items reference loop handling.</value>
         </member>
-        <member name="T:Newtonsoft.Json.Serialization.JsonPropertyCollection">
+        <member name="T:Newtonsoft.Json.Serialization.JsonPropertyNameCollection">
             <summary>
-            A collection of <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> objects.
+            A collection of <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> objects.
             </summary>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyCollection.#ctor(System.Type)">
+        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyNameCollection.#ctor(System.Type)">
             <summary>
-            Initializes a new instance of the <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyCollection"/> class.
+            Initializes a new instance of the <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyNameCollection"/> class.
             </summary>
             <param name="type">The type.</param>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyCollection.GetKeyForItem(Newtonsoft.Json.Serialization.JsonProperty)">
+        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyNameCollection.GetKeyForItem(Newtonsoft.Json.Serialization.JsonPropertyName)">
             <summary>
             When implemented in a derived class, extracts the key from the specified element.
             </summary>
             <param name="item">The element from which to extract the key.</param>
             <returns>The key for the specified element.</returns>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyCollection.AddProperty(Newtonsoft.Json.Serialization.JsonProperty)">
+        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyNameCollection.AddProperty(Newtonsoft.Json.Serialization.JsonPropertyName)">
             <summary>
-            Adds a <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> object.
+            Adds a <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> object.
             </summary>
             <param name="property">The property to add to the collection.</param>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyCollection.GetClosestMatchProperty(System.String)">
+        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyNameCollection.GetClosestMatchProperty(System.String)">
             <summary>
-            Gets the closest matching <see cref="T:Newtonsoft.Json.Serialization.JsonProperty"/> object.
+            Gets the closest matching <see cref="T:Newtonsoft.Json.Serialization.JsonPropertyName"/> object.
             First attempts to get an exact case match of <paramref name="propertyName"/> and then
             a case insensitive match.
             </summary>
             <param name="propertyName">Name of the property.</param>
             <returns>A matching property if found.</returns>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyCollection.GetProperty(System.String,System.StringComparison)">
+        <member name="M:Newtonsoft.Json.Serialization.JsonPropertyNameCollection.GetProperty(System.String,System.StringComparison)">
             <summary>
             Gets a property by property name.
             </summary>
@@ -10563,7 +10563,7 @@
             </param>
             <param name="overrideSpecifiedNames">
             A flag indicating whether explicitly specified property names should be processed,
-            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/>.
+            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/>.
             </param>
         </member>
         <member name="M:Newtonsoft.Json.Serialization.KebabCaseNamingStrategy.#ctor(System.Boolean,System.Boolean,System.Boolean)">
@@ -10575,7 +10575,7 @@
             </param>
             <param name="overrideSpecifiedNames">
             A flag indicating whether explicitly specified property names should be processed,
-            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/>.
+            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/>.
             </param>
             <param name="processExtensionDataNames">
             A flag indicating whether extension data names should be processed.
@@ -10656,7 +10656,7 @@
         <member name="P:Newtonsoft.Json.Serialization.NamingStrategy.OverrideSpecifiedNames">
             <summary>
             A flag indicating whether explicitly specified property names,
-            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/>, should be processed.
+            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/>, should be processed.
             Defaults to <c>false</c>.
             </summary>
         </member>
@@ -10785,7 +10785,7 @@
             </param>
             <param name="overrideSpecifiedNames">
             A flag indicating whether explicitly specified property names should be processed,
-            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/>.
+            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/>.
             </param>
         </member>
         <member name="M:Newtonsoft.Json.Serialization.SnakeCaseNamingStrategy.#ctor(System.Boolean,System.Boolean,System.Boolean)">
@@ -10797,7 +10797,7 @@
             </param>
             <param name="overrideSpecifiedNames">
             A flag indicating whether explicitly specified property names should be processed,
-            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyAttribute"/>.
+            e.g. a property name customized with a <see cref="T:Newtonsoft.Json.JsonPropertyNameAttribute"/>.
             </param>
             <param name="processExtensionDataNames">
             A flag indicating whether extension data names should be processed.

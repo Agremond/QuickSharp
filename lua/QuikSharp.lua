@@ -76,7 +76,7 @@ function main()
             -- --------------------------------
             -- Обработка команд от C#
             -- --------------------------------
-            log("Запрос от C# 1 (req_id=" .. tostring(req_id).."): " .. to_json(cmd), 0)
+            --log("Запрос от C# 1 (req_id=" .. tostring(req_id).."): " .. to_json(cmd), 0)
 	    if cmd.cmd == "ping" then
             -- Специальная обработка ping с ответом как-нибудь
             response = {
@@ -92,7 +92,7 @@ function main()
 		    result.nonce = cmd.nonce   -- Добавляем обратно в ответ
         end
 		result.req_id = req_id
-		log("После dispatch: cmd=" .. tostring(result.cmd) .. ", data тип=" .. type(result.data), 1)
+		--log("После dispatch: cmd=" .. tostring(result.cmd) .. ", data тип=" .. type(result.data), 1)
 	        local ok, send_err = util.sendResponse(result)
 	        if not ok then
 	            log("Ошибка отправки ответа: " .. tostring(send_err), 2)

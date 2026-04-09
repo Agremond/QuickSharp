@@ -70,8 +70,8 @@ namespace QuikSharp.DataStructures.Transaction
         public string ACCOUNT { get; set; }
         public string CLIENT_CODE { get; set; }
 
-        [JsonConverter(typeof(ToStringNumberConverter<int>))]
-        public int QUANTITY { get; set; }
+       // [JsonConverter(typeof(ToStringNumberConverter<int>))]
+        public decimal QUANTITY { get; set; }
 
         [JsonConverter(typeof(ToStringNumberConverter<decimal>))]
         public decimal PRICE { get; set; }

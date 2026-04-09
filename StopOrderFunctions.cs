@@ -13,8 +13,7 @@ namespace QuikSharp
     public class StopOrderFunctions
     {
         private readonly IQuikTransport _transport;
-        private readonly TradingFunctions _trading;  // для отправки транзакций
-
+        
         public delegate void StopOrderHandler(StopOrder stopOrder);
         public event StopOrderHandler? NewStopOrder;
 
@@ -23,10 +22,9 @@ namespace QuikSharp
             NewStopOrder?.Invoke(stopOrder);
         }
 
-        public StopOrderFunctions(IQuikTransport transport, TradingFunctions trading)
+        public StopOrderFunctions(IQuikTransport transport)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
-            _trading = trading ?? throw new ArgumentNullException(nameof(trading));
         }
 
         /// <summary>
@@ -87,7 +85,7 @@ namespace QuikSharp
             if (stopOrder.StopOrderType == StopOrderType.TakeProfitStopLimit)
                 trans.STOPPRICE2 = stopOrder.ConditionPrice2;
 
-            return await _trading.SendTransaction(trans).ConfigureAwait(false);
+            return await _transport.SendTransaction(trans).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +105,7 @@ namespace QuikSharp
                 STOP_ORDER_KEY = stopOrder.OrderNum.ToString()
             };
 
-            return await _trading.SendTransaction(trans).ConfigureAwait(false);
+            return await _transport.SendTransaction(trans).ConfigureAwait(false);
         }
 
         private static StopOrderKind ConvertStopOrderType(StopOrderType stopOrderType)

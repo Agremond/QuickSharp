@@ -1,11 +1,11 @@
-п»ї-- qsfunctions.lua
--- РћР±СЂР°Р±РѕС‚С‡РёРєРё РєРѕРјР°РЅРґ QUIK# (Lua в†’ C# / РІРЅРµС€РЅРёР№ РїСЂРѕС†РµСЃСЃ)
--- Р’С‹Р·С‹РІР°СЋС‚СЃСЏ С‡РµСЂРµР· dispatch_and_process РїСЂРё РїРѕР»СѓС‡РµРЅРёРё JSON-СЃРѕРѕР±С‰РµРЅРёСЏ СЃ РїРѕР»РµРј "cmd"
+-- qsfunctions.lua
+-- Обработчики команд QUIK# (Lua ? C# / внешний процесс)
+-- Вызываются через dispatch_and_process при получении JSON-сообщения с полем "cmd"
 
 local json = require "dkjson"
 
 local qsfunctions = {}
-local is_debug = true
+local is_debug = false
 
 local function send_error(msg, error_text)
     msg.cmd       = "lua_error"
@@ -14,37 +14,37 @@ local function send_error(msg, error_text)
     return msg
 end
 --------------------------------------------------------------------------------
--- РћСЃРЅРѕРІРЅРѕР№ РґРёСЃРїРµС‚С‡РµСЂ РєРѕРјР°РЅРґ
+-- Основной диспетчер команд
 --------------------------------------------------------------------------------
 
---- Р’С‹РїРѕР»РЅСЏРµС‚ РєРѕРјР°РЅРґСѓ РїРѕ msg.cmd РёР»Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РѕС€РёР±РєСѓ
--- Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ traceback
+--- Выполняет команду по msg.cmd или возвращает ошибку
+-- Вспомогательная функция для получения traceback
 local function get_traceback(err)
-    return debug.traceback("Lua error: " .. tostring(err), 2)  -- СѓСЂРѕРІРµРЅСЊ 2, С‡С‚РѕР±С‹ РїСЂРѕРїСѓСЃС‚РёС‚СЊ СЃР°Рј xpcall
+    return debug.traceback("Lua error: " .. tostring(err), 2)  -- уровень 2, чтобы пропустить сам xpcall
 end
 function qsfunctions.dispatch_and_process(msg)
     if type(msg) ~= "table" then
         log("dispatch_and_process: msg is not a table", 1)
-        return { cmd = "lua_error", lua_error = "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ СЃРѕРѕР±С‰РµРЅРёСЏ (РЅРµ С‚Р°Р±Р»РёС†Р°)" }
+        return { cmd = "lua_error", lua_error = "Некорректный формат сообщения (не таблица)" }
     end
 
     if not msg.cmd or type(msg.cmd) ~= "string" then
         log("dispatch_and_process: msg.cmd missing or not string", 1)
-        return { cmd = "lua_error", lua_error = "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ СЃРѕРѕР±С‰РµРЅРёСЏ (РЅРµС‚ cmd)" }
+        return { cmd = "lua_error", lua_error = "Некорректный формат сообщения (нет cmd)" }
     end
 
     local handler = qsfunctions[msg.cmd]
     if not handler then
-        log("РќРµРёР·РІРµСЃС‚РЅР°СЏ РєРѕРјР°РЅРґР°: " .. tostring(msg.cmd), 3)
+        log("Неизвестная команда: " .. tostring(msg.cmd), 3)
         return send_error(msg, "Command not implemented: " .. tostring(msg.cmd))
     end
 
-    -- Р’С‹РїРѕР»РЅСЏРµРј РѕР±СЂР°Р±РѕС‚С‡РёРє СЃ РїРѕР»РЅС‹Рј traceback
+    -- Выполняем обработчик с полным traceback
     local status, result = xpcall(
         function() return handler(msg) end,
         get_traceback
     )
-    log("result : " .. type(result), 3)
+    
    
     if status then
         local res = result or msg
@@ -57,17 +57,17 @@ function qsfunctions.dispatch_and_process(msg)
             res.cmd = res.cmd or msg.cmd
             res.lua_error = nil
             if res.data == nil then
-                res.data = json.null        -- РёР»Рё {} вЂ” РЅРѕ null Р»СѓС‡С€Рµ РґР»СЏ СЂР°Р·Р»РёС‡РёСЏ "РЅРµС‚ РґР°РЅРЅС‹С…" Рё "РѕС€РёР±РєР°"
+                res.data = json.null        -- или {} — но null лучше для различия "нет данных" и "ошибка"
             end
         end
 
-        res.req_id = msg.req_id             -- РЅР° РІСЃСЏРєРёР№ СЃР»СѓС‡Р°Р№
+        res.req_id = msg.req_id             -- на всякий случай
         return res
     end
 end
 
 --------------------------------------------------------------------------------
--- РћС‚Р»Р°РґРѕС‡РЅС‹Рµ Рё С‚РµСЃС‚РѕРІС‹Рµ РєРѕРјР°РЅРґС‹
+-- Отладочные и тестовые команды
 --------------------------------------------------------------------------------
 
 function qsfunctions.ping(msg)
@@ -78,7 +78,7 @@ function qsfunctions.ping(msg)
     elseif inner == "Ping" then
         msg.data = "Pong"
     else
-        msg.data = tostring(inner) .. " в‰  Ping"
+        msg.data = tostring(inner) .. " ? Ping"
     end
     return msg
 end
@@ -95,12 +95,12 @@ function qsfunctions.is_quik(msg)
 end
 
 function qsfunctions.divide_string_by_zero(msg)
-    msg.data = "asd" / 0     -- РґР»СЏ С‚РµСЃС‚Р° РѕР±СЂР°Р±РѕС‚РєРё РѕС€РёР±РѕРє
+    msg.data = "asd" / 0     -- для теста обработки ошибок
     return msg
 end
 
 --------------------------------------------------------------------------------
--- РЎРµСЂРІРёСЃРЅС‹Рµ С„СѓРЅРєС†РёРё QUIK
+-- Сервисные функции QUIK
 --------------------------------------------------------------------------------
 
 function qsfunctions.isConnected(msg)
@@ -158,7 +158,7 @@ function qsfunctions.PrintDbgStr(msg)
 end
 
 --------------------------------------------------------------------------------
--- РњРµС‚РєРё (Labels) РЅР° РіСЂР°С„РёРєРµ
+-- Метки (Labels) на графике
 --------------------------------------------------------------------------------
 
 function qsfunctions.addLabel(msg)
@@ -284,15 +284,15 @@ function qsfunctions.delAllLabels(msg)
 end
 
 --------------------------------------------------------------------------------
--- РљР»Р°СЃСЃС‹ Рё РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹
+-- Классы и инструменты
 --------------------------------------------------------------------------------
 
 function qsfunctions.getClassesList(msg)
-    log("Р’С‹Р·РѕРІ " .. msg.cmd .. ", req_id=" .. tostring(msg.req_id or "?"), 0)
+    log("Вызов " .. msg.cmd .. ", req_id=" .. tostring(msg.req_id or "?"), 0)
     local classes = getClassesList()
     if not classes or classes == "" then
         msg.data = ""
-        msg.warning = "РЎРїРёСЃРѕРє РєР»Р°СЃСЃРѕРІ РїСѓСЃС‚ РёР»Рё РЅРµ РїРѕР»СѓС‡РµРЅ"
+        msg.warning = "Список классов пуст или не получен"
     else
         msg.data = classes
     end
@@ -340,7 +340,7 @@ function qsfunctions.getSecurityClass(msg)
 end
 
 --------------------------------------------------------------------------------
--- РљР»РёРµРЅС‚СЃРєРёРµ РєРѕРґС‹ Рё С‚РѕСЂРіРѕРІС‹Рµ СЃС‡РµС‚Р°
+-- Клиентские коды и торговые счета
 --------------------------------------------------------------------------------
 
 
@@ -462,26 +462,26 @@ function qsfunctions.getTradeAccounts(msg)
     return msg
 end
 --------------------------------------------------------------------------------
--- Level II РєРѕС‚РёСЂРѕРІРєРё (СЃС‚Р°РєР°РЅ)
+-- Level II котировки (стакан)
 --------------------------------------------------------------------------------
 
 function qsfunctions.Subscribe_Level_II_Quotes(msg)
     local data_str = msg.data and msg.data.data or "<nil>"
 
-    log("Subscribe_Level_II_Quotes called | raw data: " .. tostring(data_str), 1)
+    --log("Subscribe_Level_II_Quotes called | raw data: " .. tostring(data_str), 1)
 
     if not msg.data or not msg.data.data or msg.data.data == "" then
-        log("Subscribe_Level_II_Quotes в†’ РїСѓСЃС‚РѕР№ РёР»Рё РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ msg.data.data", 3)
-        msg.lua_error = "РџСѓСЃС‚РѕР№ РїР°СЂР°РјРµС‚СЂ РґР»СЏ РїРѕРґРїРёСЃРєРё"
+        log("Subscribe_Level_II_Quotes ? пустой или некорректный msg.data.data", 3)
+        msg.lua_error = "Пустой параметр для подписки"
         msg.data = false
         return msg
     end
 
     local spl = split(msg.data.data, "|")
     if #spl < 2 then
-        log("Subscribe_Level_II_Quotes в†’ РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїР°СЂР°РјРµС‚СЂРѕРІ, РїРѕР»СѓС‡РµРЅРѕ: " .. #spl .. " С‡Р°СЃС‚РµР№", 3)
-        log("РСЃС…РѕРґРЅР°СЏ СЃС‚СЂРѕРєР°: " .. msg.data.data, 3)
-        msg.lua_error = "РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚: РѕР¶РёРґР°РµС‚СЃСЏ class_code|sec_code"
+        log("Subscribe_Level_II_Quotes ? недостаточно параметров, получено: " .. #spl .. " частей", 3)
+        log("Исходная строка: " .. msg.data.data, 3)
+        msg.lua_error = "Неверный формат: ожидается class_code|sec_code"
         msg.data = false
         return msg
     end
@@ -489,13 +489,13 @@ function qsfunctions.Subscribe_Level_II_Quotes(msg)
     local class_code = spl[1]
     local sec_code   = spl[2]
 
-    log(string.format("Subscribe Level II: class=%s, sec=%s", class_code, sec_code), 1)
+    --log(string.format("Subscribe Level II: class=%s, sec=%s", class_code, sec_code), 1)
 
     local result = Subscribe_Level_II_Quotes(class_code, sec_code)
 
-    -- РґР»СЏ РЅР°РґС‘Р¶РЅРѕСЃС‚Рё РїСЂРёРІРѕРґРёРј Рє boolean / string
+    -- для надёжности приводим к boolean / string
     if result == nil then
-        log("Subscribe_Level_II_Quotes РІРµСЂРЅСѓР» nil", 2)
+        log("Subscribe_Level_II_Quotes вернул nil", 2)
         msg.data = false
     elseif type(result) == "boolean" then
         msg.data = result
@@ -534,7 +534,7 @@ function qsfunctions.GetQuoteLevel2(msg)
     return msg
 end
 --------------------------------------------------------------------------------
--- РћС€РёР±РєРё Рё РѕС‚Р»Р°РґРєР°
+-- Ошибки и отладка
 --------------------------------------------------------------------------------
 
 function OnError(message)
@@ -553,7 +553,7 @@ local function sendError(message)
 end
 
 --------------------------------------------------------------------------------
--- Р Р°СЃС‡С‘С‚ РѕР±СЉС‘РјР° Рё РєРѕРјРёСЃСЃРёРё
+-- Расчёт объёма и комиссии
 --------------------------------------------------------------------------------
 
 function qsfunctions.calc_buy_sell(msg)
@@ -567,17 +567,21 @@ function qsfunctions.calc_buy_sell(msg)
     if qty then
         msg.data = { qty = qty, commission = comm }
     else
-        message("РћС€РёР±РєР° CalcBuySell", 1)
+        message("Ошибка CalcBuySell", 1)
     end
     return msg
 end
 
 --------------------------------------------------------------------------------
--- РћС‚РїСЂР°РІРєР° С‚СЂР°РЅР·Р°РєС†РёР№
+-- Отправка транзакций
 --------------------------------------------------------------------------------
 
 function qsfunctions.sendTransaction(msg)
+    debug_log("sendTransaction вызвана")
+    debug_log(" msg.data =", to_json(msg.data) )
+    debug_log(" msg.data.data =", to_json(msg.data.data) )
     local res = sendTransaction(msg.data.data)
+    debug_log("Result =", tostring(res))
     if res and res ~= "" then
         msg.cmd       = "lua_transaction_error"
         msg.lua_error = res
@@ -588,7 +592,7 @@ function qsfunctions.sendTransaction(msg)
 end
 
 --------------------------------------------------------------------------------
--- РџР°СЂР°РјРµС‚СЂС‹, РґРµРїРѕ, РґРµРЅСЊРіРё, Р»РёРјРёС‚С‹
+-- Параметры, депо, деньги, лимиты
 --------------------------------------------------------------------------------
 
 function qsfunctions.paramRequest(msg)
@@ -723,13 +727,13 @@ function qsfunctions.getFuturesClientHoldings(msg)
 end
 
 --------------------------------------------------------------------------------
--- Р—Р°СЏРІРєРё (orders)
+-- Заявки (orders)
 --------------------------------------------------------------------------------
 
 -- function qsfunctions.get_orders(msg)
 --     local class_code, sec_code = nil, nil
 
---     -- Р Р°Р·Р±РѕСЂ С„РёР»СЊС‚СЂР° (class_code|sec_code)
+--     -- Разбор фильтра (class_code|sec_code)
 --     if msg.data and msg.data.data and msg.data.data ~= "" then
 --         local spl = split(msg.data.data, "|")
 --         if #spl >= 1 then class_code = spl[1] end
@@ -742,11 +746,11 @@ end
 --     for i = 0, count - 1 do
 --         local order = getItem("orders", i)
 --         if order then
---             -- Р¤РёР»СЊС‚СЂР°С†РёСЏ РїРѕ РёРЅСЃС‚СЂСѓРјРµРЅС‚Сѓ (РµСЃР»Рё СѓРєР°Р·Р°РЅ)
+--             -- Фильтрация по инструменту (если указан)
 --             if not class_code or 
 --                (order.class_code == class_code and order.sec_code == sec_code) then
                 
---                 -- РџСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ РґРµР»Р°РµРј С‡РёСЃР»РѕРІРѕР№ РёРЅРґРµРєСЃ (РѕС‡РµРЅСЊ РІР°Р¶РЅРѕ РґР»СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёРё!)
+--                 -- Принудительно делаем числовой индекс (очень важно для сериализации!)
 --                 table.insert(orders, order)
 --             end
 --         end
@@ -759,73 +763,214 @@ end
 
 --     return msg
 -- end
+-- Вспомогательная функция для безопасного преобразования QUIK datetime в таблицу чисел
+local function quik_datetime_to_table(dt)
+    if type(dt) ~= "table" then
+        return nil
+    end
+    -- QUIK возвращает таблицу с полями: year, month, day, hour, min, sec, ms (иногда mcs)
+    return {
+        year      = tonumber(dt.year) or 0,
+        month     = tonumber(dt.month) or 0,
+        day       = tonumber(dt.day) or 0,
+        hour      = tonumber(dt.hour) or 0,
+        min       = tonumber(dt.min) or 0,
+        sec       = tonumber(dt.sec) or 0,
+        ms        = tonumber(dt.ms) or 0,
+        mcs       = tonumber(dt.mcs) or 0,   -- микросекунды, если есть
+        week_day  = tonumber(dt.week_day) or 0
+    }
+end
+-- Вспомогательная функция преобразования QUIK datetime
+local function quik_datetime_to_table(dt)
+    if type(dt) ~= "table" then
+        return nil
+    end
+    return {
+        year     = tonumber(dt.year) or 0,
+        month    = tonumber(dt.month) or 0,
+        day      = tonumber(dt.day) or 0,
+        hour     = tonumber(dt.hour) or 0,
+        min      = tonumber(dt.min) or 0,
+        sec      = tonumber(dt.sec) or 0,
+        ms       = tonumber(dt.ms) or 0,
+        mcs      = tonumber(dt.mcs) or 0,
+        week_day = tonumber(dt.week_day) or 0
+    }
+end
 
+-- Основная нормализация заявки
+local function normalize_order(order)
+    if not order or type(order) ~= "table" then 
+        return nil 
+    end
+
+    -- === 1. Целочисленные поля (должны приходить без .0) ===
+local int_fields = {
+    "order_num", "ordernum", "uid", "canceled_uid", "accepted_uid", "trans_id",
+    "flags", "revision_number", "trading_session", "ext_order_status", "exec_type",
+    "repoterm", "linkedorder", "acnt_type", "value_entry_type", "price_entry_type",
+    "qty", "qty2", "operation_type", "side_qualifier", "capacity", 
+    "executing_trader_qualifier", "client_qualifier", 
+    "investment_decision_maker_qualifier", "investment_decision_maker_short_code",
+    "executing_trader_short_code", "client_short_code", "on_behalf_of_uid",
+    "min_qty", "ext_order_flags", "passive_only_order",          -- добавлено
+    "settle_date", "settle_date2", "start_date"                  -- long ? int_fields
+}
+    log("int_fields ",3)
+    for _, field in ipairs(int_fields) do
+        if order[field] ~= nil then
+            order[field] = math.floor(tonumber(order[field]))
+           -- log("field " ..  tostring(order[field]) .. " " .. tonumber(order[field]), 3)
+        end
+    end
+
+    -- === 2. Дробные поля (qty, price, value и т.д.) ===
+local float_fields = {
+    "balance", "price", "value", "awg_price", "yield", "accruedint",
+    "price2", "repo_value_balance", "repovalue", "repo2value", 
+    "visible_repo_value", "visibility_factor", "start_discount",
+    "visible", "external_qty",                     -- decimal в C#
+    "activation_time", "expiry", "expiry_time", "repoterm",  -- decimal
+    "filled_value", "value2"
+}
+    log("float_fields ",3)
+    for _, field in ipairs(float_fields) do
+        if order[field] ~= nil then
+            order[field] = tonumber(order[field])
+           -- log("field " ..  tostring(order[field]) .. " " .. tonumber(order[field]), 3)
+        end
+    end
+
+    -- === 3. Строковые поля (защита от nil) ===
+local string_fields = {
+    "class_code", "sec_code", "account", "client_code", "brokerref", 
+    "firmid", "userid", "exchange_code", "settle_currency", 
+    "price_currency", "settlecode", "reject_reason", "extref", 
+    "benchmark", "lseccode", "bank_acc_id", "seccode",
+    "settle_date", "settlecode"   -- на всякий случай (иногда приходят как string)
+}
+
+    for _, field in ipairs(string_fields) do
+        if order[field] ~= nil then
+            order[field] = tostring(order[field])
+        else
+            order[field] = ""   -- чтобы в JSON не было null
+        end
+    end
+
+    -- === 4. Даты ===
+    order.datetime          = quik_datetime_to_table(order.datetime)
+    order.withdraw_datetime = quik_datetime_to_table(order.withdraw_datetime)
+
+    return order
+end
+
+-- ===================================================================
 function qsfunctions.get_orders(msg)
     local class_code, sec_code = nil, nil
 
-    debug_log("get_orders() РІС‹Р·РІР°РЅР°. msg.data.data =", msg.data and msg.data.data or "nil")
-
-    -- Р Р°Р·Р±РѕСЂ С„РёР»СЊС‚СЂР° (class_code|sec_code)
     if msg.data and msg.data.data and msg.data.data ~= "" then
         local spl = split(msg.data.data, "|")
-        if #spl >= 1 then 
-            class_code = spl[1] 
-            debug_log("  в†’ class_code =", class_code)
-        end
-        if #spl >= 2 then 
-            sec_code = spl[2] 
-            debug_log("  в†’ sec_code =", sec_code)
-        end
-    else
-        debug_log("  в†’ С„РёР»СЊС‚СЂ РЅРµ СѓРєР°Р·Р°РЅ (Р±СѓРґСѓС‚ РІРѕР·РІСЂР°С‰РµРЅС‹ РІСЃРµ Р·Р°СЏРІРєРё)")
+        if #spl >= 1 then class_code = spl[1] end
+        if #spl >= 2 then sec_code = spl[2] end
     end
 
     local orders = {}
     local count = getNumberOf("orders")
-    
-    debug_log("  в†’ РІСЃРµРіРѕ Р·Р°СЏРІРѕРє РІ С‚РµСЂРјРёРЅР°Р»Рµ:", count)
 
     for i = 0, count - 1 do
         local order = getItem("orders", i)
         if order then
-            -- Р¤РёР»СЊС‚СЂР°С†РёСЏ РїРѕ РёРЅСЃС‚СЂСѓРјРµРЅС‚Сѓ (РµСЃР»Рё СѓРєР°Р·Р°РЅ)
             local match = true
-            
-            if class_code then
-                match = (order.class_code == class_code and order.sec_code == sec_code)
-                
-                if not match then
-                    debug_log("  в†’ РїСЂРѕРїСѓС‰РµРЅР° Р·Р°СЏРІРєР° #" .. i .. " (РЅРµ СЃРѕРІРїР°РґР°РµС‚ РёРЅСЃС‚СЂСѓРјРµРЅС‚):", 
-                              order.class_code, order.sec_code, 
-                              "в†’ РЅСѓР¶РµРЅ:", class_code, sec_code)
-                end
+            if class_code and sec_code then
+                -- Приводим к строке на случай, если в getItem придут числа
+                match = (tostring(order.class_code) == class_code and 
+                         tostring(order.sec_code) == sec_code)
             end
 
             if match then
-                -- РџСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ РґРµР»Р°РµРј С‡РёСЃР»РѕРІРѕР№ РёРЅРґРµРєСЃ (РѕС‡РµРЅСЊ РІР°Р¶РЅРѕ РґР»СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёРё!)
-                table.insert(orders, order)
-                debug_log("  в†’ РґРѕР±Р°РІР»РµРЅР° Р·Р°СЏРІРєР° #" .. i .. " order_num =", order.order_num or "nil", 
-                          "status =", order.flags or "nil")
+                local normalized = normalize_order(order)
+                if normalized then
+                    table.insert(orders, normalized)
+                end
             end
-        else
-            debug_log("  в†’ getItem('orders', " .. i .. ") РІРµСЂРЅСѓР» nil!")
         end
     end
-    debug_log("Р·Р°СЏРІРєРё ", tostring(orders))
+
     msg.data = orders
     msg.count = #orders
     msg.filtered = (class_code ~= nil)
 
-    debug_log("get_orders() Р·Р°РІРµСЂС€РµРЅР°. Р’РѕР·РІСЂР°С‰РµРЅРѕ Р·Р°СЏРІРѕРє:", #orders, 
-              "filtered =", tostring(msg.filtered))
-
     return msg
 end
+
+-- function qsfunctions.get_orders(msg)
+--     local class_code, sec_code = nil, nil
+
+--     debug_log("get_orders() вызвана. msg.data.data =", msg.data and msg.data.data or "nil")
+
+--     -- Разбор фильтра (class_code|sec_code)
+--     if msg.data and msg.data.data and msg.data.data ~= "" then
+--         local spl = split(msg.data.data, "|")
+--         if #spl >= 1 then 
+--             class_code = spl[1] 
+--             debug_log("  ? class_code =", class_code)
+--         end
+--         if #spl >= 2 then 
+--             sec_code = spl[2] 
+--             debug_log("  ? sec_code =", sec_code)
+--         end
+--     else
+--         debug_log("  ? фильтр не указан (будут возвращены все заявки)")
+--     end
+
+--     local orders = {}
+--     local count = getNumberOf("orders")
+    
+--     debug_log("  ? всего заявок в терминале:", count)
+
+--     for i = 0, count - 1 do
+--         local order = getItem("orders", i)
+--         if order then
+--             -- Фильтрация по инструменту (если указан)
+--             local match = true
+            
+--             if class_code then
+--                 match = (order.class_code == class_code and order.sec_code == sec_code)
+                
+--                 if not match then
+--                     debug_log("  ? пропущена заявка #" .. i .. " (не совпадает инструмент):", 
+--                               order.class_code, order.sec_code, 
+--                               "? нужен:", class_code, sec_code)
+--                 end
+--             end
+
+--             if match then
+--                 -- Принудительно делаем числовой индекс (очень важно для сериализации!)
+--                 table.insert(orders, order)
+--                 debug_log("  ? добавлена заявка #" .. i .. " order_num =", order.order_num or "nil", 
+--                           "status =", order.flags or "nil")
+--             end
+--         else
+--             debug_log("  ? getItem('orders', " .. i .. ") вернул nil!")
+--         end
+--     end
+--     debug_log("заявки ", tostring(orders))
+--     msg.data = orders
+--     msg.count = #orders
+--     msg.filtered = (class_code ~= nil)
+
+--     debug_log("get_orders() завершена. Возвращено заявок:", #orders, 
+--               "filtered =", tostring(msg.filtered))
+
+--     return msg
+-- end
 
 function qsfunctions.getOrder_by_ID(msg)
     local class_code, sec_code, trans_id = nil, nil, nil
 
-    -- Р Р°Р·Р±РѕСЂ С„РёР»СЊС‚СЂР° (class_code|sec_code|trans_id)
+    -- Разбор фильтра (class_code|sec_code|trans_id)
     if msg.data and msg.data.data and msg.data.data ~= "" then
         local spl = split(msg.data.data, "|")
         if #spl >= 1 then class_code = spl[1] end
@@ -848,7 +993,7 @@ function qsfunctions.getOrder_by_ID(msg)
         end
     end
 
-    -- Р“Р°СЂР°РЅС‚РёСЂСѓРµРј РІРѕР·РІСЂР°С‚ РјР°СЃСЃРёРІР° (РґР°Р¶Рµ РїСѓСЃС‚РѕРіРѕ)
+    -- Гарантируем возврат массива (даже пустого)
     msg.data = orders
     msg.count = #orders
     msg.filtered = true
@@ -864,7 +1009,7 @@ function qsfunctions.get_order_by_number(msg)
     local order_id   = math.tointeger(spl[2] or 0)
 
     if not order_id or order_id == 0 or class_code == "" then
-        msg.lua_error = "РћС€РёР±РєР° РїР°СЂСЃРёРЅРіР°: С‚СЂРµР±СѓРµС‚СЃСЏ Class|OrderNum"
+        msg.lua_error = "Ошибка парсинга: требуется Class|OrderNum"
         msg.data = {}                   
         msg.count = 0
         return msg
@@ -903,29 +1048,29 @@ function qsfunctions.get_order_by_number(msg)
 
         msg.count = 1
     else
-        log("get_order_by_number: Р·Р°СЏРІРєР° " .. tostring(order_id) .. " РЅРµ РЅР°Р№РґРµРЅР°", 3)
+        log("get_order_by_number: заявка " .. tostring(order_id) .. " не найдена", 3)
         msg.data = {}
         msg.count = 0
     end
 
-    -- Р’СЃРµРіРґР° РІРѕР·РІСЂР°С‰Р°РµРј РјР°СЃСЃРёРІ (РґР°Р¶Рµ РµСЃР»Рё РѕРґРЅР° Р·Р°СЏРІРєР° РёР»Рё РїСѓСЃС‚Рѕ)
-    msg.data = result   -- РѕР±РѕСЂР°С‡РёРІР°РµРј РІ РјР°СЃСЃРёРІ РґР»СЏ РµРґРёРЅРѕРѕР±СЂР°Р·РёСЏ
-    -- Р•СЃР»Рё РЅСѓР¶РЅРѕ РІРѕР·РІСЂР°С‰Р°С‚СЊ РїСЂРѕСЃС‚Рѕ РѕР±СЉРµРєС‚ РїСЂРё РЅР°С…РѕР¶РґРµРЅРёРё РѕРґРЅРѕР№ Р·Р°СЏРІРєРё вЂ” РјРѕР¶РЅРѕ СѓР±СЂР°С‚СЊ С„РёРіСѓСЂРЅС‹Рµ СЃРєРѕР±РєРё,
-    -- РЅРѕ РїРѕ Р°РЅР°Р»РѕРіРёРё СЃ get_orders Р»СѓС‡С€Рµ РІСЃРµРіРґР° РјР°СЃСЃРёРІ.
+    -- Всегда возвращаем массив (даже если одна заявка или пусто)
+    msg.data = result   -- оборачиваем в массив для единообразия
+    -- Если нужно возвращать просто объект при нахождении одной заявки — можно убрать фигурные скобки,
+    -- но по аналогии с get_orders лучше всегда массив.
 
     return msg
 end
 --------------------------------------------------------------------------------
--- Р”РµРїРѕР·РёС‚РЅС‹Рµ Р»РёРјРёС‚С‹
+-- Депозитные лимиты
 --------------------------------------------------------------------------------
 
 function qsfunctions.get_depo_limits(msg)
     local filter_sec_code = tostring(msg.data.data or ""):gsub("%s+", ""):upper()
 
-    debug_log("get_depo_limits() РІС‹Р·РІР°РЅР° | С„РёР»СЊС‚СЂ:", filter_sec_code ~= "" and filter_sec_code or "<РІСЃРµ РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹>")
+    debug_log("get_depo_limits() вызвана | фильтр:", filter_sec_code ~= "" and filter_sec_code or "<все инструменты>")
 
     local count = getNumberOf("depo_limits")
-    debug_log("РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№ РІ depo_limits:", count)
+    debug_log("Количество записей в depo_limits:", count)
 
     local depo_limits = {}
     local matched = 0
@@ -956,7 +1101,7 @@ function qsfunctions.get_depo_limits(msg)
                     awg_position_price = tonumber(d.awg_position_price) or 0,
                     limit_kind         = tonumber(d.limit_kind) or 0,
                     
-                    -- Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїРѕР»РµР·РЅС‹Рµ РїРѕР»СЏ (С‡Р°СЃС‚Рѕ Р±С‹РІР°СЋС‚ РїРѕР»РµР·РЅС‹ РїСЂРё РѕС‚Р»Р°РґРєРµ)
+                    -- Дополнительные полезные поля (часто бывают полезны при отладке)
                     balaccid           = tostring(d.balaccid or ""),
                     limit_kind_name    = (d.limit_kind == 0 and "T+2" or 
                                         d.limit_kind == 1 and "T+1" or 
@@ -965,8 +1110,8 @@ function qsfunctions.get_depo_limits(msg)
 
                 table.insert(depo_limits, item)
 
-                -- Р”РµС‚Р°Р»СЊРЅР°СЏ РѕС‚Р»Р°РґРєР° РєР°Р¶РґРѕР№ РЅР°Р№РґРµРЅРЅРѕР№ РїРѕР·РёС†РёРё
-                debug_log(string.format("  [%d] MATCH в†’ %s | currentbal: %s | currentlimit: %s | locked_sell: %s | trdaccid: %s",
+                -- Детальная отладка каждой найденной позиции
+                debug_log(string.format("  [%d] MATCH ? %s | currentbal: %s | currentlimit: %s | locked_sell: %s | trdaccid: %s",
                     matched,
                     item.sec_code,
                     item.currentbal,
@@ -975,22 +1120,22 @@ function qsfunctions.get_depo_limits(msg)
                     item.trdaccid
                 ))
             else
-                -- РћРїС†РёРѕРЅР°Р»СЊРЅРѕ: РјРѕР¶РЅРѕ РІРєР»СЋС‡РёС‚СЊ РґР»СЏ РѕС‡РµРЅСЊ РїРѕРґСЂРѕР±РЅРѕР№ РѕС‚Р»Р°РґРєРё
-                -- debug_log("  SKIP в†’ " .. current_sec .. " (РЅРµ СЃРѕРІРїР°РґР°РµС‚ СЃ С„РёР»СЊС‚СЂРѕРј " .. filter_sec_code .. ")")
+                -- Опционально: можно включить для очень подробной отладки
+                -- debug_log("  SKIP ? " .. current_sec .. " (не совпадает с фильтром " .. filter_sec_code .. ")")
             end
         else
-            debug_log("  WARNING: getItem('depo_limits', " .. i .. ") РІРµСЂРЅСѓР» nil!")
+            debug_log("  WARNING: getItem('depo_limits', " .. i .. ") вернул nil!")
         end
     end
 
-    debug_log("get_depo_limits Р·Р°РІРµСЂС€РµРЅР°. РќР°Р№РґРµРЅРѕ РїРѕР·РёС†РёР№:", #depo_limits, "(matched:", matched, ")")
+    debug_log("get_depo_limits завершена. Найдено позиций:", #depo_limits, "(matched:", matched, ")")
 
-    -- Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕР№ СЂРµР·СѓР»СЊС‚Р°С‚
+    -- Дополнительная проверка на пустой результат
     if #depo_limits == 0 then
         if filter_sec_code ~= "" then
-            debug_log("Р’РќРРњРђРќРР•: РџРѕ РёРЅСЃС‚СЂСѓРјРµРЅС‚Сѓ " .. filter_sec_code .. " РґРµРїРѕР·РёС‚Р°СЂРЅС‹С… Р»РёРјРёС‚РѕРІ РЅРµ РЅР°Р№РґРµРЅРѕ!")
+            debug_log("ВНИМАНИЕ: По инструменту " .. filter_sec_code .. " депозитарных лимитов не найдено!")
         else
-            debug_log("Р’РќРРњРђРќРР•: depo_limits РїРѕР»РЅРѕСЃС‚СЊСЋ РїСѓСЃС‚!")
+            debug_log("ВНИМАНИЕ: depo_limits полностью пуст!")
         end
     end
 
@@ -1034,7 +1179,7 @@ end
 -- end
 
 --------------------------------------------------------------------------------
--- РЎРґРµР»РєРё
+-- Сделки
 --------------------------------------------------------------------------------
 
 function qsfunctions.get_trades(msg)
@@ -1087,7 +1232,7 @@ function qsfunctions.get_all_trades(msg)
 end
 
 --------------------------------------------------------------------------------
--- РџРѕСЂС‚С„РµР»СЊ
+-- Портфель
 --------------------------------------------------------------------------------
 
 function qsfunctions.getPortfolioInfo(msg)
@@ -1105,7 +1250,7 @@ function qsfunctions.getPortfolioInfoEx(msg)
 end
 
 --------------------------------------------------------------------------------
--- РћРїС†РёРѕРЅС‹ (РїСЂРёРјРµСЂ СЂРµР°Р»РёР·Р°С†РёРё)
+-- Опционы (пример реализации)
 --------------------------------------------------------------------------------
 
 function qsfunctions.getOptionBoard(msg)
@@ -1170,7 +1315,7 @@ function getOptions(classCode, secCode, series)
 end
 
 --------------------------------------------------------------------------------
--- РЎС‚РѕРї-Р·Р°СЏРІРєРё
+-- Стоп-заявки
 --------------------------------------------------------------------------------
 
 function qsfunctions.get_stop_orders(msg)
@@ -1193,7 +1338,7 @@ function qsfunctions.get_stop_orders(msg)
 end
 
 --------------------------------------------------------------------------------
--- РЎРІРµС‡Рё
+-- Свечи
 --------------------------------------------------------------------------------
 
 function qsfunctions.get_num_candles(msg)
@@ -1245,7 +1390,7 @@ function qsfunctions.get_candles(msg)
 end
 
 --------------------------------------------------------------------------------
--- DataSource (РїРѕРґРїРёСЃРєР° РЅР° СЃРІРµС‡Рё)
+-- DataSource (подписка на свечи)
 --------------------------------------------------------------------------------
 
 data_sources = data_sources or {}
@@ -1321,7 +1466,7 @@ function qsfunctions.subscribe_to_candles(msg)
     if ds:Size() == 0 then
         ds:Close()
         msg.data = "error"
-        msg.lua_error = "DataSource РїСѓСЃС‚РѕР№ РїРѕСЃР»Рµ РѕР¶РёРґР°РЅРёСЏ"
+        msg.lua_error = "DataSource пустой после ожидания"
         return msg
     end
 
