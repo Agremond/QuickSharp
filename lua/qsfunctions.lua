@@ -816,8 +816,8 @@ local int_fields = {
     "executing_trader_short_code", "client_short_code", "on_behalf_of_uid",
     "min_qty", "ext_order_flags", "passive_only_order",          -- добавлено
     "settle_date", "settle_date2", "start_date"                  -- long ? int_fields
-}
-    log("int_fields ",3)
+    }
+    --log("int_fields ",3)
     for _, field in ipairs(int_fields) do
         if order[field] ~= nil then
             order[field] = math.floor(tonumber(order[field]))
@@ -833,8 +833,8 @@ local float_fields = {
     "visible", "external_qty",                     -- decimal в C#
     "activation_time", "expiry", "expiry_time", "repoterm",  -- decimal
     "filled_value", "value2"
-}
-    log("float_fields ",3)
+    }
+    --log("float_fields ",3)
     for _, field in ipairs(float_fields) do
         if order[field] ~= nil then
             order[field] = tonumber(order[field])

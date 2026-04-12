@@ -505,7 +505,7 @@ namespace QuikSharp.DataStructures.Transaction
         /// Состояние заявки.
         /// </summary>
         [JsonIgnore]
-        public State State { get; private set; }
+        public State State { get; set; }
 
         private OrderTradeFlags _flags;
 
