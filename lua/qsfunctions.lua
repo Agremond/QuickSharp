@@ -1248,70 +1248,101 @@ function qsfunctions.getPortfolioInfoEx(msg)
     msg.data = getPortfolioInfoEx(firmId, clientCode, tonumber(limit_kind))
     return msg
 end
-
---------------------------------------------------------------------------------
--- ќпционы (пример реализации)
---------------------------------------------------------------------------------
-
+--------------------------
+-- OptionBoard functions --
+--------------------------
+--------------------------
 function qsfunctions.getOptionBoard(msg)
-    local spl = split(msg.data.data, "|")
+    local spl = split(msg.data, "|")
     local classCode, secCode, series = spl[1], spl[2], spl[3]
-    local result = getOptions(classCode, secCode, series)
-    msg.data = result or {}
-    return msg
+	local result, err = getOptions(classCode, secCode, series )
+	--log(">>> Debug".. classCode .. "|".. secCode .. "|".. series) 
+	--error( classCode..secCode..series)
+	if result then
+		msg.data = result
+	else
+		log("Option board returns nil", 3)
+		msg.data = nil
+	end
+	
+    return msg.data
 end
 
-function getOptions(classCode, secCode, series)
-    local SecList = getClassSecurities(classCode)
-    local t = {}
-    local week, month, quartal, all = false, false, false, false
+function getOptions(classCode,secCode,series)
+	--classCode = "SPBOPT"
+--BaseSecList="RIZ6"
+--series: 0 - ближайша€ недел€, 1 - ближний мес€ц, 2 - ближний квартал, 4 - все
+local SecList = getClassSecurities(classCode) --все сразу
+local t={}
+local p={}
+local week = false
+local month = false
+local quartal = false
+local all = false
+local len = 0;
+local days_to_mat
 
-    for sec in string.gmatch(SecList, "([^,]+)") do
-        week = false
-        month = false
+local last_char
+for sec in string.gmatch(SecList, "([^,]+)") do --перебираем опционы по очереди.
+			week = false
+			month = false
+			quartal = false
+			all = false
+			
 
-        local Optionbase = getParamEx(classCode, sec, "optionbase").param_image
-        if string.find(secCode, Optionbase) then
-            local days_to_mat = getParamEx(classCode, sec, "DAYS_TO_MAT_DATE").param_value + 0
-            local len = string.len(sec)
-            local last_char = string.sub(sec, len)
+            local Optionbase=getParamEx(classCode,sec,"optionbase").param_image
+            if (string.find(secCode,Optionbase)~=nil ) then
 
-            if tonumber(last_char) then
-                month = true
+				days_to_mat = getParamEx(classCode,sec,"DAYS_TO_MAT_DATE").param_value+0
+				len = string.len(sec)
+				last_char = string.sub(sec, len)
+
+				--log("Last char:"..last_char)
+				--log("Type:"..type(tonumber(last_char)))
+				if(tonumber(last_char) ~= nil) then
+				--	log("Convert: "..tonumber(last_char))
+					month = true
+				end
+				
+				
+
+
+				if( tonumber(days_to_mat) <= 8 ) then
+				--	log("this week".."Sec:"..sec.." Days:"..days_to_mat)
+					week = true
+				else
+				--	log("Sec:"..sec.." Days:"..days_to_mat)
+				end
+
+				if(( tonumber(series) == 0 and week) or (tonumber(series) == 1 and month) ) or tonumber(series) == 4 then
+					p={
+						["code"]=getParamEx(classCode,sec,"code").param_image,
+						["Name"]=getSecurityInfo(classCode,sec).name,
+						["DAYS_TO_MAT_DATE"]=days_to_mat,
+						["BID"]=getParamEx(classCode,sec,"BID").param_value+0,
+						["OFFER"]=getParamEx(classCode,sec,"OFFER").param_value+0,
+						["OPTIONBASE"]=Optionbase,
+						["OPTIONTYPE"]=getParamEx(classCode,sec,"optiontype").param_image,
+						["Longname"]=getParamEx(classCode,sec,"longname").param_image,
+						["shortname"]=getParamEx(classCode,sec,"shortname").param_image,
+						["Volatility"]=getParamEx(classCode,sec,"volatility").param_value+0,
+						["Lot"]=getParamEx(classCode,sec,"LOTSIZE").param_value+0,
+						["Strike"]=getParamEx(classCode,sec,"strike").param_value+0,
+						["Lastprice"]=getParamEx(classCode,sec,"last").param_value+0,
+						["THEORPRICE"]=getParamEx(classCode,sec,"THEORPRICE").param_value+0,
+						["MAT_DATE"]=getParamEx(classCode,sec,"MAT_DATE").param_image,
+						["STEPPRICET"]=getParamEx(classCode,sec,"STEPPRICET").param_value+0,
+						["SEC_PRICE_STEP"]=getParamEx(classCode,sec,"SEC_PRICE_STEP").param_value+0
+						}
+
+
+
+							table.insert( t, p )
+				end
             end
 
-            if tonumber(days_to_mat) <= 8 then
-                week = true
-            end
-
-            if (tonumber(series) == 0 and week) or
-               (tonumber(series) == 1 and month) or
-               tonumber(series) == 4 then
-
-                local p = {
-                    code             = getParamEx(classCode, sec, "code").param_image,
-                    Name             = getSecurityInfo(classCode, sec).name,
-                    DAYS_TO_MAT_DATE = days_to_mat,
-                    BID              = getParamEx(classCode, sec, "BID").param_value + 0,
-                    OFFER            = getParamEx(classCode, sec, "OFFER").param_value + 0,
-                    OPTIONBASE       = Optionbase,
-                    OPTIONTYPE       = getParamEx(classCode, sec, "optiontype").param_image,
-                    Longname         = getParamEx(classCode, sec, "longname").param_image,
-                    shortname        = getParamEx(classCode, sec, "shortname").param_image,
-                    Volatility       = getParamEx(classCode, sec, "volatility").param_value + 0,
-                    Lot              = getParamEx(classCode, sec, "LOTSIZE").param_value + 0,
-                    Strike           = getParamEx(classCode, sec, "strike").param_value + 0,
-                    Lastprice        = getParamEx(classCode, sec, "last").param_value + 0,
-                    THEORPRICE       = getParamEx(classCode, sec, "THEORPRICE").param_value + 0,
-                    MAT_DATE         = getParamEx(classCode, sec, "MAT_DATE").param_image,
-                    STEPPRICET       = getParamEx(classCode, sec, "STEPPRICET").param_value + 0,
-                    SEC_PRICE_STEP   = getParamEx(classCode, sec, "SEC_PRICE_STEP").param_value + 0
-                }
-                table.insert(t, p)
-            end
-        end
-    end
-    return t
+end
+return t
 end
 
 --------------------------------------------------------------------------------

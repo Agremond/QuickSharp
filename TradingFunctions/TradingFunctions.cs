@@ -373,11 +373,12 @@ namespace QuikSharp
         /// <param name="classCode"></param>
         /// <param name="secCode"></param>
         /// <returns></returns>
-        public async Task<List<OptionBoard>> GetOptionBoard(string classCode, string secCode)
+        public async Task<List<OptionBoard>> GetOptionBoard(string classCode, string secCode, string series)
         {
-            var payload = $"{classCode}|{secCode}";
+            var payload = $"{classCode}|{secCode}|{series}";
             return await _transport.SendAsync<Message, List<OptionBoard>>(
                 new Message(payload, "getOptionBoard"), "getOptionBoard").ConfigureAwait(false) ?? new List<OptionBoard>();
         }
+
     }
 }
