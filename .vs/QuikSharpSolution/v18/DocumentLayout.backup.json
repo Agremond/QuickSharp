@@ -60,8 +60,7 @@
               "ViewState": "AgIAACEBAAAAAAAAAAAAADUBAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:20:36.024Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -85,8 +84,7 @@
               "RelativeToolTip": "TradingFunctions\\TradingFunctions.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAADwv0EAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T18:47:18.456Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-10T18:47:18.456Z"
             },
             {
               "$type": "Document",
@@ -98,8 +96,7 @@
               "RelativeToolTip": "..\\QS.Tests\\ClassFunctionsTest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwA4AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T18:45:58.291Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-10T18:45:58.291Z"
             },
             {
               "$type": "Document",
@@ -111,8 +108,7 @@
               "RelativeToolTip": "..\\QS.Tests\\ServiceFuncitonsTest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T18:45:50.968Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-10T18:45:50.968Z"
             },
             {
               "$type": "Document",
@@ -124,8 +120,7 @@
               "RelativeToolTip": "..\\QS.Tests\\TradingFunctionsTest.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAMwEkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T18:43:35.121Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-10T18:43:35.121Z"
             },
             {
               "$type": "Document",

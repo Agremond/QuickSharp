@@ -3,14 +3,14 @@
   "WorkspaceRootPath": "C:\\Programming\\QuikSharp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\tradingfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,17 +33,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\Program.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\Program.cs",
               "ToolTip": "C:\\Programming\\QS.Tests\\Program.cs",
               "RelativeToolTip": "..\\QS.Tests\\Program.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAADwvzoAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAADwv0YAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-14T19:23:21.868Z",
               "IsPinned": true,
@@ -76,15 +76,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "TradingFunctions.cs",
               "DocumentMoniker": "C:\\Programming\\QuikSharp\\TradingFunctions\\TradingFunctions.cs",
               "RelativeDocumentMoniker": "TradingFunctions\\TradingFunctions.cs",
               "ToolTip": "C:\\Programming\\QuikSharp\\TradingFunctions\\TradingFunctions.cs",
               "RelativeToolTip": "TradingFunctions\\TradingFunctions.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAADwv0EAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAMBAAAAAAAAAAAswA4BAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T18:47:18.456Z"
+              "WhenOpened": "2026-04-10T18:47:18.456Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -112,7 +113,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "TradingFunctionsTest.cs",
               "DocumentMoniker": "C:\\Programming\\QS.Tests\\TradingFunctionsTest.cs",
               "RelativeDocumentMoniker": "..\\QS.Tests\\TradingFunctionsTest.cs",
