@@ -13,6 +13,24 @@ local function send_error(msg, error_text)
     msg.data      = nil
     return msg
 end
+local function debug_log(...)
+    if not is_debug then return end
+    
+    local args = {...}
+    for i, v in ipairs(args) do
+        if type(v) == "nil" then
+            args[i] = "<nil>"
+        elseif type(v) == "boolean" then
+            args[i] = v and "true" or "false"
+        elseif type(v) == "table" then
+            args[i] = "{table}"
+        elseif type(v) == "function" then
+            args[i] = "<function>"
+        end
+    end
+    
+    log("[QS DEBUG] " .. table.concat(args, " "), 2)
+end
 --------------------------------------------------------------------------------
 -- Основной диспетчер команд
 --------------------------------------------------------------------------------
@@ -23,49 +41,73 @@ local function get_traceback(err)
     return debug.traceback("Lua error: " .. tostring(err), 2)  -- уровень 2, чтобы пропустить сам xpcall
 end
 function qsfunctions.dispatch_and_process(msg)
+    debug_log("dispatch_and_process called | type:", type(msg))
+
     if type(msg) ~= "table" then
+        debug_log("ERROR: msg is not a table, got:", type(msg))
         log("dispatch_and_process: msg is not a table", 1)
         return { cmd = "lua_error", lua_error = "Некорректный формат сообщения (не таблица)" }
     end
 
+    debug_log("Received command:", msg.cmd or "<nil>", 
+              "| req_id:", msg.id or "<nil>")
+
     if not msg.cmd or type(msg.cmd) ~= "string" then
+        debug_log("ERROR: msg.cmd missing or not string, cmd =", tostring(msg.cmd))
         log("dispatch_and_process: msg.cmd missing or not string", 1)
         return { cmd = "lua_error", lua_error = "Некорректный формат сообщения (нет cmd)" }
     end
 
     local handler = qsfunctions[msg.cmd]
+
     if not handler then
+        debug_log("WARNING: Unknown command:", msg.cmd)
         log("Неизвестная команда: " .. tostring(msg.cmd), 3)
         return send_error(msg, "Command not implemented: " .. tostring(msg.cmd))
     end
 
-    -- Выполняем обработчик с полным traceback
+    debug_log("Found handler for:", msg.cmd)
+
+    -- Выполняем обработчик
     local status, result = xpcall(
-        function() return handler(msg) end,
+        function()
+            debug_log("? Executing handler:", msg.cmd)
+            return handler(msg)
+        end,
         get_traceback
     )
-    
-   
+
     if status then
+        debug_log("? Handler", msg.cmd, "finished successfully")
+
         local res = result or msg
 
         if type(res.lua_error) == "string" and res.lua_error ~= "" then
+            debug_log("Handler returned lua_error:", res.lua_error)
             res.cmd = "lua_error"
-            --log("lua_error DD : " .. type(result) .. "   " .. res.lua_error, 3)
             res.data = json.null
+            log("lua_error DD : " .. type(result) .. "   " .. res.lua_error, 3)
         else
+            debug_log("Handler success, final cmd =", res.cmd or msg.cmd)
             res.cmd = res.cmd or msg.cmd
             res.lua_error = nil
             if res.data == nil then
-                res.data = json.null        -- или {} — но null лучше для различия "нет данных" и "ошибка"
+                res.data = json.null
             end
         end
 
-        res.req_id = msg.req_id             -- на всякий случай
+        res.req_id = msg.req_id
         return res
+    else
+        debug_log("CRITICAL ERROR in handler:", msg.cmd)
+        log("dispatch_and_process: error in handler '" .. msg.cmd .. "'", 1)
+        return { 
+            cmd = "lua_error", 
+            lua_error = "Internal error in command " .. tostring(msg.cmd),
+            req_id = msg.req_id 
+        }
     end
 end
-
 --------------------------------------------------------------------------------
 -- Отладочные и тестовые команды
 --------------------------------------------------------------------------------
@@ -344,11 +386,6 @@ end
 --------------------------------------------------------------------------------
 
 
-local function debug_log(...)
-    if is_debug then
-        log("[QS DEBUG] " .. table.concat({...}, " "),2)
-    end
-end
 
 function qsfunctions.getClientCode(msg)
     local count = getNumberOf("MONEY_LIMITS") or 0
@@ -1253,98 +1290,115 @@ end
 --------------------------
 --------------------------
 function qsfunctions.getOptionBoard(msg)
-    local spl = split(msg.data, "|")
-    local classCode, secCode, series = spl[1], spl[2], spl[3]
-	local result, err = getOptions(classCode, secCode, series )
-	--log(">>> Debug".. classCode .. "|".. secCode .. "|".. series) 
-	--error( classCode..secCode..series)
-	if result then
-		msg.data = result
-	else
-		log("Option board returns nil", 3)
-		msg.data = nil
-	end
-	
-    return msg.data
+    debug_log("getOptionBoard called | req_id:", msg.req_id or "<nil>")
+
+    local data_str = (type(msg.data) == "table" and msg.data.data) or msg.data or ""
+    if type(data_str) ~= "string" or data_str == "" then
+        debug_log("ERROR: Invalid data format")
+        return { cmd = "lua_error", lua_error = "Invalid data format for getOptionBoard" }
+    end
+
+    local spl = split(data_str, "|")
+    local classCode = spl[1]
+    local secCode   = spl[2]
+    local series    = tonumber(spl[3]) or 4
+
+    debug_log("Parsed: class=", classCode, "sec=", secCode, "series=", series)
+
+    if not classCode or not secCode then
+        return { cmd = "lua_error", lua_error = "classCode and secCode are required" }
+    end
+
+    local result = getOptions(classCode, secCode, series)
+
+    msg.cmd = "getOptionBoard"
+    msg.data = result
+    msg.lua_error = nil
+
+    debug_log("getOptionBoard completed, returned", #result, "options")
+    return msg
 end
+function getOptions(classCode, secCode, series)
+    series = tonumber(series) or 4
 
-function getOptions(classCode,secCode,series)
-	--classCode = "SPBOPT"
---BaseSecList="RIZ6"
---series: 0 - ближайшая неделя, 1 - ближний месяц, 2 - ближний квартал, 4 - все
-local SecList = getClassSecurities(classCode) --все сразу
-local t={}
-local p={}
-local week = false
-local month = false
-local quartal = false
-local all = false
-local len = 0;
-local days_to_mat
+    debug_log("getOptions started | class=", classCode, "secCode=", secCode, "series=", series)
 
-local last_char
-for sec in string.gmatch(SecList, "([^,]+)") do --перебираем опционы по очереди.
-			week = false
-			month = false
-			quartal = false
-			all = false
-			
+    local SecList = getClassSecurities(classCode)
+    if not SecList or type(SecList) ~= "string" or SecList == "" then
+        debug_log("getOptions ERROR: getClassSecurities returned empty")
+        return {}
+    end
 
-            local Optionbase=getParamEx(classCode,sec,"optionbase").param_image
-            if (string.find(secCode,Optionbase)~=nil ) then
+    local t = {}
+    local count = 0
+    local basePrefix = secCode:sub(1, 2)  -- "Si"
 
-				days_to_mat = getParamEx(classCode,sec,"DAYS_TO_MAT_DATE").param_value+0
-				len = string.len(sec)
-				last_char = string.sub(sec, len)
+    for sec in string.gmatch(SecList, "([^,]+)") do
+        sec = sec:match("^%s*(.-)%s*$")
+        if sec and sec:sub(1, 2) == basePrefix then   -- Быстрая фильтрация по префиксу
 
-				--log("Last char:"..last_char)
-				--log("Type:"..type(tonumber(last_char)))
-				if(tonumber(last_char) ~= nil) then
-				--	log("Convert: "..tonumber(last_char))
-					month = true
-				end
-				
-				
-
-
-				if( tonumber(days_to_mat) <= 8 ) then
-				--	log("this week".."Sec:"..sec.." Days:"..days_to_mat)
-					week = true
-				else
-				--	log("Sec:"..sec.." Days:"..days_to_mat)
-				end
-
-				if(( tonumber(series) == 0 and week) or (tonumber(series) == 1 and month) ) or tonumber(series) == 4 then
-					p={
-						["code"]=getParamEx(classCode,sec,"code").param_image,
-						["Name"]=getSecurityInfo(classCode,sec).name,
-						["DAYS_TO_MAT_DATE"]=days_to_mat,
-						["BID"]=getParamEx(classCode,sec,"BID").param_value+0,
-						["OFFER"]=getParamEx(classCode,sec,"OFFER").param_value+0,
-						["OPTIONBASE"]=Optionbase,
-						["OPTIONTYPE"]=getParamEx(classCode,sec,"optiontype").param_image,
-						["Longname"]=getParamEx(classCode,sec,"longname").param_image,
-						["shortname"]=getParamEx(classCode,sec,"shortname").param_image,
-						["Volatility"]=getParamEx(classCode,sec,"volatility").param_value+0,
-						["Lot"]=getParamEx(classCode,sec,"LOTSIZE").param_value+0,
-						["Strike"]=getParamEx(classCode,sec,"strike").param_value+0,
-						["Lastprice"]=getParamEx(classCode,sec,"last").param_value+0,
-						["THEORPRICE"]=getParamEx(classCode,sec,"THEORPRICE").param_value+0,
-						["MAT_DATE"]=getParamEx(classCode,sec,"MAT_DATE").param_image,
-						["STEPPRICET"]=getParamEx(classCode,sec,"STEPPRICET").param_value+0,
-						["SEC_PRICE_STEP"]=getParamEx(classCode,sec,"SEC_PRICE_STEP").param_value+0
-						}
-
-
-
-							table.insert( t, p )
-				end
+            local function safe_get(param)
+                local res = getParamEx(classCode, sec, param)
+                if res and res.result == "1" then
+                    return res.param_value or res.param_image or ""
+                end
+                return ""
             end
 
-end
-return t
-end
+            local Optionbase = safe_get("optionbase")
+            local DaysToMat  = tonumber(safe_get("DAYS_TO_MAT_DATE")) or 0
+            local Strike     = tonumber(safe_get("strike")) or 0
+            local OptionType = safe_get("optiontype")
 
+            -- Определяем тип экспирации
+            local is_week  = (DaysToMat <= 8)
+            local is_month = false
+            if tonumber(string.sub(sec, -1)) then
+                is_month = true
+            end
+
+            -- Фильтрация по series
+            local need = false
+            if series == 4 then
+                need = true
+            elseif series == 0 and is_week then
+                need = true
+            elseif series == 1 and is_month then
+                need = true
+            end
+
+            if need then
+                local info = getSecurityInfo(classCode, sec) or {}
+
+                local p = {
+                    code           = sec,
+                    Name           = info.name or safe_get("shortname") or "",
+                    DAYS_TO_MAT_DATE = DaysToMat,
+                    BID            = tonumber(safe_get("BID")) or 0,
+                    OFFER          = tonumber(safe_get("OFFER")) or 0,
+                    OPTIONBASE     = Optionbase,
+                    OPTIONTYPE     = OptionType,
+                    Longname       = safe_get("longname") or "",
+                    shortname      = safe_get("shortname") or "",
+                    Volatility     = tonumber(safe_get("volatility")) or 0,
+                    Lot            = tonumber(safe_get("LOTSIZE")) or 1,
+                    Strike         = Strike,
+                    Lastprice      = tonumber(safe_get("last")) or 0,
+                    THEORPRICE     = tonumber(safe_get("THEORPRICE")) or 0,
+                    MAT_DATE       = safe_get("MAT_DATE") or "",
+                    STEPPRICET     = tonumber(safe_get("STEPPRICET")) or 0,
+                    SEC_PRICE_STEP = tonumber(safe_get("SEC_PRICE_STEP")) or 0,
+                }
+
+                table.insert(t, p)
+                count = count + 1
+            end
+        end
+    end
+
+    debug_log("getOptions finished: found", count, "options for", secCode, "(series", series, ")")
+    return t
+end
 --------------------------------------------------------------------------------
 -- Стоп-заявки
 --------------------------------------------------------------------------------

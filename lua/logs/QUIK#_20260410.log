@@ -1,6 +1,0 @@
-2026-04-10 21:34:45.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
-2026-04-10 21:34:45.100 LOG 1: Shared memory IPC (variant 2) initialized
-2026-04-10 21:34:45.150 LOG 1: QUIK# connected via shared memory (variant 2)
-2026-04-10 21:47:50.050 LOG 0: Detected Quik version: 1208, script path: C:\Programming\QuikSharp\lua
-2026-04-10 21:47:50.100 LOG 1: Shared memory IPC (variant 2) initialized
-2026-04-10 21:47:50.150 LOG 1: QUIK# connected via shared memory (variant 2)

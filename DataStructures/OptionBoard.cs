@@ -69,11 +69,57 @@ namespace QuikSharp.DataStructures
         /// </summary>
         [JsonPropertyName("BID")]
         public double BID { get; set; }
+        /// <summary>
+        /// Дата экспирации
+        /// </summary>
+        [JsonPropertyName("MAT_DATE")]
+        public string ExpDate { get; set; }
 
         /// <summary>
         /// DaysToMatDate
         /// </summary>
         [JsonPropertyName("DAYS_TO_MAT_DATE")]
-        public int DAYSTOMATDATE { get; set; }
+        public double DAYSTOMATDATE { get; set; }
+        /// <summary>
+        /// LastPrice
+        /// </summary>
+        [JsonPropertyName("Lastprice")]
+        public double LastPrice { get; set; }
+
+        /// <summary>
+        /// TheorPrice
+        /// </summary>
+        [JsonPropertyName("THEORPRICE")]
+        public double TheorPrice { get; set; }
+
+        /// <summary>
+        /// Шаг цены
+        /// </summary>
+        [JsonPropertyName("SEC_PRICE_STEP")]
+        public double Step { get; set; }
+
+        /// <summary>
+        /// Стоимость шага цены
+        /// </summary>
+        [JsonPropertyName("STEPPRICET")]
+        public double StepPrice { get; set; }
+        /// <summary>
+        /// Размер лота
+        /// </summary>
+        [JsonPropertyName("LOTSIZE")]
+        public int Lot { get; set; }
+
+        /// <summary>
+        /// Гарантийное обеспечение покуптеля
+        /// </summary>
+        [JsonPropertyName("BUYDEPO")]
+        public double BuyDepo { get; set; }
+
+
+        /// <summary>
+        /// Гарантийное обеспечение продавца
+        /// </summary>
+        [JsonPropertyName("SELLDEPO")]
+        public double SellDepo { get; set; }
     }
 }

@@ -1530,9 +1530,49 @@
             Bid
             </summary>
         </member>
+        <member name="P:QuikSharp.DataStructures.OptionBoard.ExpDate">
+            <summary>
+            Дата экспирации
+            </summary>
+        </member>
         <member name="P:QuikSharp.DataStructures.OptionBoard.DAYSTOMATDATE">
             <summary>
             DaysToMatDate
+            </summary>
+        </member>
+        <member name="P:QuikSharp.DataStructures.OptionBoard.LastPrice">
+            <summary>
+            LastPrice
+            </summary>
+        </member>
+        <member name="P:QuikSharp.DataStructures.OptionBoard.TheorPrice">
+            <summary>
+            TheorPrice
+            </summary>
+        </member>
+        <member name="P:QuikSharp.DataStructures.OptionBoard.Step">
+            <summary>
+            Шаг цены
+            </summary>
+        </member>
+        <member name="P:QuikSharp.DataStructures.OptionBoard.StepPrice">
+            <summary>
+            Стоимость шага цены
+            </summary>
+        </member>
+        <member name="P:QuikSharp.DataStructures.OptionBoard.Lot">
+            <summary>
+            Размер лота
+            </summary>
+        </member>
+        <member name="P:QuikSharp.DataStructures.OptionBoard.BuyDepo">
+            <summary>
+            Гарантийное обеспечение покуптеля
+            </summary>
+        </member>
+        <member name="P:QuikSharp.DataStructures.OptionBoard.SellDepo">
+            <summary>
+            Гарантийное обеспечение продавца
             </summary>
         </member>
         <member name="T:QuikSharp.DataStructures.OptionType">
@@ -7293,6 +7333,195 @@
             <summary>
             Отменяет существующую стоп-заявку.
             </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetDepo(System.String,System.String,System.String,System.String)">
+            <summary>
+            Функция для получения информации по бумажным лимитам
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetDepoEx(System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Функция для получения информации по бумажным лимитам указанного типа
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetDepoLimits">
+            <summary>
+            Возвращает список записей из таблицы 'Лимиты по бумагам'.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetDepoLimits(System.String)">
+            <summary>
+            Возвращает список записей из таблицы 'Лимиты по бумагам', отфильтрованных по коду инструмента.
+            </summary>
+            <param name="secCode">Код инструментаю</param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetMoney(System.String,System.String,System.String,System.String)">
+             <summary>
+             Функция для получения информации по денежным лимитам
+             </summary>
+            
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetMoneyEx(System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+             функция для получения информации по денежным лимитам указанного типа
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetMoneyLimits">
+            <summary>
+             функция для получения информации по денежным лимитам всех торговых счетов (кроме фьючерсных) и валют
+             Лучшее место для получения связки clientCode + firmid
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetFuturesLimit(System.String,System.String,System.Int32,System.String)">
+            <summary>
+             функция для получения информации по фьючерсным лимитам
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetFuturesClientLimits">
+            <summary>
+             функция для получения информации по фьючерсным лимитам всех клиентских счетов
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetFuturesHolding(System.String,System.String,System.String,System.Int32)">
+            <summary>
+             функция для получения информации по фьючерсным позициям
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetFuturesClientHoldings">
+            <summary>
+             функция для получения информации по всем фьючерсным позициям
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.ParamRequest(System.String,System.String,System.String)">
+            <summary>
+            Функция заказывает получение параметров Таблицы текущих торгов
+            </summary>
+            <param name="classCode"></param>
+            <param name="secCode"></param>
+            <param name="paramName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.CancelParamRequest(System.String,System.String,System.String)">
+            <summary>
+            Функция отменяет заказ на получение параметров Таблицы текущих торгов
+            </summary>
+            <param name="classCode"></param>
+            <param name="secCode"></param>
+            <param name="paramName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetParamEx(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Функция для получения значений Таблицы текущих значений параметров
+            </summary>
+            <param name="classCode"></param>
+            <param name="secCode"></param>
+            <param name="paramName"></param>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetParamEx2(System.String,System.String,System.String)">
+            <summary>
+            Функция для получения всех значений Таблицы текущих значений параметров
+            </summary>
+            <param name="classCode"></param>
+            <param name="secCode"></param>
+            <param name="paramName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetTrades">
+            <summary>
+            функция для получения таблицы сделок по заданному инструменту
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetTrades(System.String,System.String)">
+            <summary>
+            функция для получения таблицы сделок по заданному инструменту
+            </summary>
+            <param name="classCode"></param>
+            <param name="secCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetTradesByOrderNumber(System.Int64)">
+            <summary>
+            функция для получения таблицы сделок номеру заявки
+            </summary>
+            <param name="orderNum"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetAllTrades">
+            <summary>
+            функция для получения таблицы обезличенных сделок
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetAllTrades(System.String,System.String)">
+            <summary>
+            функция для получения таблицы обезличенных сделок по заданному инструменту
+            </summary>
+            <param name="classCode"></param>
+            <param name="secCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetTradeDate">
+            <summary>
+             функция для получения даты торговой сессии
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.CalcBuySell(System.String,System.String,System.String,System.String,System.Double,System.Boolean,System.Boolean)">
+            <summary>
+             функция для расчета максимально возможного количества лотов в заявке
+             При заданном параметре is_market=true, необходимо передать параметр price=0, иначе будет рассчитано максимально возможное количество лотов в заявке по цене price.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetPortfolioInfo(System.String,System.String)">
+            <summary>
+             функция для получения значений параметров таблицы «Клиентский портфель»
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetPortfolioInfoEx(System.String,System.String,System.Int32)">
+            <summary>
+             функция для получения значений параметров таблицы «Клиентский портфель» с учетом вида лимита
+             Для получения значений параметров таблицы «Клиентский портфель» для клиентов срочного рынка без единой денежной позиции
+             необходимо указать в качестве «clientCode» – торговый счет на срочном рынке, а в качестве «limitKind» – 0.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetBuySellInfo(System.String,System.String,System.String,System.String,System.Double)">
+            <summary>
+             функция для получения параметров таблицы «Купить/Продать»
+            </summary>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetTrdAccByClientCode(System.String,System.String)">
+            <summary>
+            Функция возвращает торговый счет срочного рынка, соответствующий коду клиента фондового рынка с единой денежной позицией
+            </summary>
+            <param name="firmId"></param>
+            <param name="clientCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetClientCodeByTrdAcc(System.String,System.String)">
+            <summary>
+            Функция возвращает код клиента фондового рынка с единой денежной позицией, соответствующий торговому счету срочного рынка
+            </summary>
+            <param name="firmId"></param>
+            <param name="trdAccId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.IsUcpClient(System.String,System.String)">
+            <summary>
+            Функция предназначена для получения признака, указывающего имеет ли клиент единую денежную позицию
+            </summary>
+            <param name="firmId">идентификатор фирмы фондового рынка</param>
+            <param name="client">код клиента фондового рынка или торговый счет срочного рынка</param>
+            <returns></returns>
+        </member>
+        <member name="M:QuikSharp.TradingFunctions.GetOptionBoard(System.String,System.String,System.String)">
+            <summary>
+            Функция получения доски опционов
+            </summary>
+            <param name="classCode"></param>
+            <param name="secCode"></param>
+            <returns></returns>
         </member>
         <member name="T:QuikSharp.Transports.IQuikTransport">
             <summary>

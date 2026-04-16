@@ -336,9 +336,9 @@ namespace QuikSharp.Transports
                         //var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
 
                         string json = Encoding.UTF8.GetString(buffer).Trim();
-                        Console.WriteLine($"[{reqId}] RAW d RESPONSE (len={len}):");
-                        Console.WriteLine(json);                     
-                        Console.WriteLine("-----------------------------------");
+                        //Console.WriteLine($"[{reqId}] RAW d RESPONSE (len={len}):");
+                        //Console.WriteLine(json);                     
+                        //Console.WriteLine("-----------------------------------");
 
                         if (string.IsNullOrWhiteSpace(json))
                         {
