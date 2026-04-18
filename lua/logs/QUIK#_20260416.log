@@ -34419,3 +34419,7 @@
 2026-04-16 22:09:12.100 LOG 1: После dispatch: cmd=Unsubscribe_Level_II_Quotes, data тип=boolean
 2026-04-16 22:09:12.150 LOG 0: Запрос от C# 1 (req_id=828): {"t":"1776366552712","cmd":"Subscribe_Level_II_Quotes","id":"828","data":{"t":"1776366552712","cmd":"Subscribe_Level_II_Quotes","data":"SPBOPT|Si79000BS6"}}
 2026-04-16 22:09:12.200 LOG 1: После dispatch: cmd=Subscribe_Level_II_Quotes, data тип=boolean
+2026-04-17 13:21:27.150 LOG 0: Запрос от C# 1 (req_id=1): {"t":"1776421286944","cmd":"getClientCode","id":"1","data":{"t":"1776421286941","cmd":"getClientCode","data":""}}
+2026-04-17 13:21:27.200 LOG 1: После dispatch: cmd=getClientCode, data тип=string
+2026-04-17 13:21:42.050 LOG 0: Запрос от C# 1 (req_id=1): {"t":"1776421302292","cmd":"getClientCode","id":"1","data":{"t":"1776421302290","cmd":"getClientCode","data":""}}
+2026-04-17 13:21:42.100 LOG 1: После dispatch: cmd=getClientCode, data тип=string

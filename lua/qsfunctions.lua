@@ -1331,7 +1331,7 @@ function getOptions(classCode, secCode, series)
 
     local t = {}
     local count = 0
-    local basePrefix = secCode:sub(1, 2)  -- "Si"
+    local basePrefix = secCode:sub(1, 2)
 
     for sec in string.gmatch(SecList, "([^,]+)") do
         sec = sec:match("^%s*(.-)%s*$")
@@ -1345,10 +1345,10 @@ function getOptions(classCode, secCode, series)
                 return ""
             end
 
-            local Optionbase = safe_get("optionbase")
+            local Optionbase = getParamEx(classCode,sec,"optionbase").param_image
             local DaysToMat  = tonumber(safe_get("DAYS_TO_MAT_DATE")) or 0
             local Strike     = tonumber(safe_get("strike")) or 0
-            local OptionType = safe_get("optiontype")
+            local OptionType = getParamEx(classCode,sec,"optiontype").param_image
 
             -- Определяем тип экспирации
             local is_week  = (DaysToMat <= 8)
@@ -1371,21 +1371,21 @@ function getOptions(classCode, secCode, series)
                 local info = getSecurityInfo(classCode, sec) or {}
 
                 local p = {
-                    code           = sec,
+                    code           = getParamEx(classCode,sec,"code").param_image,
                     Name           = info.name or safe_get("shortname") or "",
                     DAYS_TO_MAT_DATE = DaysToMat,
                     BID            = tonumber(safe_get("BID")) or 0,
                     OFFER          = tonumber(safe_get("OFFER")) or 0,
                     OPTIONBASE     = Optionbase,
                     OPTIONTYPE     = OptionType,
-                    Longname       = safe_get("longname") or "",
-                    shortname      = safe_get("shortname") or "",
+                    Longname       = getParamEx(classCode,sec,"longname").param_image or "",
+                    shortname      = getParamEx(classCode,sec,"shortname").param_image or "",
                     Volatility     = tonumber(safe_get("volatility")) or 0,
                     Lot            = tonumber(safe_get("LOTSIZE")) or 1,
                     Strike         = Strike,
                     Lastprice      = tonumber(safe_get("last")) or 0,
                     THEORPRICE     = tonumber(safe_get("THEORPRICE")) or 0,
-                    MAT_DATE       = safe_get("MAT_DATE") or "",
+                    MAT_DATE       = getParamEx(classCode,sec,"MAT_DATE").param_image or "",
                     STEPPRICET     = tonumber(safe_get("STEPPRICET")) or 0,
                     SEC_PRICE_STEP = tonumber(safe_get("SEC_PRICE_STEP")) or 0,
                 }
