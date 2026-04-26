@@ -1477,24 +1477,205 @@ end
 --------------------------------------------------------------------------------
 -- DataSource (подписка на свечи)
 --------------------------------------------------------------------------------
+---
+local function fetch_candle(ds, index)
+    debug_log("fetch_candle: start", "index =", index, "ds:Size() =", ds:Size())
+
+    -- Проверка валидности индекса
+    if index < 1 or index > ds:Size() then
+        debug_log("ERROR: Index out of range!", "index =", index, "size =", ds:Size())
+        return nil
+    end
+
+    local candle = {}
+
+    -- Безопасное получение каждого поля с отладкой
+    local success, value = pcall(function() return ds:O(index) end)
+    if success then 
+        candle.open = value 
+    else 
+        debug_log("ERROR ds:O(" .. index .. ") failed:", value) 
+        candle.open = 0 
+    end
+
+    success, value = pcall(function() return ds:H(index) end)
+    if success then 
+        candle.high = value 
+    else 
+        debug_log("ERROR ds:H(" .. index .. ") failed:", value) 
+        candle.high = 0 
+    end
+
+    success, value = pcall(function() return ds:L(index) end)
+    if success then 
+        candle.low = value 
+    else 
+        debug_log("ERROR ds:L(" .. index .. ") failed:", value) 
+        candle.low = 0 
+    end
+
+    success, value = pcall(function() return ds:C(index) end)
+    if success then 
+        candle.close = value 
+    else 
+        debug_log("ERROR ds:C(" .. index .. ") failed:", value) 
+        candle.close = 0 
+    end
+
+    success, value = pcall(function() return ds:V(index) end)
+    if success then 
+        candle.volume = value 
+    else 
+        debug_log("ERROR ds:V(" .. index .. ") failed:", value) 
+        candle.volume = 0 
+    end
+
+    success, value = pcall(function() return ds:T(index) end)
+    if success then 
+        candle.datetime = value 
+    else 
+        debug_log("ERROR ds:T(" .. index .. ") failed:", value) 
+        candle.datetime = { year=1970, month=1, day=1, hour=0, min=0, sec=0 }
+    end
+
+    debug_log("fetch_candle: finished index=" .. index,
+              "O=" .. tostring(candle.open),
+              "H=" .. tostring(candle.high),
+              "L=" .. tostring(candle.low),
+              "C=" .. tostring(candle.close),
+              "V=" .. tostring(candle.volume))
+
+    return candle
+end
+------ Возвращаем все свечи по заданному инструменту и интервалу
+function qsfunctions.get_candles_from_data_source(msg)
+    debug_log("get_candles_from_data_source: start", "msg.data.data =", msg.data.data)
+
+    local ds, is_error = create_data_source(msg)
+    debug_log("create_data_source result:", "ds =", ds ~= nil, "is_error =", is_error)
+
+    if not is_error then
+        debug_log("DataSource created successfully. Waiting for data...")
+
+        --- датасорс изначально приходит пустой, нужно некоторое время подождать пока он заполниться данными
+        local wait_start = os.clock()
+        repeat 
+            sleep(1)
+            debug_log("Waiting for DS size... current size =", ds:Size())
+        until ds:Size() > 0
+
+        local wait_time = os.clock() - wait_start
+        debug_log("DataSource filled. Size =", ds:Size(), "waited ~", math.floor(wait_time), "seconds")
+
+        local count = tonumber(split(msg.data.data, "|")[4]) 
+        debug_log("Requested count of candles =", count)
+
+        local class, sec, interval = get_candles_param(msg)
+        debug_log("Parameters:", "class =", class, "sec =", sec, "interval =", interval)
+
+        local candles = {}
+        local start_i = count == 0 and 1 or math.max(1, ds:Size() - count + 1)
+
+        debug_log("Will read from index", start_i, "to", ds:Size(), "(total to read:", ds:Size() - start_i + 1, ")")
+
+        for i = start_i, ds:Size() do
+
+            local candle = fetch_candle(ds, i)
+            candle.sec = sec
+            candle.class = class
+            candle.interval = interval
+
+            table.insert(candles, candle)
+
+            -- Отладка каждые 100 свечей, чтобы не спамить лог при большом количестве
+            if i % 100 == 0 or i == ds:Size() then
+                debug_log("Fetched candle", i, "of", ds:Size(), 
+                         "| Open =", candle.open, 
+                         "| Close =", candle.close,
+                         "| Volume =", candle.volume)
+            end
+        end
+
+        debug_log("Total candles fetched =", #candles)
+        
+        ds:Close()
+        debug_log("DataSource closed")
+
+        msg.data = candles
+    else
+        debug_log("ERROR: Failed to create DataSource")
+    end
+
+    debug_log("get_candles_from_data_source: finished", "candles count =", type(msg.data) == "table" and #msg.data or "<not table>")
+    return msg
+end
+
+function create_data_source(msg)
+    debug_log("create_data_source: start", "msg.data =", msg.data)
+
+    local class, sec, interval = get_candles_param(msg)
+    debug_log("get_candles_param result:", 
+              "class =", class, 
+              "sec =", sec, 
+              "interval =", interval)
+
+    local ds, error_descr = CreateDataSource(class, sec, interval)
+    
+    debug_log("CreateDataSource called:", 
+              "ds =", (ds ~= nil), 
+              "error_descr =", error_descr or "<nil>")
+
+    local is_error = false
+
+    if error_descr ~= nil then
+        debug_log("ERROR: CreateDataSource returned error_descr:", error_descr)
+        
+        msg.cmd = "lua_create_data_source_error"
+        msg.lua_error = error_descr
+        is_error = true
+    elseif ds == nil then
+        local err_msg = "Can't create data source for " .. class .. ", " .. sec .. ", " .. tostring(interval)
+        debug_log("ERROR:", err_msg)
+        
+        msg.cmd = "lua_create_data_source_error"
+        msg.lua_error = err_msg
+        is_error = true
+    else
+        debug_log("SUCCESS: DataSource created successfully")
+    end
+
+    debug_log("create_data_source: finished", 
+              "is_error =", is_error, 
+              "returning ds =", (ds ~= nil))
+
+    return ds, is_error
+end
 
 data_sources = data_sources or {}
 last_indexes = last_indexes or {}
+
+--- Возвращает из msg информацию о инструменте на который подписываемся и интервале
+function get_candles_param(msg)
+	local spl = split(msg.data.data, "|")
+	return spl[1], spl[2], tonumber(spl[3])
+end
 
 local function get_key(class, sec, interval)
     return class .. "|" .. sec .. "|" .. tostring(interval)
 end
 
-local function fetch_candle(ds, index)
-    return {
-        open   = ds:O(index),
-        high   = ds:H(index),
-        low    = ds:L(index),
-        close  = ds:C(index),
-        volume = ds:V(index),
-        datetime = ds:T(index)
-    }
-end
+-- local function fetch_candle(ds, index)
+--     return {
+--         open   = ds:O(index),
+--         high   = ds:H(index),
+--         low    = ds:L(index),
+--         close  = ds:C(index),
+--         volume = ds:V(index),
+--         datetime = ds:T(index)
+--     }
+-- end
+
+
 
 local function data_source_callback(index, class, sec, interval)
     local key = get_key(class, sec, interval)

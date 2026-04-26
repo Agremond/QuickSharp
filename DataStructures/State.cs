@@ -17,10 +17,15 @@ namespace QuikSharp.DataStructures
         /// Исполнена
         /// </summary>
         Completed,
+     
 
         /// <summary>
         /// Снята
         /// </summary>
-        Canceled
+        Canceled,
+        /// <summary>
+        /// Плановая
+        /// </summary>
+        Planned
     }
 }

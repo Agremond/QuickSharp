@@ -3687,6 +3687,11 @@
             Снята
             </summary>
         </member>
+        <member name="F:QuikSharp.DataStructures.State.Planned">
+            <summary>
+            Плановая
+            </summary>
+        </member>
         <member name="T:QuikSharp.DataStructures.StopOrder">
             <summary>
             Стоп-заявка
