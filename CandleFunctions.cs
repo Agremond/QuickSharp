@@ -106,7 +106,7 @@ namespace QuikSharp
         /// <returns>Список свечей.</returns>
         public async Task<List<Candle>> GetLastCandles(string classCode, string securityCode, CandleInterval interval, int count, string param = "-")
         {
-            var payload = $"{classCode}|{securityCode}|{(int)interval}|{param}|{count}";
+            var payload = $"{classCode}|{securityCode}|{(int)interval}|{count}|{param}";
             var message = new Message(payload, "get_candles_from_data_source");
             return await _transport.SendAsync<Message, List<Candle>>(message, "get_candles_from_data_source").ConfigureAwait(false);
         }
