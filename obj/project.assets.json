@@ -1979,11 +1979,11 @@
   "project": {
     "version": "2.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Programming\\QuikSharp\\QuikSharp.csproj",
+      "projectUniqueName": "D:\\Programming\\QuikSharp\\QuikSharp.csproj",
       "projectName": "QUIKSharp",
-      "projectPath": "C:\\Programming\\QuikSharp\\QuikSharp.csproj",
+      "projectPath": "D:\\Programming\\QuikSharp\\QuikSharp.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Programming\\QuikSharp\\obj\\",
+      "outputPath": "D:\\Programming\\QuikSharp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages",
@@ -2063,7 +2063,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.107/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.108/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
