@@ -12,9 +12,12 @@ namespace QuikSharp.DataStructures
     public class OrderBook : IWithLuaTimeStamp
     {
         // ReSharper disable InconsistentNaming
+
+        
         /// <summary>
         /// Строка стакана
         /// </summary>
+        /// 
         public class PriceQuantity
         {
             /// <summary>
@@ -27,7 +30,7 @@ namespace QuikSharp.DataStructures
             /// </summary>
             public double quantity { get; set; }
         }
-
+        
         /// <summary>
         /// Код класса
         /// </summary>

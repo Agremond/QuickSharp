@@ -1599,6 +1599,7 @@
             <summary>
             Строка стакана
             </summary>
+            
         </member>
         <member name="P:QuikSharp.DataStructures.OrderBook.PriceQuantity.price">
             <summary>
