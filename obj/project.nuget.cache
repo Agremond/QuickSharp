@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7PbBZaf6etU=",
+  "dgSpecHash": "g3CNJe8YQT4=",
   "success": true,
   "projectFilePath": "D:\\Programming\\QuikSharp\\QuikSharp.csproj",
   "expectedPackageFiles": [
@@ -31,5 +31,15 @@
     "C:\\Users\\Артур\\.nuget\\packages\\system.reflection.typeextensions\\4.7.0\\system.reflection.typeextensions.4.7.0.nupkg.sha512",
     "C:\\Users\\Артур\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.17763.57\\microsoft.windows.sdk.net.ref.10.0.17763.57.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Произошла ошибка при получении данных уязвимости пакета: Время ожидания завершения скачивания \"https://api.nuget.org/v3-vulnerabilities/2026.07.16.05.27.22/vulnerability.base.json\" истекло, так как за 60000\u00A0мс не получено никаких данных.",
+      "projectPath": "D:\\Programming\\QuikSharp\\QuikSharp.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\Programming\\QuikSharp\\QuikSharp.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

@@ -385,19 +385,50 @@ end
 --  лиентские коды и торговые счета
 --------------------------------------------------------------------------------
 
+-- „итает элемент системной таблицы client_codes: в отличие от money_limits/trade_accounts
+-- (записи-таблицы с пол€ми), элементы client_codes бывают Ћ»Ѕќ простой строкой (сам код),
+-- Ћ»Ѕќ таблицей с полем client_code/code Ч обрабатываем оба варианта.
+local function extract_client_code(item)
+    if type(item) == "table" then
+        return item.client_code or item.code
+    end
+    return item
+end
 
-
-function qsfunctions.getClientCode(msg)
-    local count = getNumberOf("MONEY_LIMITS") or 0
-    debug_log("getClientCode: MONEY_LIMITS count =", tostring(count))
+-- –езервный источник (старое поведение): раньше здесь ошибочно сто€ло "MONEY_LIMITS"
+-- (регистр не совпадает с реальным именем системной таблицы QUIK Lua Ч везде в этом файле
+-- используетс€ "money_limits", см. qsfunctions.getMoneyLimits и др.), из-за чего
+-- getNumberOf/getItem не находили нужную таблицу и по факту всегда отдавали максимум одну
+-- запись. ќсновной источник теперь Ч таблица "client_codes" (даЄт все коды клиента сразу,
+-- без прив€зки к валюте/лимиту), money_limits оставлен как fallback на случай, если
+-- client_codes в конкретной сборке терминала недоступна.
+local function collect_client_codes_from_money_limits(seen, codes)
+    local count = getNumberOf("money_limits") or 0
+    debug_log("collect_client_codes_from_money_limits: count =", tostring(count))
 
     for i = 0, count - 1 do
-        local ok, item = pcall(getItem, "MONEY_LIMITS", i)
+        local ok, item = pcall(getItem, "money_limits", i)
+        if ok and item then
+            local cc = extract_client_code(item)
+            if cc and cc ~= "" and not seen[cc] then
+                seen[cc] = true
+                table.insert(codes, cc)
+            end
+        end
+    end
+end
+
+function qsfunctions.getClientCode(msg)
+    local count = getNumberOf("client_codes") or 0
+    debug_log("getClientCode: client_codes count =", tostring(count))
+
+    for i = 0, count - 1 do
+        local ok, item = pcall(getItem, "client_codes", i)
 
         if not ok or not item then
             debug_log("getClientCode: failed to get item at index", tostring(i))
         else
-            local cc = item.client_code
+            local cc = extract_client_code(item)
             debug_log("getClientCode: index", tostring(i), "client_code =", tostring(cc))
 
             if cc and cc ~= "" then
@@ -405,6 +436,14 @@ function qsfunctions.getClientCode(msg)
                 return msg
             end
         end
+    end
+
+    -- client_codes пуста/недоступна Ч пробуем старый источник
+    local seen, codes = {}, {}
+    collect_client_codes_from_money_limits(seen, codes)
+    if #codes > 0 then
+        msg.data = codes[1]
+        return msg
     end
 
     debug_log("getClientCode: no client_code found")
@@ -415,16 +454,16 @@ function qsfunctions.getClientCodes(msg)
     local codes = {}
     local seen = {}
 
-    local count = getNumberOf("MONEY_LIMITS") or 0
-    debug_log("getClientCodes: MONEY_LIMITS count =", tostring(count))
+    local count = getNumberOf("client_codes") or 0
+    debug_log("getClientCodes: client_codes count =", tostring(count))
 
     for i = 0, count - 1 do
-        local ok, item = pcall(getItem, "MONEY_LIMITS", i)
+        local ok, item = pcall(getItem, "client_codes", i)
 
         if not ok or not item then
             debug_log("getClientCodes: failed at index", tostring(i))
         else
-            local cc = item.client_code
+            local cc = extract_client_code(item)
             debug_log("getClientCodes: index", tostring(i), "client_code =", tostring(cc))
 
             if cc and cc ~= "" and not seen[cc] then
@@ -432,6 +471,11 @@ function qsfunctions.getClientCodes(msg)
                 table.insert(codes, cc)
             end
         end
+    end
+
+    -- client_codes пуста/недоступна Ч пробуем старый источник
+    if #codes == 0 then
+        collect_client_codes_from_money_limits(seen, codes)
     end
 
     debug_log("getClientCodes: total unique =", tostring(#codes))
