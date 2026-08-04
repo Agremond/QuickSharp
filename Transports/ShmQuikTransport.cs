@@ -99,16 +99,12 @@ namespace QuikSharp.Transports
 
         public ShmQuikTransport(JsonSerializerOptions? jsonOpts = null)
         {
-            _jsonOpts = jsonOpts ?? new JsonSerializerOptions
-            {
-                               
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                //NumberHandling = JsonNumberHandling.AllowReadingFromString, // помогает частично
-                NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
-
-            };
+            // Раньше здесь при jsonOpts == null (всегда, ни один вызывающий код его не передаёт)
+            // строился отдельный JsonSerializerOptions без кастомных конвертеров, из-за чего
+            // конвертеры, зарегистрированные в QuikJson.Options (см. StringToIntConverter),
+            // фактически никогда не применялись — вопреки полю _jsonOpts выше, которое
+            // инициализировалось QuikJson.Options, но тут же перезатиралось.
+            _jsonOpts = jsonOpts ?? QuikJson.Options;
         }
 
         /// <summary>

@@ -72,12 +72,59 @@ namespace QUIKSharp.DataStructures
                 return int.TryParse(str, out var value) ? value : 0;
             }
             if (reader.TokenType == JsonTokenType.Number)
-                return reader.GetInt32();
+            {
+                if (reader.TryGetInt32(out var intValue))
+                    return intValue;
+
+                // QUIK иногда отдаёт целочисленные поля как float (например "qty":1.0) —
+                // TryGetInt32 отклоняет любой числовой токен с дробной частью, даже нулевой.
+                // В этом случае читаем как double и округляем.
+                return (int)Math.Round(reader.GetDouble());
+            }
 
             throw new JsonException($"Cannot convert {reader.TokenType} to int");
         }
 
         public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
+        {
+            writer.WriteNumberValue(value);
+        }
+    }
+
+    /// <summary>
+    /// Номера заявок в QUIK — 18-19-значные целые (например 1892951937447283712), значительно
+    /// превышающие точное представление double (~15-17 значащих цифр). Если такое поле читать
+    /// как double (как раньше было с Order.OrderNum), последние цифры округляются и итоговое
+    /// значение перестаёт совпадать с реальным номером заявки — из-за этого, например, попытка
+    /// отменить заявку по ORDER_KEY, построенному из округлённого double, уходит на другой
+    /// (или несуществующий) номер и молча отклоняется биржей. Поэтому такие поля объявлены как
+    /// long, а этот конвертер регистрируется глобально в QuikJson.Options.
+    /// </summary>
+    public class StringToLongConverter : JsonConverter<long>
+    {
+        public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.String)
+            {
+                var str = reader.GetString();
+                return long.TryParse(str, out var value) ? value : 0;
+            }
+            if (reader.TokenType == JsonTokenType.Number)
+            {
+                if (reader.TryGetInt64(out var longValue))
+                    return longValue;
+
+                // Дробно-отформatированное число (как "qty":1.0) — восстанавливаем через
+                // double. Для очень больших номеров заявок это уже не гарантирует точность
+                // (double теряет точность после ~15-17 значащих цифр), но это единственный
+                // доступный fallback для нецелого JSON-токена.
+                return (long)Math.Round(reader.GetDouble());
+            }
+
+            throw new JsonException($"Cannot convert {reader.TokenType} to long");
+        }
+
+        public override void Write(Utf8JsonWriter writer, long value, JsonSerializerOptions options)
         {
             writer.WriteNumberValue(value);
         }

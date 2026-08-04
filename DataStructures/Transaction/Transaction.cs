@@ -70,7 +70,12 @@ namespace QuikSharp.DataStructures.Transaction
         public string ACCOUNT { get; set; }
         public string CLIENT_CODE { get; set; }
 
-       // [JsonConverter(typeof(ToStringNumberConverter<int>))]
+        // QUIK принимает транзакцию как таблицу СТРОК — нативный sendTransaction() ожидает
+        // QUANTITY строкой ("1"), а не числом. Без конвертера System.Text.Json пишет decimal
+        // как JSON-число, Lua передаёт его в QUIK как есть, и QUIK форматирует нестроковое
+        // значение по-своему (с 6 знаками после запятой — "1.000000") и отклоняет транзакцию
+        // как нецелое количество ("Неправильно указано количество").
+        [JsonConverter(typeof(ToStringNumberConverter<decimal>))]
         public decimal QUANTITY { get; set; }
 
         [JsonConverter(typeof(ToStringNumberConverter<decimal>))]

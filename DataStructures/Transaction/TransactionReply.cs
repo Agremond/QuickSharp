@@ -70,7 +70,7 @@ namespace QuikSharp.DataStructures.Transaction
         /// Номер заявки
         /// </summary>
         [JsonPropertyName("order_num")]
-        public double? OrderNum { get; set; }
+        public long? OrderNum { get; set; }
 
         /// <summary>
         /// Цена
@@ -152,7 +152,7 @@ namespace QuikSharp.DataStructures.Transaction
         /// Номер первой заявки, которая выставлялась при автоматической замене кода клиента. Используется, если на сервере QUIK настроена замена кода клиента для кросс-сделки
         /// </summary>
         [JsonPropertyName("first_ordernum")]
-        public double FirstOrderNum { get; set; }
+        public long FirstOrderNum { get; set; }
 
         /// <summary>
         /// Дата и время получения шлюзом ответа на транзакцию

@@ -17,7 +17,7 @@ namespace QuikSharp.DataStructures.Transaction
         /// Номер заявки в торговой системе
         /// </summary>
         [JsonPropertyName("order_num")]
-        public double OrderNum { get; set; }
+        public long OrderNum { get; set; }
 
         /// <summary>
         /// Поручение/комментарий, обычно: код клиента/номер поручения

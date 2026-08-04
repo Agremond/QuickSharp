@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using QUIKSharp.DataStructures;
 
 namespace QuikSharp
 {
@@ -27,8 +28,13 @@ namespace QuikSharp
         // Опционально: можно добавить конвенцию, чтобы пустые коллекции всегда сериализовались как []
         static QuikJson()
         {
-            // Если нужно, можно добавить кастомный конвертер сюда
-            // Options.Converters.Add(new EmptyArrayConverter());
+            // QUIK иногда отдаёт целочисленные поля как float (например "qty":1.0 в ответах
+            // по заявкам) — стандартный int-конвертер System.Text.Json такие токены отклоняет.
+            Options.Converters.Add(new StringToIntConverter());
+
+            // Номера заявок (order_num и т.п.) — 18-19-значные целые; long сохраняет точность,
+            // которую double не может (см. StringToLongConverter).
+            Options.Converters.Add(new StringToLongConverter());
         }
     }
 }

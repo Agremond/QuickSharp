@@ -57,7 +57,7 @@ namespace QuikSharp
                 ACTION = TransactionAction.KILL_ORDER,
                 CLASSCODE = order.ClassCode,
                 SECCODE = order.SecCode,
-                ORDER_KEY = order.OrderNum.ToString()
+                ORDER_KEY = order.OrderNum.ToString(System.Globalization.CultureInfo.InvariantCulture)
             };
 
             return await _transport.SendTransaction(txn).ConfigureAwait(false);
