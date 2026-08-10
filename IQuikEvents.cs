@@ -177,5 +177,11 @@ namespace QuikSharp
         /// Функция вызывается терминалом QUIK при получении ответа на транзакцию пользователя.
         /// </summary>
         event TransReplyHandler OnTransReply;
+
+        /// <summary>
+        /// Внутренняя ошибка транспорта (не событие от QUIK, см. IQuikTransport.OnTransportError) —
+        /// без подписчика такие сбои раньше уходили только в Console.WriteLine и терялись.
+        /// </summary>
+        event Action<Exception>? OnTransportError;
     }
 }

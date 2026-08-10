@@ -47,6 +47,13 @@
         <None Remove="Examples\**" />
         <None Remove="lua\**\*.*" />
         <Content Include="lua\**\*.*" />
+        <!-- Legacy пустой файл, дублирует атрибуты сборки, которые SDK-style проект уже
+             генерирует сам (GenerateAssemblyInfo=true по умолчанию) — без исключения свежая
+             сборка падает с CS0579 (Повторяющийся атрибут). -->
+        <Compile Remove="Properties\AssemblyInfo.cs" />
+        <Compile Remove="QS.Tests\**" />
+        <EmbeddedResource Remove="QS.Tests\**" />
+        <None Remove="QS.Tests\**" />
     </ItemGroup>
 
     <ItemGroup>

@@ -32,6 +32,7 @@ namespace QuikSharp
             _transport.OnMoneyLimitDelete += m => OnMoneyLimitDelete?.Invoke(m);
             _transport.OnConnected += () => OnConnected?.Invoke();
             _transport.OnDisconnected += () => OnDisconnected?.Invoke();
+            _transport.OnTransportError += ex => OnTransportError?.Invoke(ex);
         }
 
         public event InitHandler OnConnectedToQuik;
@@ -65,5 +66,6 @@ namespace QuikSharp
         public event StopOrderHandler OnStopOrder;
         public event TradeHandler OnTrade;
         public event TransReplyHandler OnTransReply;
+        public event Action<Exception>? OnTransportError;
     }
 }

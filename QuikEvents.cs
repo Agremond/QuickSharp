@@ -360,6 +360,6 @@ namespace QuikSharp
         /// </summary>
         public event TransReplyHandler OnTransReply;
 
-      
+        public event Action<Exception>? OnTransportError;
     }
 }

@@ -109,6 +109,14 @@ namespace QuikSharp.Transports
         /// <summary>Подключение потеряно (сокеты закрыты, SHM недоступен)</summary>
         event Action OnDisconnected;
 
+        /// <summary>
+        /// Внутренняя ошибка транспорта (не событие от QUIK) — не разобрался входящий callback
+        /// (JSON не десериализуется в ожидаемый тип и т.п.) или иная ошибка цикла чтения
+        /// request/response/callback-канала. Раньше только уходило в Console.WriteLine и терялось —
+        /// никто в приложении на это не подписывался.
+        /// </summary>
+        event Action<Exception>? OnTransportError;
+
         // Опциональные / редкие события (можно добавить позже, если понадобятся)
 
         // event Action<NegDeal> OnNegDeal;
