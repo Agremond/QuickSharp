@@ -19,8 +19,10 @@ namespace QuikSharp
 
             Console.WriteLine("Starting QuikSharp 2026...");
 
-            // Создаём транспорт (пример — SHM)
-            IQuikTransport transport = new ShmQuikTransport(); // <-- твоя реализация
+            // Транспорт выбирается через lua/config.json ("transport": "shm"|"tcp"),
+            // тот же файл читает Lua-скрипт (см. lua/ipc.lua) — выбор общий для обеих сторон.
+            var (kind, host, responsePort, callbackPort) = TransportFactory.ReadFromDefaultConfig();
+            IQuikTransport transport = TransportFactory.Create(kind, host, responsePort, callbackPort);
 
             _quik = new Quik(transport);
 

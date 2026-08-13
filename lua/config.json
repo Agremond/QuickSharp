@@ -1,4 +1,5 @@
 {
+    "transport": "shm",
     "servers": [
         {
             "scriptName": "QuikSharp",

@@ -19,8 +19,9 @@ namespace QuikSharp.IntegrationTests
             // ────────────────────────────────────────────────────────────────
             // 1. Создание единственного транспорта и клиента Quik
             // ────────────────────────────────────────────────────────────────
-            Console.WriteLine("Инициализация SHM-транспорта...");
-            IQuikTransport transport = new ShmQuikTransport();
+            var (kind, host, responsePort, callbackPort) = TransportFactory.ReadFromDefaultConfig();
+            Console.WriteLine($"Инициализация транспорта: {kind}...");
+            IQuikTransport transport = TransportFactory.Create(kind, host, responsePort, callbackPort);
 
             Console.WriteLine("Создание клиента Quik...");
             var quik = new Quik(transport);

@@ -4,7 +4,7 @@
 
 package.path = package.path .. ";.\\?.lua;.\\?.luac"
 
-local qsutils = require "qsutils"
+local qsutils = require "ipc"
 
 local qscallbacks = {}
 

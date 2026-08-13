@@ -2,12 +2,10 @@
 -- ������� ������ QUIK# � �������������� shared memory (ipc.shm + ipc.sem)
 -- ���������� qsutils.lua (������ � connect / receiveRequest / sendResponse)
 
-local util = require "qsutils"
-local json = require "dkjson"           -- ���� ����� �������
-
--- ����������� ������� � ������� QUIK (���� ����� ����������)
-local qf = require "qsfunctions"        -- ��������� ������
-local callbacks = require "qscallbacks" -- ��������� �������
+-- Важно: сами require() ниже отложены до конца блока is_quik(), где настраивается
+-- package.cpath — ipc.lua при transport="tcp" требует "socket", а его native
+-- core.dll ищется именно через этот cpath, который иначе ещё не был бы расширен.
+local util, json, qf, callbacks
 
 -- ��������, ������� �� ������ � QUIK
 function is_quik()
@@ -48,6 +46,13 @@ if is_quik() then
     package.path  = package.path  .. ";" .. script_path .. "\\?.lua;" .. script_path .. "\\?.luac"
     package.cpath = package.cpath .. ";" .. script_path .. libPath .. "?.dll;" .. "." .. libPath .. "?.dll"
 end
+
+util = require "ipc"
+json = require "dkjson"           -- либо через ipc, если нужен
+
+-- транспортно-независимая бизнес-логика QUIK
+qf = require "qsfunctions"        -- обработка команд
+callbacks = require "qscallbacks" -- обработка событий
 
 log("Detected Quik version: " .. (quikVersion or "unknown") .. ", script path: " .. script_path, 0)
 
