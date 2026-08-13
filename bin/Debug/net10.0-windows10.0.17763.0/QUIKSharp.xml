@@ -6699,12 +6699,6 @@
             Функция вызывается терминалом QUIK при получении ответа на транзакцию пользователя.
             </summary>
         </member>
-        <member name="E:QuikSharp.IQuikEvents.OnTransportError">
-            <summary>
-            Внутренняя ошибка транспорта (не событие от QUIK, см. IQuikTransport.OnTransportError) —
-            без подписчика такие сбои раньше уходили только в Console.WriteLine и терялись.
-            </summary>
-        </member>
         <member name="T:QuikSharp.ISecurity">
              <summary>
             
@@ -7627,14 +7621,6 @@
         <member name="E:QuikSharp.Transports.IQuikTransport.OnDisconnected">
             <summary>Подключение потеряно (сокеты закрыты, SHM недоступен)</summary>
         </member>
-        <member name="E:QuikSharp.Transports.IQuikTransport.OnTransportError">
-            <summary>
-            Внутренняя ошибка транспорта (не событие от QUIK) — не разобрался входящий callback
-            (JSON не десериализуется в ожидаемый тип и т.п.) или иная ошибка цикла чтения
-            request/response/callback-канала. Раньше только уходило в Console.WriteLine и терялось —
-            никто в приложении на это не подписывался.
-            </summary>
-        </member>
         <member name="T:QuikSharp.Transports.ShmQuikTransport">
             <summary>
             Транспорт на основе Shared Memory + Semaphore + Mutex (вариант с отдельными буферами)
@@ -7652,48 +7638,6 @@
             Генерирует уникальный TRANS_ID для отправки транзакций в QUIK
             Значение от 1 до ~2.29 млрд, как требует QUIK
             Без MMF — простой, надёжный и быстрый вариант
-            </summary>
-        </member>
-        <member name="T:QuikSharp.Transports.TcpQuikTransport">
-            <summary>
-            Транспорт на основе двух TCP-соединений (request/response + callback), как в исходном
-            "netstack" QuikSharp. Lua-скрипт выступает TCP-сервером (см. lua/nettransport.lua),
-            этот класс — TCP-клиентом. Сообщения — JSON с разделителем "\n".
-            Используется как альтернатива <see cref="T:QuikSharp.Transports.ShmQuikTransport"/>, когда семафоры shared
-            memory приводят к подвешиванию QUIK.
-            </summary>
-        </member>
-        <member name="T:QuikSharp.Transports.TransportKind">
-            <summary>
-            Выбор транспорта QUIK# — shared memory (по умолчанию) или TCP ("netstack").
-            </summary>
-        </member>
-        <member name="T:QuikSharp.Transports.TransportFactory">
-            <summary>
-            Создаёт нужный <see cref="T:QuikSharp.Transports.IQuikTransport"/>, в т.ч. по настройкам из lua/config.json —
-            того же файла, который читает Lua-скрипт (см. lua/ipc.lua), чтобы выбор транспорта
-            был общим для C# и Lua.
-            </summary>
-        </member>
-        <member name="M:QuikSharp.Transports.TransportFactory.FindDefaultConfigPath">
-            <summary>
-            Ищет lua/config.json, поднимаясь от каталога сборки вверх по дереву каталогов —
-            lua/**/* не копируется в bin при сборке (Content без CopyToOutputDirectory), поэтому
-            при запуске из bin/Debug/... нужно найти исходный lua/config.json в дереве проекта.
-            Возвращает null, если файл не найден за 8 уровней.
-            </summary>
-        </member>
-        <member name="M:QuikSharp.Transports.TransportFactory.ReadFromDefaultConfig(System.String)">
-            <summary>
-            Как <see cref="M:QuikSharp.Transports.TransportFactory.ReadFromConfig(System.String,System.String)"/>, но сам находит lua/config.json
-            через <see cref="M:QuikSharp.Transports.TransportFactory.FindDefaultConfigPath"/>.
-            </summary>
-        </member>
-        <member name="M:QuikSharp.Transports.TransportFactory.ReadFromConfig(System.String,System.String)">
-            <summary>
-            Читает config.json (формат см. lua/config.json). При отсутствии файла, поля
-            "transport" или записи для scriptName — возвращает (Shm, значения по умолчанию),
-            т.е. поведение не меняется, если конфиг не трогали.
             </summary>
         </member>
         <member name="T:QUIKSharp.DataStructures.StringToLongConverter">
