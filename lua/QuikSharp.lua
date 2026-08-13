@@ -1,13 +1,18 @@
 -- QuikSharp.lua
--- пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ QUIK# пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ shared memory (ipc.shm + ipc.sem)
--- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ qsutils.lua (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ connect / receiveRequest / sendResponse)
+-- ВНИМАНИЕ: этот файл и остальные *.lua в этой папке должны сохраняться в кодировке
+-- Windows-1251 (cp1251), НЕ в UTF-8. Lua-окружение QUIK читает и показывает кириллицу
+-- (в message()/log() и в самих исходниках) только как cp1251 -- сохранение в UTF-8
+-- превращает все русские строки и комментарии в нечитаемый мусор (в этом файле так уже
+-- однажды произошло, см. git-историю до коммита b673751).
+-- Главный скрипт QUIK# с использованием shared memory (ipc.shm + ipc.sem)
+-- Использует qsutils.lua (работа с connect / receiveRequest / sendResponse)
 
--- Р’Р°Р¶РЅРѕ: СЃР°РјРё require() РЅРёР¶Рµ РѕС‚Р»РѕР¶РµРЅС‹ РґРѕ РєРѕРЅС†Р° Р±Р»РѕРєР° is_quik(), РіРґРµ РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ
--- package.cpath вЂ” ipc.lua РїСЂРё transport="tcp" С‚СЂРµР±СѓРµС‚ "socket", Р° РµРіРѕ native
--- core.dll РёС‰РµС‚СЃСЏ РёРјРµРЅРЅРѕ С‡РµСЂРµР· СЌС‚РѕС‚ cpath, РєРѕС‚РѕСЂС‹Р№ РёРЅР°С‡Рµ РµС‰С‘ РЅРµ Р±С‹Р» Р±С‹ СЂР°СЃС€РёСЂРµРЅ.
+-- Важно: сами require() ниже отложены до конца блока is_quik(), где настраивается
+-- package.cpath -- ipc.lua при transport="tcp" требует "socket", а его native
+-- core.dll ищется именно через этот cpath, который иначе ещё не был бы расширен.
 local util, json, qf, callbacks
 
--- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ QUIK
+-- Проверка, запущен ли скрипт в QUIK
 function is_quik()
     return getScriptPath ~= nil
 end
@@ -48,69 +53,69 @@ if is_quik() then
 end
 
 util = require "ipc"
-json = require "dkjson"           -- Р»РёР±Рѕ С‡РµСЂРµР· ipc, РµСЃР»Рё РЅСѓР¶РµРЅ
+json = require "dkjson"           -- либо через ipc, если нужен
 
--- С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕ-РЅРµР·Р°РІРёСЃРёРјР°СЏ Р±РёР·РЅРµСЃ-Р»РѕРіРёРєР° QUIK
-qf = require "qsfunctions"        -- РѕР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґ
-callbacks = require "qscallbacks" -- РѕР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
+-- транспортно-независимая бизнес-логика QUIK
+qf = require "qsfunctions"        -- обработка команд
+callbacks = require "qscallbacks" -- обработка событий
 
 log("Detected Quik version: " .. (quikVersion or "unknown") .. ", script path: " .. script_path, 0)
 
--- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+-- Проверка статуса выполнения скрипта
 function IsScriptRunning()
     return getScriptPath() ~= nil
 end
 
---- пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (QUIK пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+--- Главная функция (QUIK вызывает автоматически)
 function main()
-    message("QuikSharp: пїЅпїЅпїЅпїЅпїЅпїЅ...", 1)
+    message("QuikSharp: Запуск...", 1)
 
     local connected = util.connect()
     if not connected then
-        message("QuikSharp: пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ shared memory", 3)
+        message("QuikSharp: Не удалось инициализировать shared memory", 3)
         return
     end
 
-    message("QuikSharp: IPC (shared memory) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 1)
+    message("QuikSharp: IPC (shared memory) успешно инициализирован", 1)
 
     while IsScriptRunning() do
-        local cmd, req_id, err = util.receiveRequest(0.150)   -- 50 пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        local cmd, req_id, err = util.receiveRequest(0.150)   -- 50 мс в ожидании данных
 
         if cmd then
 		
             -- --------------------------------
-            -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ C#
+            -- Обработка команд от C#
             -- --------------------------------
-            --log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ C# 1 (req_id=" .. tostring(req_id).."): " .. to_json(cmd), 0)
+            --log("Запрос от C# 1 (req_id=" .. tostring(req_id).."): " .. to_json(cmd), 0)
 	    if cmd.cmd == "ping" then
-            -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ping пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ
+            -- Специальная обработка ping с ответом как-нибудь
             response = {
                 cmd    = "ping",
-                req_id = req_id,          -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ id
-                data   = "Pong",          -- пїЅпїЅпїЅ "Ping", "OK", "" пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                req_id = req_id,          -- Обязательно возвращаем тот же id
+                data   = "Pong",          -- Или "Ping", "OK", "" в зависимости
                 t      = timemsec(),
                 success = true
             }
         else	
 	        local result = qf.dispatch_and_process(cmd)
 		if cmd.nonce then
-		    result.nonce = cmd.nonce   -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
+		    result.nonce = cmd.nonce   -- Добавляем обратно в ответ
         end
 		result.req_id = req_id
-		--log("пїЅпїЅпїЅпїЅпїЅ dispatch: cmd=" .. tostring(result.cmd) .. ", data пїЅпїЅпїЅ=" .. type(result.data), 1)
+		--log("После dispatch: cmd=" .. tostring(result.cmd) .. ", data тип=" .. type(result.data), 1)
 	        local ok, send_err = util.sendResponse(result)
 	        if not ok then
-	            log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: " .. tostring(send_err), 2)
+	            log("Ошибка отправки ответа: " .. tostring(send_err), 2)
 	        end
 	   end
 
         elseif err == "timeout" then
-            -- пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+            -- Тишина, идем в начало или просто ждем
             sleep(5)
 
         elseif err == "empty body" then
             -- --------------------------------
-            -- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ pong / heartbeat
+            -- Пример структуры в стиле заголовок pong / heartbeat
             -- --------------------------------
             local response = {
                 cmd     = "heartbeat",
@@ -120,38 +125,39 @@ function main()
             }
             local ok, send_err = util.sendResponse(response)
             if not ok then
-                log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ heartbeat: " .. tostring(send_err), 2)
+                log("Ошибка отправки heartbeat: " .. tostring(send_err), 2)
             end
 
         else
             -- --------------------------------
-            -- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ / пїЅпїЅпїЅпїЅпїЅпїЅпїЅ / пїЅпїЅпїЅпїЅпїЅ
+            -- Прочие ошибки / события / вылет
             -- --------------------------------
             if err then
-                log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " .. tostring(err), 2)
+                log("Ошибка цикла событий: " .. tostring(err), 2)
             end
-            sleep(10)   -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            sleep(10)   -- Небольшая пауза перед повторной попыткой
         end
     end
 
     util.Close()
-    message("QuikSharp: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 1)
+    message("QuikSharp: Работа завершена", 1)
 end
 
--- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ QUIK-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+-- Обязательные QUIK-функции
 function OnInit()
-    -- пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    -- Здесь возможна дополнительная инициализация, если нужно
 end
 
 function OnStop()
     util.Close()
-    message("QuikSharp: OnStop > IPC пїЅпїЅпїЅпїЅпїЅпїЅ", 1)
+    message("QuikSharp: OnStop > IPC закрыт", 1)
 end
 
--- OnOrder/OnTrade Р·РґРµСЃСЊ СЂР°РЅСЊС€Рµ РїРµСЂРµРѕРїСЂРµРґРµР»СЏР»РёСЃСЊ, РЅРѕ РїСЂРѕРІРµСЂСЏР»Рё callbacks.OnOrder/callbacks.OnTrade,
--- Р° qscallbacks.lua РІРѕР·РІСЂР°С‰Р°РµС‚ РїСѓСЃС‚СѓСЋ С‚Р°Р±Р»РёС†Сѓ (РІСЃРµ С„СѓРЅРєС†РёРё С‚Р°Рј вЂ” РіР»РѕР±Р°Р»СЊРЅС‹Рµ, РЅРµ РїРѕР»СЏ С‚Р°Р±Р»РёС†С‹) вЂ”
--- СѓСЃР»РѕРІРёРµ РІСЃРµРіРґР° Р±С‹Р»Рѕ false, Рё util.sendCallback РЅРёРєРѕРіРґР° РЅРµ РІС‹Р·С‹РІР°Р»СЃСЏ. РЈР±СЂР°РЅРѕ: РіР»РѕР±Р°Р»СЊРЅС‹Рµ
--- OnOrder/OnTrade/OnTransReply/OnQuote/OnFuturesClientHolding/..., РѕР±СЉСЏРІР»РµРЅРЅС‹Рµ РІРЅСѓС‚СЂРё
--- qscallbacks.lua (require РІС‹С€Рµ), Рё С‚Р°Рє РєРѕСЂСЂРµРєС‚РЅРѕ С€Р»СЋС‚ sendEvent(...) СЃР°РјРё, Р±РµР· РѕР±С‘СЂС‚РѕРє Р·РґРµСЃСЊ.
+-- Функции обратного вызова QUIK > C#
+-- OnOrder/OnTrade здесь раньше переопределялись, но проверяли callbacks.OnOrder/callbacks.OnTrade,
+-- а qscallbacks.lua возвращает пустую таблицу (все функции там -- глобальные, не поля таблицы) --
+-- условие всегда было false, и util.sendCallback никогда не вызывался. Убрано: глобальные
+-- OnOrder/OnTrade/OnTransReply/OnQuote/OnFuturesClientHolding/..., объявленные внутри
+-- qscallbacks.lua (require выше), и так корректно шлют sendEvent(...) сами, без обёрток здесь.
 
-message("QuikSharp пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (SHM-пїЅпїЅпїЅпїЅпїЅ)", 1)
+message("QuikSharp готов к связи в памяти (SHM-режим)", 1)

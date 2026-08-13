@@ -1,13 +1,18 @@
 -- nettransport.lua
--- IPC-РјРѕРґСѓР»СЊ QUIK# РЅР° TCP ("netstack"): Lua РІС‹СЃС‚СѓРїР°РµС‚ TCP-СЃРµСЂРІРµСЂРѕРј (2 РїРѕСЂС‚Р°: response,
--- callback = response+1), C# РїРѕРґРєР»СЋС‡Р°РµС‚СЃСЏ РєР°Рє TCP-РєР»РёРµРЅС‚. РЎРѕРѕР±С‰РµРЅРёСЏ вЂ” JSON СЃ СЂР°Р·РґРµР»РёС‚РµР»РµРј "\n".
--- РђР»СЊС‚РµСЂРЅР°С‚РёРІР° ShmQuikTransport/qsutils.lua, РІС‹Р±РёСЂР°РµС‚СЃСЏ С‡РµСЂРµР· lua/config.json ("transport").
+-- ВНИМАНИЕ: этот файл должен сохраняться в кодировке Windows-1251 (cp1251), НЕ в UTF-8.
+-- Lua-окружение QUIK читает и показывает кириллицу (в message()/log() и в самих
+-- исходниках) только как cp1251 -- сохранение в UTF-8 превращает все русские строки
+-- и комментарии в нечитаемый мусор (см. lua/QuikSharp.lua и его git-историю, где это
+-- уже однажды случилось).
+-- IPC-модуль QUIK# на TCP ("netstack"): Lua выступает TCP-сервером (2 порта: response,
+-- callback = response+1), C# подключается как TCP-клиент. Сообщения — JSON с разделителем "\n".
+-- Альтернатива ShmQuikTransport/qsutils.lua, выбирается через lua/config.json ("transport").
 --
--- РџРѕРІС‚РѕСЂСЏРµС‚ С‚РѕС‚ Р¶Рµ РєРѕРЅС‚СЂР°РєС‚ С„СѓРЅРєС†РёР№, С‡С‚Рѕ Рё qsutils.lua (connect/receiveRequest/sendResponse/
--- sendCallback/Close/is_connected), Рё С‚Рµ Р¶Рµ РіР»РѕР±Р°Р»СЊРЅС‹Рµ С…РµР»РїРµСЂС‹
+-- Повторяет тот же контракт функций, что и qsutils.lua (connect/receiveRequest/sendResponse/
+-- sendCallback/Close/is_connected), и те же глобальные хелперы
 -- (log/delay/timemsec/split/split2/to_json/from_json/scriptFilename/paramsFromConfig),
--- С‚Р°Рє РєР°Рє qsfunctions.lua/qscallbacks.lua РёСЃРїРѕР»СЊР·СѓСЋС‚ С‡Р°СЃС‚СЊ РёР· РЅРёС… РЅР°РїСЂСЏРјСѓСЋ (РЅРµ С‡РµСЂРµР· qsutils),
--- РїРѕСЌС‚РѕРјСѓ СЌС‚РѕС‚ РјРѕРґСѓР»СЊ вЂ” РїРѕР»РЅРѕС†РµРЅРЅС‹Р№ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅС‹Р№ "СЃРѕСЃРµРґ" qsutils.lua, Р° РЅРµ С‚РѕР»СЊРєРѕ IPC.
+-- так как qsfunctions.lua/qscallbacks.lua используют часть из них напрямую (не через qsutils),
+-- поэтому этот модуль — полноценный самостоятельный "сосед" qsutils.lua, а не только IPC.
 
 local socket = require "socket"
 local json   = require "dkjson"
@@ -15,7 +20,7 @@ local json   = require "dkjson"
 local qsutils = {}
 
 --------------------------------------------------------------------------------
--- Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ С„СѓРЅРєС†РёРё РІСЂРµРјРµРЅРё Рё Р·Р°РґРµСЂР¶РµРє (РїРѕРІС‚РѕСЂСЏРµС‚ qsutils.lua)
+-- Вспомогательные функции времени и задержек (повторяет qsutils.lua)
 --------------------------------------------------------------------------------
 
 function delay(msec)
@@ -45,7 +50,7 @@ function scriptFilename()
 end
 
 --------------------------------------------------------------------------------
--- РџСѓС‚Рё Рё Р»РѕРіРёСЂРѕРІР°РЅРёРµ
+-- Пути и логирование
 --------------------------------------------------------------------------------
 
 local script_path = getScriptPath and getScriptPath() or "."
@@ -95,7 +100,7 @@ end
 logfile = openLog()
 
 --------------------------------------------------------------------------------
--- РљРѕРЅС„РёРі Рё СЂР°Р·Р±РёРµРЅРёРµ СЃС‚СЂРѕРє
+-- Конфиг и разбиение строк
 --------------------------------------------------------------------------------
 
 local function readConfigAsJson()
@@ -159,7 +164,7 @@ function split2(inputstr, sep)
 end
 
 --------------------------------------------------------------------------------
--- JSON РѕР±С‘СЂС‚РєРё
+-- JSON обёртки
 --------------------------------------------------------------------------------
 
 function from_json(str)
@@ -182,16 +187,16 @@ function to_json(tbl)
 end
 
 --------------------------------------------------------------------------------
--- IPC РїРѕРІРµСЂС… TCP-СЃРѕРєРµС‚РѕРІ (Lua = СЃРµСЂРІРµСЂ, C# = РєР»РёРµРЅС‚)
+-- IPC поверх TCP-сокетов (Lua = сервер, C# = клиент)
 --------------------------------------------------------------------------------
 
-local SCRIPT_NAME = "QuikSharp"   -- РґРѕР»Р¶РЅРѕ СЃРѕРІРїР°РґР°С‚СЊ СЃ Р·Р°РїРёСЃСЊСЋ "servers" РІ config.json
+local SCRIPT_NAME = "QuikSharp"   -- должно совпадать с записью "servers" в config.json
 
 local response_server, callback_server
 local response_client, callback_client
 local is_connected_flag = false
 
---- РЅРµР±Р»РѕРєРёСЂСѓСЋС‰РёР№ accept РЅР° РѕР±РѕРёС… СЃРµСЂРІРµСЂРЅС‹С… СЃРѕРєРµС‚Р°С… (settimeout(0) => accept() РЅРµ Р±Р»РѕРєРёСЂСѓРµС‚)
+--- неблокирующий accept на обоих серверных сокетах (settimeout(0) => accept() не блокирует)
 local function try_accept_clients()
     if response_client and callback_client then
         return true
@@ -233,7 +238,7 @@ local function disconnect()
     if callback_client then pcall(callback_client.close, callback_client); callback_client = nil end
 end
 
---- РїРѕРґРєР»СЋС‡РµРЅРёРµ/РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ: Р±РёРЅРґРёС‚ СЃРµСЂРІРµСЂРЅС‹Рµ СЃРѕРєРµС‚С‹ (РЅРµ Р±Р»РѕРєРёСЂСѓРµС‚)
+--- подключение/инициализация: биндит серверные сокеты (не блокирует)
 function qsutils.connect()
     if response_server and callback_server then
         try_accept_clients()
@@ -264,7 +269,7 @@ function qsutils.connect()
     return true
 end
 
---- С‡РёС‚Р°РµС‚ Р·Р°РїСЂРѕСЃ РѕС‚ C# (РЅРµР±Р»РѕРєРёСЂСѓСЋС‰Рµ, СЃ С‚Р°Р№РјР°СѓС‚РѕРј), РєР°Рє qsutils.receiveRequest
+--- читает запрос от C# (неблокирующе, с таймаутом), как qsutils.receiveRequest
 function qsutils.receiveRequest(timeout_sec)
     timeout_sec = timeout_sec or 5.0
 
@@ -295,11 +300,11 @@ function qsutils.receiveRequest(timeout_sec)
         return nil, "disconnected"
     end
 
-    -- ok and sockerr == "timeout", Р»РёР±Рѕ pcall РїРѕР№РјР°Р» СЂРµР°Р»СЊРЅСѓСЋ РѕС€РёР±РєСѓ СЃРѕРєРµС‚Р°
+    -- ok and sockerr == "timeout", либо pcall поймал реальную ошибку сокета
     return nil, "timeout"
 end
 
---- РѕС‚РїСЂР°РІРєР° РѕС‚РІРµС‚Р° РёР»Рё callback'Р° РІ C#
+--- отправка ответа или callback'а в C#
 local function send_message(client, msg_table)
     if not client then
         return nil, "not connected"
@@ -344,8 +349,8 @@ end
 
 qsutils.is_connected = function() return is_connected_flag end
 
--- РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃРѕ СЃС‚Р°СЂС‹Рј РєРѕРґРѕРј (qsfunctions.lua Р·РѕРІС‘С‚ sendCallback РєР°Рє РіР»РѕР±Р°Р»СЊРЅСѓСЋ
--- С„СѓРЅРєС†РёСЋ, РЅР°РїСЂРёРјРµСЂ РїСЂРё РїСѓР±Р»РёРєР°С†РёРё РЅРѕРІРѕР№ СЃРІРµС‡Рё РёР· data source callback)
+-- для совместимости со старым кодом (qsfunctions.lua зовёт sendCallback как глобальную
+-- функцию, например при публикации новой свечи из data source callback)
 sendResponse = qsutils.sendResponse
 sendCallback = qsutils.sendCallback
 

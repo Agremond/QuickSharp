@@ -1,40 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Programming\\QuikSharp\\",
+  "WorkspaceRootPath": "D:\\Programming\\QuikSharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\candlefunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\candlefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:candlefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:transports\\shmquiktransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\tradingfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:tradingfunctions\\tradingfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\orderbookfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\orderfunctionstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|c:\\programming\\quiksharp\\classfunctions\\classfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{30A32241-46DE-6CB2-2DC4-89BE6305B391}|QuikSharp.csproj|solutionrelative:classfunctions\\classfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{87404FDC-94FB-B5ED-FBB1-AAFAED49972A}|..\\QS.Tests\\QS.Tests.csproj|c:\\programming\\qs.tests\\servicefuncitonstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A64C4FFC-48E4-7BFA-962F-6AAFCE700096}|QS.Tests\\QS.Tests.csproj|d:\\programming\\quiksharp\\qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A64C4FFC-48E4-7BFA-962F-6AAFCE700096}|QS.Tests\\QS.Tests.csproj|solutionrelative:qs.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -44,43 +14,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\Program.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\Program.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\Program.cs",
-              "RelativeToolTip": "..\\QS.Tests\\Program.cs",
-              "ViewState": "AgIAAOEAAAAAAAAAAAAewPYAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:23:21.868Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ShmQuikTransport.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
-              "RelativeDocumentMoniker": "Transports\\ShmQuikTransport.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\Transports\\ShmQuikTransport.cs",
-              "RelativeToolTip": "Transports\\ShmQuikTransport.cs",
-              "ViewState": "AgIAAAUBAAAAAAAAAAAvwCMBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T19:20:36.024Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
@@ -88,102 +26,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CandleFunctions.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\CandleFunctions.cs",
-              "RelativeDocumentMoniker": "CandleFunctions.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\CandleFunctions.cs",
-              "RelativeToolTip": "CandleFunctions.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAewGgAAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T11:18:14.796Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CandleFunctionsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\CandleFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\CandleFunctionsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\CandleFunctionsTest.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAIA5wDEAAAAIAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Programming\\QuikSharp\\QS.Tests\\Program.cs",
+              "RelativeDocumentMoniker": "QS.Tests\\Program.cs",
+              "ToolTip": "D:\\Programming\\QuikSharp\\QS.Tests\\Program.cs",
+              "RelativeToolTip": "QS.Tests\\Program.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAgwD0AAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T11:08:21.848Z",
+              "WhenOpened": "2026-08-13T19:19:48.354Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TradingFunctionsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\TradingFunctionsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\TradingFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\TradingFunctionsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\TradingFunctionsTest.cs",
-              "ViewState": "AgIAAA0BAAAAAAAAAAAMwDUBAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T19:49:25.031Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "OrderBookFunctionsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\OrderBookFunctionsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\OrderBookFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\OrderBookFunctionsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\OrderBookFunctionsTest.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBgAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T19:04:51.548Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "OrderFunctionsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\OrderFunctionsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\OrderFunctionsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\OrderFunctionsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\OrderFunctionsTest.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAowEcAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T14:48:25.35Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "TradingFunctions.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\TradingFunctions\\TradingFunctions.cs",
-              "RelativeDocumentMoniker": "TradingFunctions\\TradingFunctions.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\TradingFunctions\\TradingFunctions.cs",
-              "RelativeToolTip": "TradingFunctions\\TradingFunctions.cs",
-              "ViewState": "AgIAAGkBAAAAAAAAAAAqwH8BAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T18:47:18.456Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ClassFunctions.cs",
-              "DocumentMoniker": "C:\\Programming\\QuikSharp\\ClassFunctions\\ClassFunctions.cs",
-              "RelativeDocumentMoniker": "ClassFunctions\\ClassFunctions.cs",
-              "ToolTip": "C:\\Programming\\QuikSharp\\ClassFunctions\\ClassFunctions.cs",
-              "RelativeToolTip": "ClassFunctions\\ClassFunctions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T21:55:44.635Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ServiceFuncitonsTest.cs",
-              "DocumentMoniker": "C:\\Programming\\QS.Tests\\ServiceFuncitonsTest.cs",
-              "RelativeDocumentMoniker": "..\\QS.Tests\\ServiceFuncitonsTest.cs",
-              "ToolTip": "C:\\Programming\\QS.Tests\\ServiceFuncitonsTest.cs",
-              "RelativeToolTip": "..\\QS.Tests\\ServiceFuncitonsTest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T18:45:50.968Z"
             }
           ]
         }

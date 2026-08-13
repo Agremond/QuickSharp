@@ -45,8 +45,7 @@ namespace QuikSharp.IntegrationTests
             {
                 Console.WriteLine($"Ошибка подключения: {ex.Message}");
                 transport.Dispose();
-                Console.WriteLine("\nНажмите любую клавишу для выхода...");
-                Console.ReadKey();
+                WaitForKeyIfInteractive();
                 return;
             }
 
@@ -55,12 +54,12 @@ namespace QuikSharp.IntegrationTests
             // ────────────────────────────────────────────────────────────────
             try
             {
-                //RunClassTests(quik);
-                //RunServiceTests(quik);
-               // RunTradingTests(quik);
-                //RunCandleFunctionsTests(quik);
+                RunClassTests(quik);
+                RunServiceTests(quik);
+                RunTradingTests(quik);
+                RunCandleFunctionsTests(quik);
                 RunOrderFunctionsTests(quik);
-               //RunOrderBookTests(quik);
+               RunOrderBookTests(quik);
 
             }
             catch (Exception ex)
@@ -76,10 +75,22 @@ namespace QuikSharp.IntegrationTests
             // Отключение и очистка ресурсов
            
             
-            Console.WriteLine("\nНажмите любую клавишу для выхода...");
-            Console.ReadKey();
+            WaitForKeyIfInteractive();
             transport.Dispose();
             Console.WriteLine("Ресурсы освобождены.");
+            WaitForKeyIfInteractive();
+        }
+
+        /// <summary>
+        /// Ждёт нажатия клавиши только в интерактивной консоли. При перенаправленном
+        /// stdin/stdout (автоматический запуск, pipe) Console.ReadKey() бросает
+        /// InvalidOperationException -- в этом случае просто продолжаем без ожидания.
+        /// </summary>
+        private static void WaitForKeyIfInteractive()
+        {
+            if (Console.IsInputRedirected)
+                return;
+
             Console.WriteLine("\nНажмите любую клавишу для выхода...");
             Console.ReadKey();
         }

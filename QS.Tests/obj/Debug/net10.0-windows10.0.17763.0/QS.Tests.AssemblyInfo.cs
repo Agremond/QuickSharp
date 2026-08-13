@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QS.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56968501e077ceb071589418ab0f52512d8b73c5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b3b7d9cbaf94eb98c19ef0912aba56197ff8079a")]
 [assembly: System.Reflection.AssemblyProductAttribute("QS.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QS.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

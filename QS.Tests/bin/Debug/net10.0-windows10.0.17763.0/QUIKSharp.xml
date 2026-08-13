@@ -7654,6 +7654,48 @@
             Без MMF — простой, надёжный и быстрый вариант
             </summary>
         </member>
+        <member name="T:QuikSharp.Transports.TcpQuikTransport">
+            <summary>
+            Транспорт на основе двух TCP-соединений (request/response + callback), как в исходном
+            "netstack" QuikSharp. Lua-скрипт выступает TCP-сервером (см. lua/nettransport.lua),
+            этот класс — TCP-клиентом. Сообщения — JSON с разделителем "\n".
+            Используется как альтернатива <see cref="T:QuikSharp.Transports.ShmQuikTransport"/>, когда семафоры shared
+            memory приводят к подвешиванию QUIK.
+            </summary>
+        </member>
+        <member name="T:QuikSharp.Transports.TransportKind">
+            <summary>
+            Выбор транспорта QUIK# — shared memory (по умолчанию) или TCP ("netstack").
+            </summary>
+        </member>
+        <member name="T:QuikSharp.Transports.TransportFactory">
+            <summary>
+            Создаёт нужный <see cref="T:QuikSharp.Transports.IQuikTransport"/>, в т.ч. по настройкам из lua/config.json —
+            того же файла, который читает Lua-скрипт (см. lua/ipc.lua), чтобы выбор транспорта
+            был общим для C# и Lua.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.Transports.TransportFactory.FindDefaultConfigPath">
+            <summary>
+            Ищет lua/config.json, поднимаясь от каталога сборки вверх по дереву каталогов —
+            lua/**/* не копируется в bin при сборке (Content без CopyToOutputDirectory), поэтому
+            при запуске из bin/Debug/... нужно найти исходный lua/config.json в дереве проекта.
+            Возвращает null, если файл не найден за 8 уровней.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.Transports.TransportFactory.ReadFromDefaultConfig(System.String)">
+            <summary>
+            Как <see cref="M:QuikSharp.Transports.TransportFactory.ReadFromConfig(System.String,System.String)"/>, но сам находит lua/config.json
+            через <see cref="M:QuikSharp.Transports.TransportFactory.FindDefaultConfigPath"/>.
+            </summary>
+        </member>
+        <member name="M:QuikSharp.Transports.TransportFactory.ReadFromConfig(System.String,System.String)">
+            <summary>
+            Читает config.json (формат см. lua/config.json). При отсутствии файла, поля
+            "transport" или записи для scriptName — возвращает (Shm, значения по умолчанию),
+            т.е. поведение не меняется, если конфиг не трогали.
+            </summary>
+        </member>
         <member name="T:QUIKSharp.DataStructures.StringToLongConverter">
             <summary>
             Номера заявок в QUIK — 18-19-значные целые (например 1892951937447283712), значительно
