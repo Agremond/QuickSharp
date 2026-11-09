@@ -141,9 +141,9 @@ namespace QuikSharp.Transports
                 var responseStream = _responseClient.GetStream();
                 var callbackStream = _callbackClient.GetStream();
 
-                _responseReader = new StreamReader(responseStream, Encoding.UTF8);
-                _responseWriter = new StreamWriter(responseStream, Encoding.UTF8) { AutoFlush = true, NewLine = "\n" };
-                _callbackReader = new StreamReader(callbackStream, Encoding.UTF8);
+                _responseReader = new StreamReader(responseStream, QuikWireEncoding.Cp1251);
+                _responseWriter = new StreamWriter(responseStream, QuikWireEncoding.Cp1251) { AutoFlush = true, NewLine = "\n" };
+                _callbackReader = new StreamReader(callbackStream, QuikWireEncoding.Cp1251);
 
                 _running = true;
 
