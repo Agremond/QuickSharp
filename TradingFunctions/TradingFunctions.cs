@@ -190,6 +190,48 @@ namespace QuikSharp
 
         public Task<bool> CancelParamRequest(string classCode, string secCode, ParamNames paramName)
             => CancelParamRequest(classCode, secCode, paramName.ToString());
+
+        // ------------------------------------------------------------------------
+        // Пакетные варианты: один запрос к Lua на весь список (class|sec|param), а не по одному.
+        // Каталог облигаций — ~3000 бумаг × десятки параметров; по одному запросу это минуты,
+        // пакетом — секунды. Порядок результата совпадает с порядком запросов.
+        // ------------------------------------------------------------------------
+
+        /// <summary>Заказывает получение параметров Таблицы текущих торгов пакетом (ParamRequest).
+        /// Без заказа QUIK получает с сервера только параметры открытых в терминале таблиц.</summary>
+        public async Task<List<bool>> ParamRequestBulk(IReadOnlyList<(string ClassCode, string SecCode, string ParamName)> requests)
+        {
+            if (requests.Count == 0) return new List<bool>();
+            return await _transport.SendAsync<Message, List<bool>>(
+                new Message(ToBulkPayload(requests), "paramRequestBulk"), "paramRequestBulk").ConfigureAwait(false)
+                ?? new List<bool>();
+        }
+
+        /// <summary>Отменяет заказ параметров пакетом (CancelParamRequest).</summary>
+        public async Task<List<bool>> CancelParamRequestBulk(IReadOnlyList<(string ClassCode, string SecCode, string ParamName)> requests)
+        {
+            if (requests.Count == 0) return new List<bool>();
+            return await _transport.SendAsync<Message, List<bool>>(
+                new Message(ToBulkPayload(requests), "cancelParamRequestBulk"), "cancelParamRequestBulk").ConfigureAwait(false)
+                ?? new List<bool>();
+        }
+
+        /// <summary>Значения параметров Таблицы текущих торгов пакетом (getParamEx2).</summary>
+        public async Task<List<ParamTable>> GetParamEx2Bulk(IReadOnlyList<(string ClassCode, string SecCode, string ParamName)> requests)
+        {
+            if (requests.Count == 0) return new List<ParamTable>();
+            return await _transport.SendAsync<Message, List<ParamTable>>(
+                new Message(ToBulkPayload(requests), "getParamEx2Bulk"), "getParamEx2Bulk").ConfigureAwait(false)
+                ?? new List<ParamTable>();
+        }
+
+        private static string[] ToBulkPayload(IReadOnlyList<(string ClassCode, string SecCode, string ParamName)> requests)
+        {
+            var payload = new string[requests.Count];
+            for (int i = 0; i < requests.Count; i++)
+                payload[i] = $"{requests[i].ClassCode}|{requests[i].SecCode}|{requests[i].ParamName}";
+            return payload;
+        }
         /// <summary>
         /// Функция для получения значений Таблицы текущих значений параметров
         /// </summary>

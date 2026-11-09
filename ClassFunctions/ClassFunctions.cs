@@ -44,6 +44,19 @@ namespace QuikSharp
             return await _transport.SendAsync<Message, SecurityInfo>(message, "getSecurityInfo").ConfigureAwait(false);
         }
 
+        /// <summary>getSecurityInfo пакетом — один запрос к Lua на весь список; порядок результата
+        /// совпадает с порядком запросов, для неизвестной бумаги — null.</summary>
+        public async Task<List<SecurityInfo?>> GetSecurityInfoBulk(IReadOnlyList<(string ClassCode, string SecCode)> securities)
+        {
+            if (securities.Count == 0) return new List<SecurityInfo?>();
+            var payload = new string[securities.Count];
+            for (int i = 0; i < securities.Count; i++)
+                payload[i] = $"{securities[i].ClassCode}|{securities[i].SecCode}";
+            return await _transport.SendAsync<Message, List<SecurityInfo?>>(
+                new Message(payload, "getSecurityInfoBulk"), "getSecurityInfoBulk").ConfigureAwait(false)
+                ?? new List<SecurityInfo?>();
+        }
+
         public async Task<SecurityInfo> GetSecurityInfo(ISecurity security)
         {
             return await GetSecurityInfo(security.ClassCode, security.SecCode).ConfigureAwait(false);

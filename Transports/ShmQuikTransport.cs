@@ -241,7 +241,7 @@ namespace QuikSharp.Transports
             };
 
             string json = JsonSerializer.Serialize(msg, _jsonOpts);
-            byte[] payload = Encoding.UTF8.GetBytes(json);
+            byte[] payload = QuikWireEncoding.Cp1251.GetBytes(json);
 
             if (payload.Length > REQ_SIZE - HEADER)
                 throw new ArgumentException($"Request too large ({payload.Length} bytes)");
@@ -331,7 +331,7 @@ namespace QuikSharp.Transports
                         
                         //var msg = JsonSerializer.Deserialize<Message>(json, _jsonOpts);
 
-                        string json = Encoding.UTF8.GetString(buffer).Trim();
+                        string json = QuikWireEncoding.Cp1251.GetString(buffer).Trim();
                         //Console.WriteLine($"[{reqId}] RAW d RESPONSE (len={len}):");
                         //Console.WriteLine(json);                     
                         //Console.WriteLine("-----------------------------------");
@@ -431,7 +431,7 @@ namespace QuikSharp.Transports
 
                         
                         
-                        string json = Encoding.UTF8.GetString(buffer).Trim();
+                        string json = QuikWireEncoding.Cp1251.GetString(buffer).Trim();
                        
                         //Console.WriteLine(json);                          // ← самый важный лог!
                         //Console.WriteLine("-----------------------------------");

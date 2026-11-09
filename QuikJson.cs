@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using QUIKSharp.DataStructures;
 
@@ -23,6 +24,10 @@ namespace QuikSharp
 
             // Дополнительно помогает в пограничных случаях
             DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+
+            // Кириллица уходит в Lua байтами cp1251 (см. QuikWireEncoding), а не \uXXXX: dkjson
+            // раскодировал бы такие последовательности в UTF-8, и QUIK получил бы «кракозябры».
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
         // Опционально: можно добавить конвенцию, чтобы пустые коллекции всегда сериализовались как []
