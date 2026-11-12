@@ -65,11 +65,13 @@ namespace QuikSharp.DataStructures
         /// <summary>
         /// Котировки спроса (покупки)
         /// </summary>
+        [JsonConverter(typeof(LuaArrayConverter<PriceQuantity>))]
         public PriceQuantity[] bid { get; set; }
 
         /// <summary>
         /// Котировки предложений (продажи)
         /// </summary>
+        [JsonConverter(typeof(LuaArrayConverter<PriceQuantity>))]
         public PriceQuantity[] offer { get; set; }
 
 

@@ -1435,8 +1435,11 @@ function getOptions(classCode, secCode, series)
                     Lastprice      = tonumber(safe_get("last")) or 0,
                     THEORPRICE     = tonumber(safe_get("THEORPRICE")) or 0,
                     MAT_DATE       = getParamEx(classCode,sec,"MAT_DATE").param_image or "",
-                    STEPPRICET     = tonumber(safe_get("STEPPRICET")) or 0,
+                    STEPPRICET     = tonumber(safe_get("STEPPRICET")) or tonumber(safe_get("STEPPRICE")) or 0, -- STEPPRICET есть не у всех брокеров
                     SEC_PRICE_STEP = tonumber(safe_get("SEC_PRICE_STEP")) or 0,
+                    -- ГО на контракт (руб.): покупка / продажа -- без них ГО стратегии из QUIK = 0
+                    BUYDEPO        = tonumber(safe_get("BUYDEPO")) or 0,
+                    SELLDEPO       = tonumber(safe_get("SELLDEPO")) or 0,
                 }
 
                 table.insert(t, p)
