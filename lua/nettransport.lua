@@ -190,7 +190,8 @@ end
 -- IPC поверх TCP-сокетов (Lua = сервер, C# = клиент)
 --------------------------------------------------------------------------------
 
-local SCRIPT_NAME = "QuikSharp"   -- должно совпадать с записью "servers" в config.json
+-- ¬торой экземпл€р (Quik_2.lua) задаЄт QUIKSHARP_SCRIPT_NAME до подключени€ QuikSharp.lua и получает свои порты из config.json
+local SCRIPT_NAME = rawget(_G, "QUIKSHARP_SCRIPT_NAME") or "QuikSharp"   -- должно совпадать с записью "servers" в config.json
 
 local response_server, callback_server
 local response_client, callback_client
